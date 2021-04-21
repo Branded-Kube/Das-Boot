@@ -27,7 +27,7 @@ namespace DataBros.States
 
             var startGameButton = new Button(buttonTexture, buttonFont)
             {
-                Position = new Vector2(325, 170),
+                Position = new Vector2(495, 250),
                 Text = "Start Game",
             };
 
@@ -35,7 +35,7 @@ namespace DataBros.States
 
             var quitGameButton = new Button(buttonTexture, buttonFont)
             {
-                Position = new Vector2(325, 220),
+                Position = new Vector2(495, 305),
                 Text = "Quit Game",
             };
 

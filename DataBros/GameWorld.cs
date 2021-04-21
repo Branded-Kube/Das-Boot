@@ -20,8 +20,6 @@ namespace DataBros
 
         private State nextState;
 
-        private GameState gameState;
-
         public void ChangeState(State state)
         {
             nextState = state;
@@ -61,6 +59,10 @@ namespace DataBros
         protected override void Initialize()
         {
             // TODO: Add your initialization logic here
+
+            _graphics.PreferredBackBufferWidth = 1100;
+            _graphics.PreferredBackBufferHeight = 1100;
+            _graphics.ApplyChanges();
 
             base.Initialize();
         }

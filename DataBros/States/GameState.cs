@@ -14,6 +14,9 @@ namespace DataBros.States
     public class GameState : State
     {
         #region Fields
+        private Texture2D backgroundTexture;
+        private Rectangle backgroundRectangle;
+
         private List<Component> components;
 
         //Upgrade menu
@@ -39,7 +42,7 @@ namespace DataBros.States
 
             var fishingPoleButton = new Button(buttonTexture, buttonFont)
             {
-                Position = new Vector2(5, 5),
+                Position = new Vector2(5, 10),
                 Text = "Fishing Pole",
             };
 
@@ -47,7 +50,7 @@ namespace DataBros.States
 
             var baitButton = new Button(buttonTexture, buttonFont)
             {
-                Position = new Vector2(5, 55),
+                Position = new Vector2(5, 65),
                 Text = "Bait",
             };
 
@@ -59,14 +62,18 @@ namespace DataBros.States
                 baitButton,
             };
 
+            //Background
+            backgroundTexture = _content.Load<Texture2D>("background1");
+            backgroundRectangle = new Rectangle(0, 0, backgroundTexture.Width, backgroundTexture.Height);
+
             //Upgrade menu
             upgradeMenuTexture = _content.Load<Texture2D>("upgmenu");
-            upgradeMenuRectangle = new Rectangle(275, 40, upgradeMenuTexture.Width, upgradeMenuTexture.Height);
+            upgradeMenuRectangle = new Rectangle(430, 90, upgradeMenuTexture.Width, upgradeMenuTexture.Height);
 
             upgrade1 = _content.Load<Texture2D>("upgrade1");
             upgrade2 = _content.Load<Texture2D>("upgrade2");
-            upgRectangle = new Rectangle(335, 90, upgrade1.Width, upgrade1.Height);
-            upg2Rectangle = new Rectangle(335, 145, upgrade2.Width, upgrade2.Height);
+            upgRectangle = new Rectangle(495, 140, upgrade1.Width, upgrade1.Height);
+            upg2Rectangle = new Rectangle(495, 195, upgrade2.Width, upgrade2.Height);
         }
 
         #endregion
@@ -74,6 +81,8 @@ namespace DataBros.States
         public override void Draw(GameTime gameTime, SpriteBatch spriteBatch)
         {
             spriteBatch.Begin();
+
+            spriteBatch.Draw(backgroundTexture, backgroundRectangle, Color.White);
 
             //Button
             foreach (var component in components)
