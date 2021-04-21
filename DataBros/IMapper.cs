@@ -1,0 +1,15 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Data;
+using System.Data.SQLite;
+using System.Text;
+
+namespace DataBros
+{
+    public interface IMapper
+    {
+        //List<Character> MapCharactersFromReader(SQLiteDataReader reader);
+        List<Character> MapCharactersFromReader(IDataReader reader);
+
+    }
+}
