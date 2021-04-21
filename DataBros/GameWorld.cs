@@ -72,15 +72,12 @@ namespace DataBros
         protected override void Initialize()
         {
             // Sets window size
-            _graphics.PreferredBackBufferWidth = 1400;
-            _graphics.PreferredBackBufferHeight = 1080;
-
+            _graphics.PreferredBackBufferWidth = 1100;
+            _graphics.PreferredBackBufferHeight = 1100;
 
             visualManager = new VisualManager(_spriteBatch, new Rectangle(0, 0, sizeX, sizeY));
 
-            _graphics.ApplyChanges();
-            _graphics.PreferredBackBufferWidth = 1100;
-            _graphics.PreferredBackBufferHeight = 1100;
+     
             _graphics.ApplyChanges();
 
             base.Initialize();
