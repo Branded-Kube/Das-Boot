@@ -27,7 +27,7 @@ namespace DataBros.States
 
             var startGameButton = new Button(buttonTexture, buttonFont)
             {
-                Position = new Vector2(350, 150),
+                Position = new Vector2(495, 250),
                 Text = "Start Game",
             };
 
@@ -35,7 +35,7 @@ namespace DataBros.States
 
             var quitGameButton = new Button(buttonTexture, buttonFont)
             {
-                Position = new Vector2(350, 200),
+                Position = new Vector2(495, 305),
                 Text = "Quit Game",
             };
 
@@ -87,10 +87,10 @@ namespace DataBros.States
             }
         }
 
-        public override void Load(ContentManager content)
-        {
-            throw new NotImplementedException();
-        }
+        //public override void Load(ContentManager content)
+        //{
+        //    throw new NotImplementedException();
+        //}
 
         #endregion
     }

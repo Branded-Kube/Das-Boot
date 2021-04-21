@@ -20,8 +20,6 @@ namespace DataBros
 
         private State nextState;
 
-        private GameState gameState;
-
         public void ChangeState(State state)
         {
             nextState = state;
@@ -81,6 +79,10 @@ namespace DataBros
             visualManager = new VisualManager(_spriteBatch, new Rectangle(0, 0, sizeX, sizeY));
 
             _graphics.ApplyChanges();
+            _graphics.PreferredBackBufferWidth = 1100;
+            _graphics.PreferredBackBufferHeight = 1100;
+            _graphics.ApplyChanges();
+
             base.Initialize();
         }
 
