@@ -26,6 +26,19 @@ namespace DataBros
         {
             nextState = state;
         }
+
+
+        // Custom classes/objects
+        public static VisualManager visualManager;
+
+
+        // Ints / points
+        private int sizeX = 1000;
+        private int sizeY = 1000;
+
+
+
+
         public GameWorld()
         {
             _graphics = new GraphicsDeviceManager(this);
@@ -60,8 +73,14 @@ namespace DataBros
 
         protected override void Initialize()
         {
-            // TODO: Add your initialization logic here
+            // Sets window size
+            _graphics.PreferredBackBufferWidth = 1400;
+            _graphics.PreferredBackBufferHeight = 1080;
 
+
+            visualManager = new VisualManager(_spriteBatch, new Rectangle(0, 0, sizeX, sizeY));
+
+            _graphics.ApplyChanges();
             base.Initialize();
         }
 
@@ -73,6 +92,8 @@ namespace DataBros
 
             //Game
             font = Content.Load<SpriteFont>("Fonts/font");
+            visualManager.LoadContent(Content);
+
 
             //Main Menu
             currentState = new MenuState(this, _graphics.GraphicsDevice, Content);
@@ -96,16 +117,27 @@ namespace DataBros
 
             currentState.PostUpdate(gameTime);
 
+
+
             base.Update(gameTime);
         }
+
+  
+
 
         protected override void Draw(GameTime gameTime)
         {
             GraphicsDevice.Clear(Color.CornflowerBlue);
 
-            // TODO: Add your drawing code here
+            _spriteBatch.Begin();
+
+            visualManager.Draw(_spriteBatch);
+
+            _spriteBatch.End();
 
             currentState.Draw(gameTime, _spriteBatch);
+
+
 
             base.Draw(gameTime);
         }

@@ -69,7 +69,7 @@ namespace DataBros
             }
            
 
-            spriteBatch.DrawString(Game1.font, string.Format("{0}", myPos), new Vector2(myPos.X * cellSize, (myPos.Y * cellSize)), MyColor);
+            spriteBatch.DrawString(GameWorld.font, string.Format("{0}", myPos), new Vector2(myPos.X * cellSize, (myPos.Y * cellSize)), MyColor);
         }
         #endregion
     }
