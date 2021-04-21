@@ -19,7 +19,7 @@ namespace DataBros.States
         #region Methods
 
         #region Constructor
-        public MenuState(Game1 game, GraphicsDevice graphicsDevice, ContentManager content) : base(game, graphicsDevice, content)
+        public MenuState(GameWorld game, GraphicsDevice graphicsDevice, ContentManager content) : base(game, graphicsDevice, content)
         {
             //Button
             var buttonTexture = _content.Load<Texture2D>("button");

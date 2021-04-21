@@ -17,7 +17,7 @@ namespace DataBros.States
 
         protected GraphicsDevice _graphicsDevice;
 
-        protected Game1 _game;
+        protected GameWorld _game;
 
         #endregion
 
@@ -30,7 +30,7 @@ namespace DataBros.States
         public abstract void PostUpdate(GameTime gameTime);
 
         #region Constructor
-        public State(Game1 game, GraphicsDevice graphicsDevice, ContentManager content)
+        public State(GameWorld game, GraphicsDevice graphicsDevice, ContentManager content)
         {
             _game = game;
 

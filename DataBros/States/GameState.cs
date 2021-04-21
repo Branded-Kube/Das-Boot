@@ -22,16 +22,22 @@ namespace DataBros.States
         private Rectangle menuRectangle;
 
         private Button fishingPoleBtn, baitBtn;
+
+        private Texture2D upgradeMenuTexture;
+        private Rectangle upgradeRectangle;
         #endregion
 
         #region Methods
 
         #region Constructor
-        public GameState(Game1 game, GraphicsDevice graphicsDevice, ContentManager content) : base(game, graphicsDevice, content)
+        public GameState(GameWorld game, GraphicsDevice graphicsDevice, ContentManager content) : base(game, graphicsDevice, content)
         {
             //Button
             var buttonTexture = _content.Load<Texture2D>("button");
             var buttonFont = _content.Load<SpriteFont>("Fonts/font");
+
+            upgradeMenuTexture = _content.Load<Texture2D>("upgrademenu");
+            upgradeRectangle = new Rectangle(100,10, upgradeMenuTexture.Width, upgradeMenuTexture.Height);
 
             var fishingPoleButton = new Button(buttonTexture, buttonFont)
             {
@@ -78,8 +84,9 @@ namespace DataBros.States
             if (paused)
             {
                 //spriteBatch.Draw(menuTexture, menuRectangle, Color.White);
-            }
+                spriteBatch.Draw(upgradeMenuTexture, upgradeRectangle, Color.White);
 
+            }
             spriteBatch.End();
         }
 
