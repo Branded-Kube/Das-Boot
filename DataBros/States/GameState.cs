@@ -82,7 +82,9 @@ namespace DataBros.States
         {
             spriteBatch.Begin();
 
-            spriteBatch.Draw(backgroundTexture, backgroundRectangle, Color.White);
+           spriteBatch.Draw(backgroundTexture, backgroundRectangle, Color.White);
+
+            GameWorld.visualManager.Draw(spriteBatch);
 
             //Button
             foreach (var component in components)
@@ -120,11 +122,20 @@ namespace DataBros.States
 
         public override void Update(GameTime gameTime)
         {
+
+            foreach (Cell cell in GameWorld.visualManager.grid)
+            {
+                cell.MyColor = Color.Yellow;
+            }
+
             //Button
             foreach (var component in components)
             {
                 component.Update(gameTime);
             }
+
+         
+
         }
 
         #endregion

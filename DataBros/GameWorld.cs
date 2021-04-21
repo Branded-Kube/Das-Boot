@@ -62,6 +62,8 @@ namespace DataBros
                 
             }
 
+  
+
             var anotherCharacter = repo.FindCharacter("Jon Snow");
             Debug.WriteLine($"Id {anotherCharacter.Id} Name {anotherCharacter.Name} XP {anotherCharacter.Experience}");
 
@@ -130,7 +132,7 @@ namespace DataBros
 
             _spriteBatch.Begin();
 
-            visualManager.Draw(_spriteBatch);
+            
 
             _spriteBatch.End();
 
