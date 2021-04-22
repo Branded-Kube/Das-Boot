@@ -32,7 +32,7 @@ namespace DataBros
             this.displayRectangle = displayRectangle;
 
 
-            cellCount = 10;
+            cellCount = 11;
 
             CreateGrid();
         }

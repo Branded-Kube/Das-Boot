@@ -31,8 +31,8 @@ namespace DataBros
 
 
         // Ints / points
-        private int sizeX = 1000;
-        private int sizeY = 1000;
+        private int sizeX = 1100;
+        private int sizeY = 1100;
 
 
 
