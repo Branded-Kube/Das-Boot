@@ -69,6 +69,29 @@ namespace DataBros
 
             repo.Close();
             //
+
+            var mapper1 = new AdventurerMapper();
+            var provider1 = new SQLiteDatabaseProvider("Data Source=adventurer.db;Version=3;new=true");
+
+            List<Bait> result1;
+            var repo1 = new Repository(provider1, mapper1);
+            repo.Open();
+
+            repo.AddBait("Regnorm", 5);
+            repo.AddBait("PowerBait", 10);
+            repo.AddBait("Sild", 20);
+
+            result1 = repo.GetAllBait();
+            foreach (var bait in result1)
+            {
+                Debug.WriteLine($"Id {bait.Id} Name {bait.BaitName} Cost {bait.Cost}");
+
+            }
+
+            var anotherBait = repo.FindBait("Regnorm");
+            Debug.WriteLine($"Id {anotherBait.Id} Name {anotherBait.BaitName} Cost {anotherBait.Cost}");
+
+            repo.Close();
         }
 
         protected override void Initialize()
