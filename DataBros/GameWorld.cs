@@ -84,12 +84,12 @@ namespace DataBros
             result1 = repo.GetAllBait();
             foreach (var bait in result1)
             {
-                Debug.WriteLine($"Id {bait.Id} Name {bait.BaitName} Cost {bait.Cost}");
+                Debug.WriteLine($"Id {bait.Id} Name {bait.BaitName} Cost {bait.Price}");
 
             }
 
             var anotherBait = repo.FindBait("Regnorm");
-            Debug.WriteLine($"Id {anotherBait.Id} Name {anotherBait.BaitName} Cost {anotherBait.Cost}");
+            Debug.WriteLine($"Id {anotherBait.Id} Name {anotherBait.BaitName} Cost {anotherBait.Price}");
 
             repo.Close();
         }

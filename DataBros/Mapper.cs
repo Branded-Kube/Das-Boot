@@ -36,14 +36,14 @@ namespace DataBros
             while (reader.Read())
             {
                 var id = reader.GetInt32(0);
-                var name = reader.GetString(1);
+                var name = reader.GetString(3);
                 var Cost = reader.GetInt32(2);
 
                 // var id = reader.GetInt32(0);
                 // var BaitName = reader.GetString(1);
                 // var Cost = reader.GetInt32(2);
 
-                result1.Add(new Bait() { Id = id, BaitName = name, Cost = Cost });
+                result1.Add(new Bait() { Id = id, BaitName = name, Price = Cost });
 
                 // result.Add(new Character() { Id = id, Name = BaitName, Experience = Cost });
 

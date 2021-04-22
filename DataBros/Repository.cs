@@ -65,13 +65,13 @@ namespace DataBros
         }
         public void AddBait(string name, int cost)
         {
-            var cmdb = new SQLiteCommand($"INSERT INTO bait (Name, Cost) VALUES ('{name}', {cost})", (SQLiteConnection)connection);
+            var cmdb = new SQLiteCommand($"INSERT INTO Bait (Name, Price) VALUES ('{name}', {cost})", (SQLiteConnection)connection);
             cmdb.ExecuteNonQuery();
         }
 
         public Bait FindBait(string BaitName)
         {
-            var cmdb = new SQLiteCommand($"SELECT * from bait WHERE name = '{BaitName}'", (SQLiteConnection)connection);
+            var cmdb = new SQLiteCommand($"SELECT * from Bait WHERE name = '{BaitName}'", (SQLiteConnection)connection);
             var reader = cmdb.ExecuteReader();
 
             var result1 = mapper.MapBaitFromReader(reader).First();

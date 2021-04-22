@@ -7,7 +7,7 @@ namespace DataBros
     public class Bait
     {
         public int Id { get; set; }
-        public int Cost { get; set; }
+        public int Price { get; set; }
 
         public string BaitName { get; set; }
     }
