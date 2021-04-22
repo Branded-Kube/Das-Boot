@@ -4,14 +4,11 @@ using System.Text;
 
 namespace DataBros
 {
-    public class Character
+    public class Bait
     {
         public int Id { get; set; }
+        public int Cost { get; set; }
 
-        public string Name { get; set; }
-
-        public int Experience { get; set; }
-
-
+        public string BaitName { get; set; }
     }
 }

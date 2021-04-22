@@ -45,6 +45,7 @@ namespace DataBros
             cmd.ExecuteNonQuery();
         }
 
+
         public Character FindCharacter(string name)
         {
             var cmd = new SQLiteCommand($"SELECT * from characters WHERE name = '{name}'", (SQLiteConnection)connection);
@@ -61,6 +62,29 @@ namespace DataBros
 
             var result = mapper.MapCharactersFromReader(reader);
             return result;
+        }
+        public void AddBait(string name, int cost)
+        {
+            var cmdb = new SQLiteCommand($"INSERT INTO bait (Name, Cost) VALUES ('{name}', {cost})", (SQLiteConnection)connection);
+            cmdb.ExecuteNonQuery();
+        }
+
+        public Bait FindBait(string BaitName)
+        {
+            var cmdb = new SQLiteCommand($"SELECT * from bait WHERE name = '{BaitName}'", (SQLiteConnection)connection);
+            var reader = cmdb.ExecuteReader();
+
+            var result1 = mapper.MapBaitFromReader(reader).First();
+            return result1;
+        }
+
+        public List<Bait> GetAllBait()
+        {
+            var cmdb = new SQLiteCommand("SELECT * from bait", (SQLiteConnection)connection);
+            var reader = cmdb.ExecuteReader();
+
+            var result1 = mapper.MapBaitFromReader(reader);
+            return result1;
         }
 
         public void Open()

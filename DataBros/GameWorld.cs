@@ -31,8 +31,8 @@ namespace DataBros
 
 
         // Ints / points
-        private int sizeX = 1000;
-        private int sizeY = 1000;
+        private int sizeX = 1100;
+        private int sizeY = 1100;
 
 
 
@@ -69,6 +69,29 @@ namespace DataBros
 
             repo.Close();
             //
+
+            var mapper1 = new AdventurerMapper();
+            var provider1 = new SQLiteDatabaseProvider("Data Source=adventurer.db;Version=3;new=true");
+
+            List<Bait> result1;
+            var repo1 = new Repository(provider1, mapper1);
+            repo.Open();
+
+            repo.AddBait("Regnorm", 5);
+            repo.AddBait("PowerBait", 10);
+            repo.AddBait("Sild", 20);
+
+            result1 = repo.GetAllBait();
+            foreach (var bait in result1)
+            {
+                Debug.WriteLine($"Id {bait.Id} Name {bait.BaitName} Cost {bait.Cost}");
+
+            }
+
+            var anotherBait = repo.FindBait("Regnorm");
+            Debug.WriteLine($"Id {anotherBait.Id} Name {anotherBait.BaitName} Cost {anotherBait.Cost}");
+
+            repo.Close();
         }
 
         protected override void Initialize()
@@ -79,9 +102,11 @@ namespace DataBros
 
             visualManager = new VisualManager(_spriteBatch, new Rectangle(0, 0, sizeX, sizeY));
 
-     
-            _graphics.ApplyChanges();
+            Window.TextInput += UserLogin.UsernameInput;
 
+            Window.TextInput += UserLogin.PasswordInput;
+
+            _graphics.ApplyChanges();
             base.Initialize();
         }
 
@@ -119,7 +144,6 @@ namespace DataBros
             currentState.PostUpdate(gameTime);
 
 
-
             base.Update(gameTime);
         }
 
@@ -132,11 +156,17 @@ namespace DataBros
 
             _spriteBatch.Begin();
 
-            
+            _spriteBatch.DrawString(font, "Enter your username", new Vector2((_graphics.PreferredBackBufferWidth / 2) - 100, 700), Color.Black, 0.0f, Vector2.Zero, 2.0f, SpriteEffects.None, 0.0f);
+            _spriteBatch.DrawString(font, UserLogin.PlayerNameInput, new Vector2((_graphics.PreferredBackBufferWidth / 2) - 100, 750), Color.Black, 0.0f, Vector2.Zero, 2.0f, SpriteEffects.None, 0.0f);
+            _spriteBatch.DrawString(font, "Enter your password", new Vector2((_graphics.PreferredBackBufferWidth / 2) - 100, 800), Color.Black, 0.0f, Vector2.Zero, 2.0f, SpriteEffects.None, 0.0f);
+            _spriteBatch.DrawString(font, UserLogin.PasswordInputString, new Vector2((_graphics.PreferredBackBufferWidth / 2) - 100, 850), Color.Black, 0.0f, Vector2.Zero, 2.0f, SpriteEffects.None, 0.0f);
+
 
             _spriteBatch.End();
 
             currentState.Draw(gameTime, _spriteBatch);
+
+
 
 
 
