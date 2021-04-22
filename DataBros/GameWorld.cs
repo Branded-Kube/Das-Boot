@@ -34,7 +34,8 @@ namespace DataBros
         private int sizeX = 1100;
         private int sizeY = 1100;
 
-
+        public static Repository repo;
+        
 
 
         public GameWorld()
@@ -44,16 +45,20 @@ namespace DataBros
             IsMouseVisible = true;
 
             // Database
-            var mapper = new AdventurerMapper();
+            var mapper = new Mapper();
             var provider = new SQLiteDatabaseProvider("Data Source=adventurer.db;Version=3;new=true");
 
             List<Character> result;
-            var repo = new Repository(provider, mapper);
+            repo = new Repository(provider, mapper);
             repo.Open();
 
             repo.AddCharacter("Jon Snow", 2983);
             repo.AddCharacter("Kurt", 2344);
             repo.AddCharacter("Hans", 12);
+
+            repo.AddWater("Lake", 20, true);
+            repo.AddWater("Ocean", 100, false);
+            repo.AddWater("Stream", 10, true);
 
             result = repo.GetAllCharacters();
             foreach (var character in result)
@@ -62,7 +67,7 @@ namespace DataBros
                 
             }
 
-  
+            
 
             var anotherCharacter = repo.FindCharacter("Jon Snow");
             Debug.WriteLine($"Id {anotherCharacter.Id} Name {anotherCharacter.Name} XP {anotherCharacter.Experience}");
@@ -70,7 +75,7 @@ namespace DataBros
             repo.Close();
             //
 
-            var mapper1 = new AdventurerMapper();
+            var mapper1 = new Mapper();
             var provider1 = new SQLiteDatabaseProvider("Data Source=adventurer.db;Version=3;new=true");
 
             List<Bait> result1;
@@ -132,6 +137,8 @@ namespace DataBros
         {
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
                 Exit();
+            if (Keyboard.GetState().IsKeyDown(Keys.Enter))
+                CatchAFish();
             if (nextState != null)
             {
                 currentState = nextState;
@@ -147,7 +154,11 @@ namespace DataBros
             base.Update(gameTime);
         }
 
-  
+    public void CatchAFish()
+        {
+
+
+        }
 
 
         protected override void Draw(GameTime gameTime)

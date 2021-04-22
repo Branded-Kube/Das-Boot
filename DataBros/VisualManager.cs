@@ -14,14 +14,13 @@ namespace DataBros
 
 
         //Handeling of cells
-        private int cellCount;
+        public int cellCount;
 
 
         //Collections
         public List<Cell> grid;
-
       
-
+        
 
         #endregion
 
@@ -33,6 +32,7 @@ namespace DataBros
 
 
             cellCount = 11;
+            
 
             CreateGrid();
         }
@@ -48,7 +48,7 @@ namespace DataBros
             }
 
         }
-      
+       
 
 
         /// <summary>

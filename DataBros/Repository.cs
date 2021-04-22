@@ -2,11 +2,12 @@
 using System.Collections.Generic;
 using System.Data;
 using System.Data.SQLite;
+using System.Diagnostics;
 using System.Linq;
 
 namespace DataBros
 {
-    public class Repository : IAdventurerRepository
+    public class Repository : IRepository
     {
         private readonly IDatabaseProvider provider;
         private readonly IMapper mapper;
@@ -63,6 +64,35 @@ namespace DataBros
             var result = mapper.MapCharactersFromReader(reader);
             return result;
         }
+
+        public Water FindWater(string name)
+        {
+
+            var cmd = new SQLiteCommand($"SELECT * from Water WHERE name = '{name}'", (SQLiteConnection)connection);
+            var reader = cmd.ExecuteReader();
+
+            var result = mapper.MapWaterFromReader(reader).First();
+            return result;
+        }
+
+        public void AddWater(string name, int size, bool type)
+        {
+            var cmd = new SQLiteCommand($"INSERT INTO Water (Name, Size, Type) VALUES ('{name}', {size}, {type})", (SQLiteConnection)connection);
+            cmd.ExecuteNonQuery();
+        }
+
+      
+        //public Character FindAFish(string name)
+        //{
+        //    Random Rnd = new Random();
+        //    Rnd.Next(1,4);
+        //    Debug.WriteLine(Rnd);
+        //    var cmd = new SQLiteCommand($"SELECT * from characters WHERE name = '{name}'", (SQLiteConnection)connection);
+        //    var reader = cmd.ExecuteReader();
+
+        //    var result = mapper.MapCharactersFromReader(reader).First();
+        //    return result;
+        //}
         public void AddBait(string name, int cost)
         {
             var cmdb = new SQLiteCommand($"INSERT INTO Bait (Name, Price) VALUES ('{name}', {cost})", (SQLiteConnection)connection);

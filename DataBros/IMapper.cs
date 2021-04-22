@@ -10,6 +10,8 @@ namespace DataBros
     {
         //List<Character> MapCharactersFromReader(SQLiteDataReader reader);
         List<Character> MapCharactersFromReader(IDataReader reader);
+        List<Water> MapWaterFromReader(IDataReader reader);
+
 
         List<Bait> MapBaitFromReader(IDataReader reader);
 

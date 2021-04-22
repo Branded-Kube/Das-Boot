@@ -6,7 +6,7 @@ using System.Text;
 
 namespace DataBros
 {
-    public class AdventurerMapper : IMapper
+    public class Mapper : IMapper
     {
         public List<Character> MapCharactersFromReader(IDataReader reader)
         {
@@ -29,7 +29,29 @@ namespace DataBros
 
             return result;
         }
+        public List<Water> MapWaterFromReader(IDataReader reader)
+        {
+            var result = new List<Water>();
+            while (reader.Read())
+            {
+                var name = reader.GetString(1);
+                var size = reader.GetInt32(2);
+                var id = reader.GetInt32(0);
+                var type = reader.GetBoolean(3);
 
+
+                // var id = reader.GetInt32(0);
+                // var BaitName = reader.GetString(1);
+                // var Cost = reader.GetInt32(2);
+
+                result.Add(new Water() { Id = id, Name = name, Size = size , Type = type});
+
+                // result.Add(new Character() { Id = id, Name = BaitName, Experience = Cost });
+
+            }
+
+            return result;
+        }
         public List<Bait> MapBaitFromReader(IDataReader reader)
         {
             var result1 = new List<Bait>();
