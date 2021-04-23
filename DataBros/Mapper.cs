@@ -72,5 +72,20 @@ namespace DataBros
             }
             return result1;
         }
+
+        public List<Fish> MapFishFromReader(IDataReader reader)
+        {
+            var result = new List<Fish>();
+            while (reader.Read())
+            {
+                var name = reader.GetString(1);
+                var price = reader.GetInt32(5);
+                var id = reader.GetInt32(0);
+
+                result.Add(new Fish() { Id = id, Name = name, Price = price});
+            }
+
+            return result;
+        }
     }
 }

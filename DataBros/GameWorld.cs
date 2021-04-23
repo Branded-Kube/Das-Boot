@@ -60,6 +60,10 @@ namespace DataBros
             repo.AddWater("Ocean", 100, false);
             repo.AddWater("Stream", 10, true);
 
+            repo.AddFish("Sild", 1, 1);
+            repo.AddFish("FladFisk", 10, 2);
+            repo.AddFish("Torsk", 20, 3);
+
             result = repo.GetAllCharacters();
             foreach (var character in result)
             {
@@ -81,7 +85,7 @@ namespace DataBros
             List<Bait> result1;
             var repo1 = new Repository(provider1, mapper1);
             repo.Open();
-
+            
             repo.AddBait("Regnorm", 5);
             repo.AddBait("PowerBait", 10);
             repo.AddBait("Sild", 20);

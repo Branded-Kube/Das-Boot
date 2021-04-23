@@ -11,9 +11,10 @@ namespace DataBros
         List<Character> GetAllCharacters();
 
         Water FindWater(string name);
-
         void AddWater(string name, int size, bool type);
 
+        Fish FindFish(string name);
+        void AddFish(string name, int price, int FKID);
 
         void AddBait(string name, int Cost);
         Bait FindBait(string name);
