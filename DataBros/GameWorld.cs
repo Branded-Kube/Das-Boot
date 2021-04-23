@@ -10,7 +10,8 @@ namespace DataBros
 {
     public class GameWorld : Game
     {
-        private GraphicsDeviceManager _graphics;
+        public static GraphicsDeviceManager _graphics;
+
         private SpriteBatch _spriteBatch;
 
         public static SpriteFont font;
@@ -171,10 +172,7 @@ namespace DataBros
 
             _spriteBatch.Begin();
 
-            _spriteBatch.DrawString(font, "Enter your username", new Vector2((_graphics.PreferredBackBufferWidth / 2) - 100, 700), Color.Black, 0.0f, Vector2.Zero, 2.0f, SpriteEffects.None, 0.0f);
-            _spriteBatch.DrawString(font, UserLogin.PlayerNameInput, new Vector2((_graphics.PreferredBackBufferWidth / 2) - 100, 750), Color.Black, 0.0f, Vector2.Zero, 2.0f, SpriteEffects.None, 0.0f);
-            _spriteBatch.DrawString(font, "Enter your password", new Vector2((_graphics.PreferredBackBufferWidth / 2) - 100, 800), Color.Black, 0.0f, Vector2.Zero, 2.0f, SpriteEffects.None, 0.0f);
-            _spriteBatch.DrawString(font, UserLogin.PasswordInputString, new Vector2((_graphics.PreferredBackBufferWidth / 2) - 100, 850), Color.Black, 0.0f, Vector2.Zero, 2.0f, SpriteEffects.None, 0.0f);
+
 
 
             _spriteBatch.End();
