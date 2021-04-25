@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Data.SQLite;
 using System.Diagnostics;
 using DataBros.States;
+using Microsoft.Xna.Framework.Content;
 
 namespace DataBros
 {
@@ -17,7 +18,7 @@ namespace DataBros
         public static SpriteFont font;
         public static Texture2D player1;
         public static Texture2D player2;
-
+        
         //states
         private State currentState;
 
@@ -31,7 +32,7 @@ namespace DataBros
 
         // Custom classes/objects
         public static VisualManager visualManager;
-
+        public static ContentManager content;
 
         // Ints / points
         private int sizeX = 1100;
@@ -45,6 +46,7 @@ namespace DataBros
         {
             _graphics = new GraphicsDeviceManager(this);
             Content.RootDirectory = "Content";
+            content = Content;
             IsMouseVisible = true;
 
             // Database
