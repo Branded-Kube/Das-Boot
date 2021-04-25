@@ -10,7 +10,8 @@ namespace DataBros
 {
     public class GameWorld : Game
     {
-        private GraphicsDeviceManager _graphics;
+        public static GraphicsDeviceManager _graphics;
+
         private SpriteBatch _spriteBatch;
 
         public static SpriteFont font;
@@ -62,6 +63,10 @@ namespace DataBros
             repo.AddWater("Ocean", 100, false);
             repo.AddWater("Stream", 10, true);
 
+            repo.AddFish("Sild", 1, 1);
+            repo.AddFish("FladFisk", 10, 2);
+            repo.AddFish("Torsk", 20, 3);
+
             result = repo.GetAllCharacters();
             foreach (var character in result)
             {
@@ -83,7 +88,7 @@ namespace DataBros
             List<Bait> result1;
             var repo1 = new Repository(provider1, mapper1);
             repo.Open();
-
+            
             repo.AddBait("Regnorm", 5);
             repo.AddBait("PowerBait", 10);
             repo.AddBait("Sild", 20);
@@ -170,10 +175,7 @@ namespace DataBros
 
             _spriteBatch.Begin();
 
-            _spriteBatch.DrawString(font, "Enter your username", new Vector2((_graphics.PreferredBackBufferWidth / 2) - 100, 700), Color.Black, 0.0f, Vector2.Zero, 2.0f, SpriteEffects.None, 0.0f);
-            _spriteBatch.DrawString(font, UserLogin.PlayerNameInput, new Vector2((_graphics.PreferredBackBufferWidth / 2) - 100, 750), Color.Black, 0.0f, Vector2.Zero, 2.0f, SpriteEffects.None, 0.0f);
-            _spriteBatch.DrawString(font, "Enter your password", new Vector2((_graphics.PreferredBackBufferWidth / 2) - 100, 800), Color.Black, 0.0f, Vector2.Zero, 2.0f, SpriteEffects.None, 0.0f);
-            _spriteBatch.DrawString(font, UserLogin.PasswordInputString, new Vector2((_graphics.PreferredBackBufferWidth / 2) - 100, 850), Color.Black, 0.0f, Vector2.Zero, 2.0f, SpriteEffects.None, 0.0f);
+
 
 
             _spriteBatch.End();

@@ -21,23 +21,27 @@ namespace DataBros
 
         private void CreateDatabaseTables()
         {
-            var cmd = new SQLiteCommand($"CREATE TABLE IF NOT EXISTS characters (Id INTEGER PRIMARY KEY, Name VARCHAR(50), Experience INTEGER);", (SQLiteConnection)connection);
+            var cmd = new SQLiteCommand($"PRAGMA foreign_keys = ON;", (SQLiteConnection)connection);
             cmd.ExecuteNonQuery();
 
-            cmd = new SQLiteCommand($"CREATE TABLE IF NOT EXISTS Players (ID INTEGER PRIMARY KEY, Name VARCHAR(50), Money INTEGER, Strengt INTEGER, FOREIGN KEY (ID) REFERENCES Region(ID));", (SQLiteConnection)connection);
+            cmd = new SQLiteCommand($"CREATE TABLE IF NOT EXISTS characters (Id INTEGER PRIMARY KEY, Name VARCHAR(50), Experience INTEGER);", (SQLiteConnection)connection);
+            cmd.ExecuteNonQuery();
+
+            cmd = new SQLiteCommand($"CREATE TABLE IF NOT EXISTS Players (PlayerID INTEGER PRIMARY KEY, Name VARCHAR(50), Money INTEGER, Strengt INTEGER);", (SQLiteConnection)connection);
             cmd.ExecuteNonQuery();
             
-            cmd = new SQLiteCommand($"CREATE TABLE IF NOT EXISTS Fish (ID INTEGER PRIMARY KEY, Name VARCHAR(50), BiteTime INTEGER, Strengt INTEGER, Weight INTEGER, Price INTEGER);", (SQLiteConnection)connection);
+            cmd = new SQLiteCommand($"CREATE TABLE IF NOT EXISTS Fish (FishID INTEGER PRIMARY KEY, Name VARCHAR(50), BiteTime INTEGER, Strengt INTEGER, Weight INTEGER, Price INTEGER, WaterFK INTEGER, FOREIGN KEY (WaterFK) REFERENCES Water(WaterID));", (SQLiteConnection)connection);
             cmd.ExecuteNonQuery();
 
-            cmd = new SQLiteCommand($"CREATE TABLE IF NOT EXISTS Region (ID INTEGER PRIMARY KEY, Name VARCHAR(50), FOREIGN KEY (ID) REFERENCES Water(ID));", (SQLiteConnection)connection);
+            
+
+            cmd = new SQLiteCommand($"CREATE TABLE IF NOT EXISTS Water (WaterID INTEGER PRIMARY KEY, Name VARCHAR(50), Size INTEGER, Type BOOLEAN);", (SQLiteConnection)connection);
             cmd.ExecuteNonQuery();
 
-            cmd = new SQLiteCommand($"CREATE TABLE IF NOT EXISTS Water (ID INTEGER PRIMARY KEY, Name VARCHAR(50), Size INTEGER, Type BOOLEAN, FOREIGN KEY (ID) REFERENCES Fish(ID));", (SQLiteConnection)connection);
+            cmd = new SQLiteCommand($"CREATE TABLE IF NOT EXISTS Bait (BaitID INTEGER PRIMARY KEY, BiteTimeMultiplier INTEGER, Price INTEGER, Name VARCHAR(50), Type BOOLEAN);", (SQLiteConnection)connection);
             cmd.ExecuteNonQuery();
 
-            cmd = new SQLiteCommand($"CREATE TABLE IF NOT EXISTS Bait (ID INTEGER PRIMARY KEY, BiteTimeMultiplier INTEGER, Price INTEGER, Name VARCHAR(50), Type BOOLEAN);", (SQLiteConnection)connection);
-            cmd.ExecuteNonQuery();
+           
         }
 
         public void AddCharacter(string name, int experience)
@@ -115,6 +119,21 @@ namespace DataBros
 
             var result1 = mapper.MapBaitFromReader(reader);
             return result1;
+        }
+        public void AddFish(string name, int price, int FKID)
+        {
+            var cmd = new SQLiteCommand($"INSERT INTO Fish (Name, Price, WaterFK) VALUES ('{name}', {price}, {FKID})", (SQLiteConnection)connection);
+            cmd.ExecuteNonQuery();
+        }
+
+
+        public Fish FindFish(string name)
+        {
+            var cmd = new SQLiteCommand($"SELECT * from Fish WHERE name = '{name}'", (SQLiteConnection)connection);
+            var reader = cmd.ExecuteReader();
+
+            var result = mapper.MapFishFromReader(reader).First();
+            return result;
         }
 
         public void Open()

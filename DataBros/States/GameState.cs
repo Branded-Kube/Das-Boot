@@ -221,6 +221,10 @@ namespace DataBros.States
             GameWorld.repo.Open();
             Water lake = GameWorld.repo.FindWater("Lake");
             Debug.WriteLine($"Id {lake.Id} Name {lake.Name} Size {lake.Size} Type {lake.Type} ");
+            // test
+            Fish torsk = GameWorld.repo.FindFish("Torsk");
+            Debug.WriteLine($"Id {torsk.Id} Name {torsk.Name} Price {torsk.Price}");
+            //
             GameWorld.repo.Close();
             currentWatersize = lake.Size;
             ResetWaterButtons();

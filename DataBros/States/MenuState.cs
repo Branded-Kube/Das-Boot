@@ -14,6 +14,19 @@ namespace DataBros.States
     {
         #region Fields
         private List<Component> components;
+        private bool isCreatingUser = false;
+
+        public bool IsCreatingUser {
+            get
+            {
+                return isCreatingUser;
+            }
+                 set
+            {
+                isCreatingUser = value;
+            }
+                
+                }
         #endregion
 
         #region Methods
@@ -41,10 +54,32 @@ namespace DataBros.States
 
             quitGameButton.Click += QuitGameButton_Click;
 
+            var CreateUserButton = new Button(buttonTexture, buttonFont)
+            {
+                Position = new Vector2(495,380),
+                Text = "Create new user",
+
+            };
+
+            CreateUserButton.Click += CreateNewUserButton_Click;
+
+
+            var UserLoginButton = new Button(buttonTexture, buttonFont)
+            {
+                Position = new Vector2(495, 430),
+                Text = "Login",
+
+            };
+
+            UserLoginButton.Click += UserLoginButton_Click;
+
+
             components = new List<Component>()
             {
                 startGameButton,
                 quitGameButton,
+                CreateUserButton,
+                UserLoginButton,
             };
         }
 
@@ -59,6 +94,16 @@ namespace DataBros.States
                 component.Draw(gameTime, spriteBatch);
             }
 
+            if (isCreatingUser)
+            {
+                spriteBatch.DrawString(GameWorld.font, "Enter your username", new Vector2((GameWorld._graphics.PreferredBackBufferWidth / 2) - 100, 700), Color.Black, 0.0f, Vector2.Zero, 2.0f, SpriteEffects.None, 0.0f);
+                spriteBatch.DrawString(GameWorld.font, UserLogin.PlayerNameInput, new Vector2((GameWorld._graphics.PreferredBackBufferWidth / 2) - 100, 750), Color.Black, 0.0f, Vector2.Zero, 2.0f, SpriteEffects.None, 0.0f);
+                spriteBatch.DrawString(GameWorld.font, "Enter your password", new Vector2((GameWorld._graphics.PreferredBackBufferWidth / 2) - 100, 800), Color.Black, 0.0f, Vector2.Zero, 2.0f, SpriteEffects.None, 0.0f);
+                spriteBatch.DrawString(GameWorld.font, UserLogin.PasswordInputString, new Vector2((GameWorld._graphics.PreferredBackBufferWidth / 2) - 100, 850), Color.Black, 0.0f, Vector2.Zero, 2.0f, SpriteEffects.None, 0.0f);
+            }
+
+           
+
             spriteBatch.End();
         }
 
@@ -71,6 +116,19 @@ namespace DataBros.States
         private void NewGameButton_Click(object sender, EventArgs e)
         {
             _game.ChangeState(new GameState(_game, _graphicsDevice, _content));
+        }
+
+        private void CreateNewUserButton_Click(object sender, EventArgs e)
+        {
+            if (isCreatingUser == false)
+            {
+                isCreatingUser = true;
+            }
+        }
+
+        private void UserLoginButton_Click(object sender, EventArgs e)
+        {
+
         }
 
         public override void PostUpdate(GameTime gameTime)

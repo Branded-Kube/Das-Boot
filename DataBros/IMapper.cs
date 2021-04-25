@@ -14,6 +14,8 @@ namespace DataBros
 
 
         List<Bait> MapBaitFromReader(IDataReader reader);
+        List<Fish> MapFishFromReader(IDataReader reader);
+
 
     }
 }
