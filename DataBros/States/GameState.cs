@@ -33,6 +33,12 @@ namespace DataBros.States
 
         private Texture2D upgrade1;
         private Texture2D upgrade2;
+        private Texture2D player1;
+        private Texture2D player2;
+        private Vector2 p1origin;
+        private Vector2 p2origin;
+        private Vector2 p1position;
+        private Vector2 p2position;
         private Rectangle upgRectangle;
         private Rectangle upg2Rectangle;
         Texture2D buttonTexture;
@@ -131,6 +137,8 @@ namespace DataBros.States
                 spriteBatch.Draw(upgradeMenuTexture, upgradeMenuRectangle, Color.White);
                 spriteBatch.Draw(upgrade1, upgRectangle, Color.White);
                 spriteBatch.Draw(upgrade2, upg2Rectangle, Color.White);
+                spriteBatch.Draw(player1, p1position, Rectangle.Empty, Color.White, 0f, p1origin, Vector2.Zero, SpriteEffects.None, 0);
+                spriteBatch.Draw(player2, p2position, Rectangle.Empty, Color.White, 0f, p2origin, Vector2.Zero, SpriteEffects.None, 0);
 
                 if (Keyboard.GetState().IsKeyDown(Keys.U))
                 {
@@ -140,6 +148,15 @@ namespace DataBros.States
 
 
             spriteBatch.End();
+        }
+
+        public void LoadContent()
+        {
+            var player1 = _content.Load<Texture2D>("player1");
+            p1origin = new Vector2(500, 300);
+            var player2 = _content.Load<SpriteFont>("player2");
+            p2origin = new Vector2(300, 300);
+
         }
 
         private void PickWaterButton_Click(object sender, EventArgs e)
@@ -249,6 +266,17 @@ namespace DataBros.States
             }
 
 
+
+            //player movement
+            if (Keyboard.GetState().IsKeyDown(Keys.Right))
+            {
+                p1position.X += 1;
+            }
+
+            if (Keyboard.GetState().IsKeyDown(Keys.Left))
+            {
+                p1position.X -= 1;
+            }
 
         }
 

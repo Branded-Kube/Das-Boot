@@ -95,14 +95,14 @@ namespace DataBros
         //}
         public void AddBait(string name, int cost)
         {
-            var cmdb = new SQLiteCommand($"INSERT INTO Bait (Name, Price) VALUES ('{name}', {cost})", (SQLiteConnection)connection);
-            cmdb.ExecuteNonQuery();
+            var cmd = new SQLiteCommand($"INSERT INTO Bait (Name, Price) VALUES ('{name}', {cost})", (SQLiteConnection)connection);
+            cmd.ExecuteNonQuery();
         }
 
         public Bait FindBait(string BaitName)
         {
-            var cmdb = new SQLiteCommand($"SELECT * from Bait WHERE name = '{BaitName}'", (SQLiteConnection)connection);
-            var reader = cmdb.ExecuteReader();
+            var cmd = new SQLiteCommand($"SELECT * from Bait WHERE name = '{BaitName}'", (SQLiteConnection)connection);
+            var reader = cmd.ExecuteReader();
 
             var result1 = mapper.MapBaitFromReader(reader).First();
             return result1;
@@ -110,8 +110,8 @@ namespace DataBros
 
         public List<Bait> GetAllBait()
         {
-            var cmdb = new SQLiteCommand("SELECT * from bait", (SQLiteConnection)connection);
-            var reader = cmdb.ExecuteReader();
+            var cmd = new SQLiteCommand("SELECT * from bait", (SQLiteConnection)connection);
+            var reader = cmd.ExecuteReader();
 
             var result1 = mapper.MapBaitFromReader(reader);
             return result1;

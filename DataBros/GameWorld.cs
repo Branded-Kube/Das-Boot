@@ -14,6 +14,8 @@ namespace DataBros
         private SpriteBatch _spriteBatch;
 
         public static SpriteFont font;
+        public static Texture2D player1;
+        public static Texture2D player2;
 
         //states
         private State currentState;
@@ -124,6 +126,7 @@ namespace DataBros
             //Game
             font = Content.Load<SpriteFont>("Fonts/font");
             visualManager.LoadContent(Content);
+            
 
 
             //Main Menu
