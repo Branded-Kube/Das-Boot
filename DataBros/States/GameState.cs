@@ -6,6 +6,7 @@ using Microsoft.Xna.Framework.Input;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Timers;
 
 namespace DataBros.States
 {
@@ -51,6 +52,8 @@ namespace DataBros.States
         public Water stream;
 
         public Water currentWater;
+        System.Timers.Timer aTimer;
+        bool alreadyFishing = false;
 
         #endregion
 
@@ -201,6 +204,22 @@ namespace DataBros.States
 
         private void FishButton_Click(object sender, EventArgs e)
         {
+            if (alreadyFishing == false)
+            {
+
+                aTimer = new System.Timers.Timer();
+                aTimer.Elapsed += new ElapsedEventHandler(OnTimedEvent);
+                //aTimer.Interval = 5000 ;
+                aTimer.Interval = 3000 * GameWorld.currentBait.BiteTime;
+                 aTimer.Enabled = true;
+                alreadyFishing = true;
+            }
+        }
+
+        private void OnTimedEvent(object sender, ElapsedEventArgs e)
+        {
+            Debug.WriteLine("You have Caught a fish!");
+
             GameWorld.repo.Open();
             var catchAble = GameWorld.repo.FindAFish(currentWater.Id);
             int max = catchAble.Count;
@@ -209,10 +228,15 @@ namespace DataBros.States
 
             var caught = catchAble[randomNumber];
 
-            Debug.WriteLine($"Id {caught.Id} Name {caught.Name} Price {caught.Price}");
+            Debug.WriteLine($"Id {caught.Id} Name {caught.Name} Price {caught.Price} ");
+            Debug.WriteLine($"Time spent {aTimer.Interval} ");
+
 
             GameWorld.repo.Close();
             //ResetWaterButtons();
+            aTimer.Elapsed -= new ElapsedEventHandler(OnTimedEvent);
+            aTimer.Enabled = false;
+            alreadyFishing = false;
 
         }
 
@@ -287,7 +311,12 @@ namespace DataBros.States
 
         private void BaitButton_Click(object sender, EventArgs e)
         {
-            paused = !paused;
+            GameWorld.repo.Open();
+            Bait nextBait = GameWorld.repo.FindBait("PowerBait");
+            GameWorld.repo.Close();
+
+            GameWorld.currentBait = nextBait;
+            //paused = !paused;
         }
 
         public override void PostUpdate(GameTime gameTime)

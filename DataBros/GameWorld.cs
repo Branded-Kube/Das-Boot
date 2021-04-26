@@ -18,6 +18,7 @@ namespace DataBros
         public static SpriteFont font;
         public static Texture2D player1;
         public static Texture2D player2;
+        public static Bait currentBait;
         
         //states
         private State currentState;
@@ -92,9 +93,9 @@ namespace DataBros
             var repo1 = new Repository(provider1, mapper1);
             repo.Open();
             
-            repo.AddBait("Regnorm", 5);
-            repo.AddBait("PowerBait", 10);
-            repo.AddBait("Sild", 20);
+            repo.AddBait("Regnorm", 5, 3);
+            repo.AddBait("PowerBait", 10, 1);
+            repo.AddBait("Sild", 20, 2);
 
             result1 = repo.GetAllBait();
             foreach (var bait in result1)
@@ -102,7 +103,7 @@ namespace DataBros
                 Debug.WriteLine($"Id {bait.Id} Name {bait.BaitName} Cost {bait.Price}");
 
             }
-
+            currentBait = repo.FindBait("Regnorm");
             var anotherBait = repo.FindBait("Regnorm");
             Debug.WriteLine($"Id {anotherBait.Id} Name {anotherBait.BaitName} Cost {anotherBait.Price}");
 

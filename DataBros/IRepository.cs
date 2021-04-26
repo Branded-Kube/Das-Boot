@@ -16,7 +16,7 @@ namespace DataBros
         Fish FindFish(string name);
         void AddFish(string name, int price, int FKID);
 
-        void AddBait(string name, int Cost);
+        void AddBait(string name, int price, int biteTime);
         Bait FindBait(string name);
         List<Bait> GetAllBait();
         void Open();

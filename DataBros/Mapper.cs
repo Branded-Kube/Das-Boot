@@ -59,16 +59,10 @@ namespace DataBros
             {
                 var id = reader.GetInt32(0);
                 var name = reader.GetString(3);
-                var Cost = reader.GetInt32(2);
+                var price = reader.GetInt32(2);
+                var biteTime = reader.GetInt32(1);
 
-                // var id = reader.GetInt32(0);
-                // var BaitName = reader.GetString(1);
-                // var Cost = reader.GetInt32(2);
-
-                result1.Add(new Bait() { Id = id, BaitName = name, Price = Cost });
-
-                // result.Add(new Character() { Id = id, Name = BaitName, Experience = Cost });
-
+                result1.Add(new Bait() { Id = id, BaitName = name, Price = price, BiteTime = biteTime});
             }
             return result1;
         }
