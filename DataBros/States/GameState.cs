@@ -70,10 +70,9 @@ namespace DataBros.States
             GameWorld.visualManager.cellCount = currentWater.Size;
             GameWorld.visualManager.CreateGrid();
 
-
+            LoadContent();
             //Button
-            buttonTexture = _content.Load<Texture2D>("button");
-            buttonFont = _content.Load<SpriteFont>("Fonts/font");
+            
             pickWaterButton = new Button(buttonTexture, buttonFont)
             {
                 Position = new Vector2(5, 10),
@@ -139,6 +138,17 @@ namespace DataBros.States
 
 
         #endregion
+        public void LoadContent()
+        {
+            var player1 = _content.Load<Texture2D>("p1sprite");
+            p1origin = new Vector2(500, 300);
+            var player2 = _content.Load<Texture2D>("p2sprite");
+            p2origin = new Vector2(300, 300);
+
+            buttonTexture = _content.Load<Texture2D>("button");
+            buttonFont = _content.Load<SpriteFont>("Fonts/font");
+
+        }
 
         public override void Draw(GameTime gameTime, SpriteBatch spriteBatch)
         {
@@ -158,8 +168,7 @@ namespace DataBros.States
                 spriteBatch.Draw(upgradeMenuTexture, upgradeMenuRectangle, Color.White);
                 spriteBatch.Draw(upgrade1, upgRectangle, Color.White);
                 spriteBatch.Draw(upgrade2, upg2Rectangle, Color.White);
-                spriteBatch.Draw(player1, p1position, Rectangle.Empty, Color.White, 0f, p1origin, Vector2.Zero, SpriteEffects.None, 0);
-                spriteBatch.Draw(player2, p2position, Rectangle.Empty, Color.White, 0f, p2origin, Vector2.Zero, SpriteEffects.None, 0);
+                
 
                 if (Keyboard.GetState().IsKeyDown(Keys.U))
                 {
@@ -167,18 +176,12 @@ namespace DataBros.States
                 }
             }
 
+            spriteBatch.Draw(player1, new Vector2(200,100), Rectangle.Empty, Color.White, 0f, p1origin, Vector2.Zero, SpriteEffects.None, 0);
+            spriteBatch.Draw(player2, new Vector2(500,200), Rectangle.Empty, Color.White, 0f, p2origin, Vector2.Zero, SpriteEffects.None, 0);
 
             spriteBatch.End();
         }
 
-        public void LoadContent()
-        {
-            var player1 = _content.Load<Texture2D>("player1");
-            p1origin = new Vector2(500, 300);
-            var player2 = _content.Load<SpriteFont>("player2");
-            p2origin = new Vector2(300, 300);
-
-        }
 
         private void PickWaterButton_Click(object sender, EventArgs e)
         {

@@ -136,10 +136,9 @@ namespace DataBros
             font = Content.Load<SpriteFont>("Fonts/font");
             visualManager.LoadContent(Content);
             
-
-
             //Main Menu
             currentState = new MenuState(this, _graphics.GraphicsDevice, Content);
+
         }
         protected override void UnloadContent()
         {

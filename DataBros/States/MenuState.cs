@@ -102,8 +102,6 @@ namespace DataBros.States
                 spriteBatch.DrawString(GameWorld.font, UserLogin.PasswordInputString, new Vector2((GameWorld._graphics.PreferredBackBufferWidth / 2) - 100, 850), Color.Black, 0.0f, Vector2.Zero, 2.0f, SpriteEffects.None, 0.0f);
             }
 
-           
-
             spriteBatch.End();
         }
 
