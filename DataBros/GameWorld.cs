@@ -21,9 +21,9 @@ namespace DataBros
         public static Bait currentBait;
         
         //states
-        private State currentState;
+        public static State currentState;
 
-        private State nextState;
+        private static State nextState;
 
         public void ChangeState(State state)
         {

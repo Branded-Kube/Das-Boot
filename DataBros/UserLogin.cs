@@ -10,44 +10,62 @@ namespace DataBros
     {
        static public StringBuilder PlayerNameInput = new StringBuilder("UserName");
        static public StringBuilder PasswordInputString = new StringBuilder("Password");
+        public static bool pass = false;
+        public static bool user = true;
 
-
-       static public void UsernameInput(object sender, TextInputEventArgs e)
+        static public void UsernameInput(object sender, TextInputEventArgs e)
         {
             var pressedKey = e.Key;
             int length = PlayerNameInput.Length;
-            if (pressedKey == Keys.Back)
+            if (user == true)
             {
-                if (length > 0)
+                if (pressedKey == Keys.Back)
                 {
-                    PlayerNameInput.Remove(length - 1, 1);
+                    if (length > 0)
+                    {
+                        PlayerNameInput.Remove(length - 1, 1);
+                    }
+
+                }
+                else if (pressedKey != Keys.Tab)
+                {
+                    var character = e.Character;
+                    PlayerNameInput.Append(character);
                 }
 
+                if (pressedKey == Keys.Enter)
+                {
+                    pass = true;
+                    user = false;
+                    _game.ChangeState(new GameState(_game, _graphicsDevice, _content));
+                }
             }
-            else if (pressedKey != Keys.Tab)
-            {
-                var character = e.Character;
-                PlayerNameInput.Append(character);
-            }
+
         }
 
       static  public void PasswordInput(object sender, TextInputEventArgs e)
         {
-            var pressedKey = e.Key;
-            int length = PasswordInputString.Length;
-            if (pressedKey == Keys.Back)
+            if (pass == true)
             {
-                if (length > 0)
+                var pressedKey = e.Key;
+                int length = PasswordInputString.Length;
+                if (pressedKey == Keys.Back)
                 {
-                    PasswordInputString.Remove(length - 1, 1);
-                }
+                    if (length > 0)
+                    {
+                        PasswordInputString.Remove(length - 1, 1);
+                    }
 
+                }
+                else if (pressedKey != Keys.Tab)
+                {
+                    var character = e.Character;
+                    PasswordInputString.Append(character);
+                }
             }
-            else if (pressedKey != Keys.Tab)
-            {
-                var character = e.Character;
-                PasswordInputString.Append(character);
-            }
+            
+
+            
         }
 
 
