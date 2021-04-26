@@ -37,7 +37,7 @@ namespace DataBros
                 {
                     pass = true;
                     user = false;
-                    _game.ChangeState(new GameState(_game, _graphicsDevice, _content));
+                    //_game.ChangeState(new GameState(_game, _graphicsDevice, _content));
                 }
             }
 
