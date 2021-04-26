@@ -82,7 +82,7 @@ namespace DataBros
         public void AddWater(string name, int size, bool type)
         {
             var cmd = new SQLiteCommand($"INSERT INTO Water (Name, Size, Type) VALUES ('{name}', {size}, {type})", (SQLiteConnection)connection);
-            cmd.ExecuteNonQuery();
+            cmd.ExecuteNonQuery(); 
         }
 
       

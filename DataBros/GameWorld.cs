@@ -19,9 +19,9 @@ namespace DataBros
         public static Texture2D player2;
 
         //states
-        private State currentState;
+        public static State currentState;
 
-        private State nextState;
+        private static State nextState;
 
         public void ChangeState(State state)
         {
