@@ -36,7 +36,7 @@ namespace DataBros
         public static ContentManager content;
 
         // Ints / points
-        private int sizeX = 1100;
+        private int sizeX = 900;
         private int sizeY = 1100;
 
         public static Repository repo;
@@ -113,10 +113,10 @@ namespace DataBros
         protected override void Initialize()
         {
             // Sets window size
-            _graphics.PreferredBackBufferWidth = 1100;
-            _graphics.PreferredBackBufferHeight = 1100;
+            _graphics.PreferredBackBufferWidth = 900;
+            _graphics.PreferredBackBufferHeight = 1000;
 
-            visualManager = new VisualManager(_spriteBatch, new Rectangle(0, 0, sizeX, sizeY));
+            visualManager = new VisualManager(_spriteBatch, new Rectangle(-566, 0, sizeX, sizeY));
 
             Window.TextInput += UserLogin.UsernameInput;
 
