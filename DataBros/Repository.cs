@@ -41,13 +41,15 @@ namespace DataBros
             cmd = new SQLiteCommand($"CREATE TABLE IF NOT EXISTS Bait (BaitID INTEGER PRIMARY KEY, BiteTimeMultiplier INTEGER, Price INTEGER, Name VARCHAR(50), Type BOOLEAN, UNIQUE(Name));", (SQLiteConnection)connection);
             cmd.ExecuteNonQuery();
 
-           
+            cmd = new SQLiteCommand($"CREATE TABLE IF NOT EXISTS CurrentFish (FishID INTEGER PRIMARY KEY, Name VARCHAR(50), BiteTime INTEGER, Strengt INTEGER, Weight INTEGER, Price INTEGER,  UNIQUE(Name));", (SQLiteConnection)connection);
+            cmd.ExecuteNonQuery();
+
+
         }
 
         public void AddCharacter(string name, int experience)
         {
             var cmd = new SQLiteCommand($"INSERT OR IGNORE INTO characters (Name, Experience) VALUES ('{name}', {experience})", (SQLiteConnection)connection);
-           // var cmd = new SQLiteCommand($"INSERT OR IGNORE INTO characters (Name, Experience) VALUES ('{name}', {experience}) WHERE NOT EXISTS (SELECT 1 FROM characters WHERE Name = {name}))", (SQLiteConnection)connection);
 
 
       
@@ -91,18 +93,18 @@ namespace DataBros
             cmd.ExecuteNonQuery();
         }
 
-      
-        //public Character FindAFish(string name)
-        //{
-        //    Random Rnd = new Random();
-        //    Rnd.Next(1,4);
-        //    Debug.WriteLine(Rnd);
-        //    var cmd = new SQLiteCommand($"SELECT * from characters WHERE name = '{name}'", (SQLiteConnection)connection);
-        //    var reader = cmd.ExecuteReader();
 
-        //    var result = mapper.MapCharactersFromReader(reader).First();
-        //    return result;
-        //}
+        public List<Fish> FindAFish(int waterId)
+        {
+           
+            //var cmd = new SQLiteCommand($"SELECT * from Fish WHERE FishID = '{randomNumber}'", (SQLiteConnection)connection);
+            // var cmd = new SQLiteCommand($"SELECT * from Fish WHERE WaterFK = '{waterId}'", (SQLiteConnection)connection);
+            var cmd = new SQLiteCommand($"SELECT * from Fish WHERE WaterFK = '{waterId}'", (SQLiteConnection)connection);
+
+            var reader = cmd.ExecuteReader();
+            var result = mapper.MapFishFromReader(reader);
+            return result;
+        }
         public void AddBait(string name, int cost)
         {
             var cmd = new SQLiteCommand($"INSERT OR IGNORE INTO Bait (Name, Price) VALUES ('{name}', {cost})", (SQLiteConnection)connection);
@@ -135,6 +137,11 @@ namespace DataBros
 
         public Fish FindFish(string name)
         {
+
+            //repo.AddFish("Torsk", 20, 3);
+
+
+
             var cmd = new SQLiteCommand($"SELECT * from Fish WHERE name = '{name}'", (SQLiteConnection)connection);
             var reader = cmd.ExecuteReader();
 
