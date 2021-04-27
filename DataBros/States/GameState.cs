@@ -147,6 +147,10 @@ namespace DataBros.States
             player2 = _content.Load<Texture2D>("pl2");
             p2origin = new Vector2(300, 300);
 
+            p1Aim = _content.Load<Texture2D>("p1aimsprite");
+            p2Aim = _content.Load<Texture2D>("p2aimsprite");
+
+
             buttonTexture = _content.Load<Texture2D>("button");
             buttonFont = _content.Load<SpriteFont>("Fonts/font");
 
@@ -165,8 +169,8 @@ namespace DataBros.States
 
             spriteBatch.Draw(player1, p1position, Color.White);
             spriteBatch.Draw(player2, p2position, Color.White);
-            spriteBatch.Draw(player1, p1AimPosition, Color.White);
-            spriteBatch.Draw(player2, p2AimPosition, Color.White);
+            spriteBatch.Draw(p1Aim, p1AimPosition, Color.White);
+            spriteBatch.Draw(p2Aim, p2AimPosition, Color.White);
 
 
 
