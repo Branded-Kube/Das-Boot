@@ -35,10 +35,10 @@ namespace DataBros.States
         private Texture2D p2Aim;
         private Vector2 p1origin;
         private Vector2 p2origin;
-        private Vector2 p1position = new Vector2(100, 900);
-        private Vector2 p2position = new Vector2(700, 900);
-        private Vector2 p1AimPosition = new Vector2(100, 500);
-        private Vector2 p2AimPosition = new Vector2(700, 500);
+        private Vector2 p1position = new Vector2(100, 500);
+        private Vector2 p2position = new Vector2(700, 500);
+        private Vector2 p1AimPosition = new Vector2(100, 900);
+        private Vector2 p2AimPosition = new Vector2(700, 900);
         private Rectangle upgRectangle;
         private Rectangle upg2Rectangle;
         Texture2D buttonTexture;
