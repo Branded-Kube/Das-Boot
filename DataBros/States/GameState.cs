@@ -142,9 +142,9 @@ namespace DataBros.States
         #endregion
         public void LoadContent()
         {
-            player1 = _content.Load<Texture2D>("p1sprite");
+            player1 = _content.Load<Texture2D>("pl1");
             p1origin = new Vector2(500, 300);
-            player2 = _content.Load<Texture2D>("p2sprite");
+            player2 = _content.Load<Texture2D>("pl2");
             p2origin = new Vector2(300, 300);
 
             buttonTexture = _content.Load<Texture2D>("button");
