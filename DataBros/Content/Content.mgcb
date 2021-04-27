@@ -68,7 +68,7 @@
 /processorParam:TextureFormat=Color
 /build:graytile.png
 
-#begin p1sprite.png
+#begin pl1.png
 /importer:TextureImporter
 /processor:TextureProcessor
 /processorParam:ColorKeyColor=255,0,255,255
@@ -78,9 +78,9 @@
 /processorParam:ResizeToPowerOfTwo=False
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
-/build:p1sprite.png
+/build:pl1.png
 
-#begin p2sprite.png
+#begin pl2.png
 /importer:TextureImporter
 /processor:TextureProcessor
 /processorParam:ColorKeyColor=255,0,255,255
@@ -90,7 +90,7 @@
 /processorParam:ResizeToPowerOfTwo=False
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
-/build:p2sprite.png
+/build:pl2.png
 
 #begin player1.png
 /importer:TextureImporter

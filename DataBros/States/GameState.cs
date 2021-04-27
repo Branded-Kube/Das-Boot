@@ -21,7 +21,7 @@ namespace DataBros.States
         private List<Component> delComponents;
 
         //Upgrade menu
-        private bool paused = false;
+        private bool playGame = false;
         private bool pickWater = true;
 
         private Texture2D upgradeMenuTexture;
@@ -175,7 +175,7 @@ namespace DataBros.States
             {
                 component.Draw(gameTime, spriteBatch);
             }
-            if (paused)
+            if (playGame)
             {
                 spriteBatch.Draw(upgradeMenuTexture, upgradeMenuRectangle, Color.White);
                 spriteBatch.Draw(upgrade1, upgRectangle, Color.White);
