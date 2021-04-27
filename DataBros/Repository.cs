@@ -33,8 +33,6 @@ namespace DataBros
             cmd = new SQLiteCommand($"CREATE TABLE IF NOT EXISTS Fish (FishID INTEGER PRIMARY KEY, Name VARCHAR(50), BiteTime INTEGER, Strengt INTEGER, Weight INTEGER, Price INTEGER, WaterFK INTEGER, FOREIGN KEY (WaterFK) REFERENCES Water(WaterID), UNIQUE(Name));", (SQLiteConnection)connection);
             cmd.ExecuteNonQuery();
 
-            
-
             cmd = new SQLiteCommand($"CREATE TABLE IF NOT EXISTS Water (WaterID INTEGER PRIMARY KEY, Name VARCHAR(50), Size INTEGER, Type BOOLEAN, UNIQUE(Name));", (SQLiteConnection)connection);
             cmd.ExecuteNonQuery();
 

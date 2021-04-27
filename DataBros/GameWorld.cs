@@ -46,6 +46,8 @@ namespace DataBros
         private static State nextState;
         //UserLogin userLogin;
 
+        
+
         public void ChangeState(State state)
         {
             nextState = state;
@@ -171,9 +173,7 @@ namespace DataBros
             //Game
             font = Content.Load<SpriteFont>("Fonts/font");
             visualManager.LoadContent(Content);
-
-
-
+            
             //Main Menu
             menuState = new MenuState(this, _graphics.GraphicsDevice, Content);
             currentState = menuState;

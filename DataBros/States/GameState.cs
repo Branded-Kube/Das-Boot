@@ -20,14 +20,9 @@ namespace DataBros.States
         private List<Component> addComponents;
         private List<Component> delComponents;
 
-
-
-
         //Upgrade menu
         private bool playGame = false;
         private bool pickWater = true;
-
-
 
         private Texture2D upgradeMenuTexture;
         private Rectangle upgradeMenuRectangle;
@@ -36,10 +31,14 @@ namespace DataBros.States
         private Texture2D upgrade2;
         private Texture2D player1;
         private Texture2D player2;
+        private Texture2D p1Aim;
+        private Texture2D p2Aim;
         private Vector2 p1origin;
         private Vector2 p2origin;
-        private Vector2 p1position;
-        private Vector2 p2position;
+        private Vector2 p1position = new Vector2(700, 900);
+        private Vector2 p2position = new Vector2(100, 900);
+        private Vector2 p1AimPosition = new Vector2(700, 500);
+        private Vector2 p2AimPosition = new Vector2(100, 500);
         private Rectangle upgRectangle;
         private Rectangle upg2Rectangle;
         Texture2D buttonTexture;
@@ -54,6 +53,9 @@ namespace DataBros.States
         public Water currentWater;
         System.Timers.Timer aTimer;
         bool alreadyFishing = false;
+
+        private KeyboardState oldState;
+        private KeyboardState newState;
 
         #endregion
 
@@ -70,10 +72,9 @@ namespace DataBros.States
             GameWorld.visualManager.cellCount = currentWater.Size;
             GameWorld.visualManager.CreateGrid();
 
-
+            LoadContent();
             //Button
-            buttonTexture = _content.Load<Texture2D>("button");
-            buttonFont = _content.Load<SpriteFont>("Fonts/font");
+            
             pickWaterButton = new Button(buttonTexture, buttonFont)
             {
                 Position = new Vector2(5, 10),
@@ -139,6 +140,21 @@ namespace DataBros.States
 
 
         #endregion
+        public void LoadContent()
+        {
+            player1 = _content.Load<Texture2D>("pl1");
+            p1origin = new Vector2(500, 300);
+            player2 = _content.Load<Texture2D>("pl2");
+            p2origin = new Vector2(300, 300);
+
+            p1Aim = _content.Load<Texture2D>("p1aimsprite");
+            p2Aim = _content.Load<Texture2D>("p2aimsprite");
+
+
+            buttonTexture = _content.Load<Texture2D>("button");
+            buttonFont = _content.Load<SpriteFont>("Fonts/font");
+
+        }
 
         public override void Draw(GameTime gameTime, SpriteBatch spriteBatch)
         {
@@ -147,6 +163,16 @@ namespace DataBros.States
             spriteBatch.Draw(backgroundTexture, backgroundRectangle, Color.White);
 
             GameWorld.visualManager.Draw(spriteBatch);
+
+            //spriteBatch.Draw(player1, new Vector2(200, 100), new Rectangle(100,100,100,100), Color.White, 0f, p1origin, 1, SpriteEffects.None, 0);
+            //spriteBatch.Draw(player2, new Vector2(500, 200), Rectangle.Empty, Color.White, 0f, p2origin, Vector2.Zero, SpriteEffects.None, 1);
+
+            spriteBatch.Draw(player1, p1position, Color.White);
+            spriteBatch.Draw(player2, p2position, Color.White);
+            spriteBatch.Draw(p1Aim, p1AimPosition, Color.White);
+            spriteBatch.Draw(p2Aim, p2AimPosition, Color.White);
+
+
 
             //Button
             foreach (var component in components)
@@ -158,8 +184,7 @@ namespace DataBros.States
                 spriteBatch.Draw(upgradeMenuTexture, upgradeMenuRectangle, Color.White);
                 spriteBatch.Draw(upgrade1, upgRectangle, Color.White);
                 spriteBatch.Draw(upgrade2, upg2Rectangle, Color.White);
-                spriteBatch.Draw(player1, p1position, Rectangle.Empty, Color.White, 0f, p1origin, Vector2.Zero, SpriteEffects.None, 0);
-                spriteBatch.Draw(player2, p2position, Rectangle.Empty, Color.White, 0f, p2origin, Vector2.Zero, SpriteEffects.None, 0);
+                
 
                 if (Keyboard.GetState().IsKeyDown(Keys.U))
                 {
@@ -167,18 +192,11 @@ namespace DataBros.States
                 }
             }
 
+            
 
             spriteBatch.End();
         }
 
-        public void LoadContent()
-        {
-            var player1 = _content.Load<Texture2D>("player1");
-            p1origin = new Vector2(500, 300);
-            var player2 = _content.Load<SpriteFont>("player2");
-            p2origin = new Vector2(300, 300);
-
-        }
 
         private void PickWaterButton_Click(object sender, EventArgs e)
         {
@@ -352,20 +370,52 @@ namespace DataBros.States
                 component.Update(gameTime);
             }
 
-
-
-            //player movement
-            if (Keyboard.GetState().IsKeyDown(Keys.Right))
+            oldState = newState;
+            newState = Keyboard.GetState();
+            //player 1 movement
+            if (newState.IsKeyDown(Keys.Right) && oldState.IsKeyUp(Keys.Right) && p1position.X <= 900)
             {
-                p1position.X += 1;
+                p1position.X += 100;
+                p1AimPosition.X += 100;
+            }
+            if (Keyboard.GetState().IsKeyDown(Keys.Left) && oldState.IsKeyUp(Keys.Left) && p1position.X  >= 100)
+            {
+                p1position.X -= 100;
+                p1AimPosition.X -= 100;
             }
 
-            if (Keyboard.GetState().IsKeyDown(Keys.Left))
+            if (Keyboard.GetState().IsKeyDown(Keys.Up) && oldState.IsKeyUp(Keys.Up) && p1AimPosition.Y >= 100)
             {
-                p1position.X -= 1;
+                p1AimPosition.Y -= 100;
+            }
+            if (Keyboard.GetState().IsKeyDown(Keys.Down) && oldState.IsKeyUp(Keys.Down) && p1AimPosition.Y <= 600)
+            {
+                p1AimPosition.Y += 100;
+            }
+
+            //player 2 movement
+            if (newState.IsKeyDown(Keys.D) && oldState.IsKeyUp(Keys.D) && p2position.X <= 900)
+            {
+                p2position.X += 100;
+                p2AimPosition.X += 100;
+            }
+            if (Keyboard.GetState().IsKeyDown(Keys.A) && oldState.IsKeyUp(Keys.A) && p2position.X >= 100)
+            {
+                p2position.X -= 100;
+                p2AimPosition.X -= 100;
+            }
+
+            if (Keyboard.GetState().IsKeyDown(Keys.W) && oldState.IsKeyUp(Keys.W) && p2AimPosition.Y >= 100)
+            {
+                p2AimPosition.Y -= 100;
+            }
+            if (Keyboard.GetState().IsKeyDown(Keys.S) && oldState.IsKeyUp(Keys.S) && p2AimPosition.Y <= 600)
+            {
+                p2AimPosition.Y += 100;
             }
 
         }
+
 
         #endregion
     }
