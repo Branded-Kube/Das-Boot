@@ -25,6 +25,8 @@ namespace DataBros
 
         private static State nextState;
 
+        
+
         public void ChangeState(State state)
         {
             nextState = state;
