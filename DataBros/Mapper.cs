@@ -66,6 +66,20 @@ namespace DataBros
             }
             return result1;
         }
+        public List<Player> MapPlayerFromReader(IDataReader reader)
+        {
+            var result1 = new List<Player>();
+            while (reader.Read())
+            {
+                var id = reader.GetInt32(0);
+                var name = reader.GetString(3);
+                var money = reader.GetInt32(2);
+                var password = reader.GetString(1);
+
+                result1.Add(new Player() { Id = id, Name = name, Money = money, Password = password });
+            }
+            return result1;
+        }
 
         public List<Fish> MapFishFromReader(IDataReader reader)
         {

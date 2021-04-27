@@ -27,7 +27,7 @@ namespace DataBros
             cmd = new SQLiteCommand($"CREATE TABLE IF NOT EXISTS characters (ID INTEGER PRIMARY KEY, Name VARCHAR(50), Experience INTEGER, UNIQUE(Name));", (SQLiteConnection)connection);
             cmd.ExecuteNonQuery();
 
-            cmd = new SQLiteCommand($"CREATE TABLE IF NOT EXISTS Players (PlayerID INTEGER PRIMARY KEY, Name VARCHAR(50), Money INTEGER, Strengt INTEGER, UNIQUE(Name));", (SQLiteConnection)connection);
+            cmd = new SQLiteCommand($"CREATE TABLE IF NOT EXISTS Player (PlayerID INTEGER PRIMARY KEY, Name VARCHAR(50), Money INTEGER, Password VARCHAR(50), UNIQUE(Name));", (SQLiteConnection)connection);
             cmd.ExecuteNonQuery();
             
             cmd = new SQLiteCommand($"CREATE TABLE IF NOT EXISTS Fish (FishID INTEGER PRIMARY KEY, Name VARCHAR(50), BiteTime INTEGER, Strengt INTEGER, Weight INTEGER, Price INTEGER, WaterFK INTEGER, FOREIGN KEY (WaterFK) REFERENCES Water(WaterID), UNIQUE(Name));", (SQLiteConnection)connection);
@@ -83,6 +83,21 @@ namespace DataBros
             cmd.ExecuteNonQuery();
         }
 
+        public void AddPlayer(string name, int money, string password)
+        {
+            var cmd = new SQLiteCommand($"INSERT OR IGNORE INTO Player (Name, Money, Password ) VALUES ('{name}', {money}, '{password}')", (SQLiteConnection)connection);
+            cmd.ExecuteNonQuery();
+        }
+
+        public Player FindPlayer(string name)
+        {
+
+            var cmd = new SQLiteCommand($"SELECT * from Player WHERE name = '{name}'", (SQLiteConnection)connection);
+            var reader = cmd.ExecuteReader();
+
+            var result = mapper.MapPlayerFromReader(reader).First();
+            return result;
+        }
 
         public List<Fish> FindAFish(int waterId)
         {

@@ -6,24 +6,45 @@ using System.Data.SQLite;
 using System.Diagnostics;
 using DataBros.States;
 using Microsoft.Xna.Framework.Content;
+using System;
 
 namespace DataBros
 {
     public class GameWorld : Game
     {
+        private static GameWorld instance;
+
+        public static GameWorld Instance
+        {
+            get
+            {
+                if (instance == null)
+                {
+                    instance = new GameWorld();
+                }
+                return instance;
+            }
+        }
+
+
         public static GraphicsDeviceManager _graphics;
 
         private SpriteBatch _spriteBatch;
 
         public static SpriteFont font;
-        public static Texture2D player1;
-        public static Texture2D player2;
+        public static Texture2D player1Sprite;
+        public static Texture2D player2Sprite;
+        public static Player player1;
+        public static Player player2;
         public static Bait currentBait;
         
         //states
         public static State currentState;
+        public static MenuState menuState;
+
 
         private static State nextState;
+        //UserLogin userLogin;
 
         public void ChangeState(State state)
         {
@@ -40,7 +61,7 @@ namespace DataBros
         private int sizeY = 1100;
 
         public static Repository repo;
-        
+
 
 
         public GameWorld()
@@ -50,6 +71,7 @@ namespace DataBros
             content = Content;
             IsMouseVisible = true;
 
+
             // Database
             var mapper = new Mapper();
             var provider = new SQLiteDatabaseProvider("Data Source=adventurer.db;Version=3;new=true");
@@ -57,6 +79,9 @@ namespace DataBros
             List<Character> result;
             repo = new Repository(provider, mapper);
             repo.Open();
+
+            //repo.AddPlayer("Player1", 100, "Pass1");
+            //repo.AddPlayer("Player2", 10, "Pass2");
 
             repo.AddCharacter("Jon Snow", 2983);
             repo.AddCharacter("Kurt", 2344);
@@ -74,14 +99,14 @@ namespace DataBros
             result = repo.GetAllCharacters();
             foreach (var character in result)
             {
-                Debug.WriteLine($"Id {character.Id} Name {character.Name} XP {character.Experience}");
+               Debug.WriteLine($"Id {character.Id} Name {character.Name} XP {character.Experience}");
                 
             }
 
             
 
             var anotherCharacter = repo.FindCharacter("Jon Snow");
-            Debug.WriteLine($"Id {anotherCharacter.Id} Name {anotherCharacter.Name} XP {anotherCharacter.Experience}");
+            //Debug.WriteLine($"Id {anotherCharacter.Id} Name {anotherCharacter.Name} XP {anotherCharacter.Experience}");
 
             repo.Close();
             //
@@ -112,18 +137,29 @@ namespace DataBros
 
         protected override void Initialize()
         {
+
             // Sets window size
             _graphics.PreferredBackBufferWidth = 900;
             _graphics.PreferredBackBufferHeight = 1000;
 
             visualManager = new VisualManager(_spriteBatch, new Rectangle(-566, 0, sizeX, sizeY));
 
+            _graphics.ApplyChanges();
+            base.Initialize();
+
+        }
+
+        public void AddUserLogin()
+        {
             Window.TextInput += UserLogin.UsernameInput;
 
             Window.TextInput += UserLogin.PasswordInput;
+        }
+        public void RemoveUserLogin()
+        {
+            Window.TextInput -= UserLogin.UsernameInput;
 
-            _graphics.ApplyChanges();
-            base.Initialize();
+            Window.TextInput -= UserLogin.PasswordInput;
         }
 
         protected override void LoadContent()
@@ -135,11 +171,13 @@ namespace DataBros
             //Game
             font = Content.Load<SpriteFont>("Fonts/font");
             visualManager.LoadContent(Content);
-            
+
 
 
             //Main Menu
-            currentState = new MenuState(this, _graphics.GraphicsDevice, Content);
+            menuState = new MenuState(this, _graphics.GraphicsDevice, Content);
+            currentState = menuState;
+            
         }
         protected override void UnloadContent()
         {
@@ -149,8 +187,7 @@ namespace DataBros
         {
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
                 Exit();
-            if (Keyboard.GetState().IsKeyDown(Keys.Enter))
-                CatchAFish();
+         
             if (nextState != null)
             {
                 currentState = nextState;
@@ -164,12 +201,6 @@ namespace DataBros
 
 
             base.Update(gameTime);
-        }
-
-    public void CatchAFish()
-        {
-
-
         }
 
 

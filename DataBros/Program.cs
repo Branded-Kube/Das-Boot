@@ -17,7 +17,7 @@ namespace DataBros
     //            game.Run();
     //    }
     //}
-    static class Program
+   public static class Program
     {
         /// <summary>
         /// The main entry point for the application.
@@ -47,7 +47,7 @@ namespace DataBros
             //Application.Run(view2);
 
 
-            using (var game = new GameWorld())
+            using (var game = GameWorld.Instance)
                 game.Run();
         }
     }

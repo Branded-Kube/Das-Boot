@@ -120,10 +120,13 @@ namespace DataBros.States
 
         private void CreateNewUserButton_Click(object sender, EventArgs e)
         {
+
+            GameWorld.Instance.AddUserLogin();
             if (isCreatingUser == false)
             {
                 isCreatingUser = true;
             }
+
         }
 
         private void UserLoginButton_Click(object sender, EventArgs e)
