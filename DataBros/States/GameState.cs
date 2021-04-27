@@ -366,7 +366,7 @@ namespace DataBros.States
                 component.Update(gameTime);
             }
 
-
+            oldState = newState;
             newState = Keyboard.GetState();
             //player 1 movement
             if (newState.IsKeyDown(Keys.Right) && oldState.IsKeyUp(Keys.Right) && p1position.X <= 900)
@@ -374,17 +374,17 @@ namespace DataBros.States
                 p1position.X += 100;
                 p1AimPosition.X += 100;
             }
-            if (Keyboard.GetState().IsKeyDown(Keys.Left) && p1position.X  >= 100)
+            if (Keyboard.GetState().IsKeyDown(Keys.Left) && oldState.IsKeyUp(Keys.Left) && p1position.X  >= 100)
             {
                 p1position.X -= 100;
                 p1AimPosition.X -= 100;
             }
 
-            if (Keyboard.GetState().IsKeyDown(Keys.Up) && p1AimPosition.Y >= 100)
+            if (Keyboard.GetState().IsKeyDown(Keys.Up) && oldState.IsKeyUp(Keys.Up) && p1AimPosition.Y >= 100)
             {
                 p1AimPosition.Y -= 100;
             }
-            if (Keyboard.GetState().IsKeyDown(Keys.Down) && p1AimPosition.Y <= 600)
+            if (Keyboard.GetState().IsKeyDown(Keys.Down) && oldState.IsKeyUp(Keys.Down) && p1AimPosition.Y <= 600)
             {
                 p1AimPosition.Y += 100;
             }
@@ -395,17 +395,17 @@ namespace DataBros.States
                 p2position.X += 100;
                 p2AimPosition.X += 100;
             }
-            if (Keyboard.GetState().IsKeyDown(Keys.A) && p2position.X >= 100)
+            if (Keyboard.GetState().IsKeyDown(Keys.A) && oldState.IsKeyUp(Keys.A) && p2position.X >= 100)
             {
                 p2position.X -= 100;
                 p2AimPosition.X -= 100;
             }
 
-            if (Keyboard.GetState().IsKeyDown(Keys.W) && p2AimPosition.Y >= 100)
+            if (Keyboard.GetState().IsKeyDown(Keys.W) && oldState.IsKeyUp(Keys.W) && p2AimPosition.Y >= 100)
             {
                 p2AimPosition.Y -= 100;
             }
-            if (Keyboard.GetState().IsKeyDown(Keys.S) && p2AimPosition.Y <= 600)
+            if (Keyboard.GetState().IsKeyDown(Keys.S) && oldState.IsKeyUp(Keys.S) && p2AimPosition.Y <= 600)
             {
                 p2AimPosition.Y += 100;
             }
