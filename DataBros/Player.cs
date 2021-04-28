@@ -91,7 +91,7 @@ namespace DataBros
             //player 1 movement
             if (alreadyFishing == false)
             {
-                if (newState.IsKeyDown(Keys.Right) && oldState.IsKeyUp(Keys.Right) && p1position.X <= 900)
+                if (newState.IsKeyDown(Keys.Right) && oldState.IsKeyUp(Keys.Right) && p1position.X <= 700)
                 {
                     p1position.X += 100;
                     p1AimPosition.X += 100;
@@ -119,7 +119,7 @@ namespace DataBros
             if (alreadyFishing == false)
             {
                 //player 2 movement
-                if (newState.IsKeyDown(Keys.D) && oldState.IsKeyUp(Keys.D) && p2position.X <= 900)
+                if (newState.IsKeyDown(Keys.D) && oldState.IsKeyUp(Keys.D) && p2position.X <= 700)
                 {
                     p2position.X += 100;
                     p2AimPosition.X += 100;
