@@ -74,8 +74,8 @@ namespace DataBros
             content = Content;
             IsMouseVisible = true;
 
-            //player1 = new Player();
-            //player2 = new Player();
+            player1 = new Player(true);
+            player2 = new Player(false);
 
             // Database
             var mapper = new Mapper();
@@ -217,10 +217,11 @@ namespace DataBros
 
             currentState.PostUpdate(gameTime);
 
-           // if (player1 != null)
-           // {
-           //     player1.Update();
-           // }
+           
+            player1.Update();
+            
+            player2.Update();
+
 
             base.Update(gameTime);
         }
@@ -241,6 +242,7 @@ namespace DataBros
 
 
 
+            
 
 
             base.Draw(gameTime);
