@@ -41,6 +41,7 @@ namespace DataBros
         //states
         public static State currentState;
         public static MenuState menuState;
+        public static GameState gameState;
 
 
         private static State nextState;
@@ -189,6 +190,7 @@ namespace DataBros
             //Game
             font = Content.Load<SpriteFont>("Fonts/font");
             visualManager.LoadContent(Content);
+            gameState = new GameState(this, _graphics.GraphicsDevice, Content);
             
             //Main Menu
             menuState = new MenuState(this, _graphics.GraphicsDevice, Content);
@@ -215,6 +217,10 @@ namespace DataBros
 
             currentState.PostUpdate(gameTime);
 
+            if (player1 != null)
+            {
+                player1.Update();
+            }
 
             base.Update(gameTime);
         }

@@ -50,6 +50,8 @@ namespace DataBros.States
         Button FishButton;
         public Water stream;
 
+        private int pullCount = 0;
+
         public Water currentWater;
         System.Timers.Timer aTimer;
         bool alreadyFishing = false;
@@ -171,7 +173,7 @@ namespace DataBros.States
             spriteBatch.Draw(player2, p2position, Color.White);
             spriteBatch.Draw(p1Aim, p1AimPosition, Color.White);
             spriteBatch.Draw(p2Aim, p2AimPosition, Color.White);
-
+            spriteBatch.DrawString(buttonFont, $"ammount of pulls left: {pullCount}", new Vector2(10, 300), Color.Green);
 
 
             //Button
@@ -191,8 +193,6 @@ namespace DataBros.States
                     //Upgrade fishing pole or bait
                 }
             }
-
-            
 
             spriteBatch.End();
         }
@@ -217,7 +217,6 @@ namespace DataBros.States
             }
             pickWater = false;
 
-
         }
 
         private void FishButton_Click(object sender, EventArgs e)
@@ -230,6 +229,22 @@ namespace DataBros.States
                 //aTimer.Interval = 5000 ;
                 aTimer.Interval = 3000 * GameWorld.currentBait.BiteTime;
                  aTimer.Enabled = true;
+                alreadyFishing = true;
+            }
+        }
+
+        public void FishingKey()
+        {
+            if (alreadyFishing == false)
+            {
+                Random rnd = new Random();
+                pullCount = rnd.Next(10, 20);
+
+                aTimer = new System.Timers.Timer();
+                aTimer.Elapsed += new ElapsedEventHandler(OnTimedEvent);
+                //aTimer.Interval = 5000 ;
+                aTimer.Interval = 3000 * GameWorld.currentBait.BiteTime;
+                aTimer.Enabled = true;
                 alreadyFishing = true;
             }
         }
@@ -370,49 +385,65 @@ namespace DataBros.States
                 component.Update(gameTime);
             }
 
-            oldState = newState;
-            newState = Keyboard.GetState();
-            //player 1 movement
-            if (newState.IsKeyDown(Keys.Right) && oldState.IsKeyUp(Keys.Right) && p1position.X <= 900)
-            {
-                p1position.X += 100;
-                p1AimPosition.X += 100;
-            }
-            if (Keyboard.GetState().IsKeyDown(Keys.Left) && oldState.IsKeyUp(Keys.Left) && p1position.X  >= 100)
-            {
-                p1position.X -= 100;
-                p1AimPosition.X -= 100;
-            }
-
-            if (Keyboard.GetState().IsKeyDown(Keys.Up) && oldState.IsKeyUp(Keys.Up) && p1AimPosition.Y >= 100)
-            {
-                p1AimPosition.Y -= 100;
-            }
-            if (Keyboard.GetState().IsKeyDown(Keys.Down) && oldState.IsKeyUp(Keys.Down) && p1AimPosition.Y <= 600)
-            {
-                p1AimPosition.Y += 100;
-            }
-
-            //player 2 movement
-            if (newState.IsKeyDown(Keys.D) && oldState.IsKeyUp(Keys.D) && p2position.X <= 900)
-            {
-                p2position.X += 100;
-                p2AimPosition.X += 100;
-            }
-            if (Keyboard.GetState().IsKeyDown(Keys.A) && oldState.IsKeyUp(Keys.A) && p2position.X >= 100)
-            {
-                p2position.X -= 100;
-                p2AimPosition.X -= 100;
-            }
-
-            if (Keyboard.GetState().IsKeyDown(Keys.W) && oldState.IsKeyUp(Keys.W) && p2AimPosition.Y >= 100)
-            {
-                p2AimPosition.Y -= 100;
-            }
-            if (Keyboard.GetState().IsKeyDown(Keys.S) && oldState.IsKeyUp(Keys.S) && p2AimPosition.Y <= 600)
-            {
-                p2AimPosition.Y += 100;
-            }
+           // oldState = newState;
+           // newState = Keyboard.GetState();
+           // //player 1 movement
+           // if (alreadyFishing == false)
+           // {
+           //     if (newState.IsKeyDown(Keys.Right) && oldState.IsKeyUp(Keys.Right) && p1position.X <= 900)
+           //     {
+           //         p1position.X += 100;
+           //         p1AimPosition.X += 100;
+           //     }
+           //     if (Keyboard.GetState().IsKeyDown(Keys.Left) && oldState.IsKeyUp(Keys.Left) && p1position.X >= 100)
+           //     {
+           //         p1position.X -= 100;
+           //         p1AimPosition.X -= 100;
+           //     }
+           //
+           //     if (Keyboard.GetState().IsKeyDown(Keys.Up) && oldState.IsKeyUp(Keys.Up) && p1AimPosition.Y >= 100)
+           //     {
+           //         p1AimPosition.Y -= 100;
+           //     }
+           //     if (Keyboard.GetState().IsKeyDown(Keys.Down) && oldState.IsKeyUp(Keys.Down) && p1AimPosition.Y <= 600)
+           //     {
+           //         p1AimPosition.Y += 100;
+           //     }
+           //     if (Keyboard.GetState().IsKeyDown(Keys.Enter) && oldState.IsKeyUp(Keys.Enter))
+           //     {
+           //         FishingKey();
+           //     }
+           // }
+           //
+           // if (alreadyFishing == false)
+           // {
+           //     //player 2 movement
+           //     if (newState.IsKeyDown(Keys.D) && oldState.IsKeyUp(Keys.D) && p2position.X <= 900)
+           //     {
+           //         p2position.X += 100;
+           //         p2AimPosition.X += 100;
+           //     }
+           //     if (Keyboard.GetState().IsKeyDown(Keys.A) && oldState.IsKeyUp(Keys.A) && p2position.X >= 100)
+           //     {
+           //         p2position.X -= 100;
+           //         p2AimPosition.X -= 100;
+           //     }
+           //
+           //     if (Keyboard.GetState().IsKeyDown(Keys.W) && oldState.IsKeyUp(Keys.W) && p2AimPosition.Y >= 100)
+           //     {
+           //         p2AimPosition.Y -= 100;
+           //     }
+           //     if (Keyboard.GetState().IsKeyDown(Keys.S) && oldState.IsKeyUp(Keys.S) && p2AimPosition.Y <= 600)
+           //     {
+           //         p2AimPosition.Y += 100;
+           //     }
+           //
+           //     if (Keyboard.GetState().IsKeyDown(Keys.Space) && oldState.IsKeyUp(Keys.Space))
+           //     {
+           //         FishingKey();
+           //     }
+           // }
+            
 
         }
 
