@@ -33,8 +33,6 @@ namespace DataBros
         private Vector2 p2AimPosition = new Vector2(100, 500);
         private bool isplayer1;
 
-        System.Timers.Timer aTimer;
-
         bool alreadyFishing = false;
 
         private KeyboardState oldState;
@@ -103,7 +101,7 @@ namespace DataBros
                     p1position.X -= 100;
                     p1AimPosition.X -= 100;
                 }
-
+       
                 if (Keyboard.GetState().IsKeyDown(Keys.Up) && oldState.IsKeyUp(Keys.Up) && p1AimPosition.Y >= 100)
                 {
                     p1AimPosition.Y -= 100;
@@ -117,7 +115,7 @@ namespace DataBros
                     GameWorld.gameState.FishingKey();
                 }
             }
-
+       
             if (alreadyFishing == false)
             {
                 //player 2 movement
@@ -131,7 +129,7 @@ namespace DataBros
                     p2position.X -= 100;
                     p2AimPosition.X -= 100;
                 }
-
+       
                 if (Keyboard.GetState().IsKeyDown(Keys.W) && oldState.IsKeyUp(Keys.W) && p2AimPosition.Y >= 100)
                 {
                     p2AimPosition.Y -= 100;
@@ -140,7 +138,7 @@ namespace DataBros
                 {
                     p2AimPosition.Y += 100;
                 }
-
+       
                 if (Keyboard.GetState().IsKeyDown(Keys.Space) && oldState.IsKeyUp(Keys.Space))
                 {
                     GameWorld.gameState.FishingKey();
