@@ -19,7 +19,7 @@ namespace DataBros
 
         void AddPlayer(string name, int money, string password);
 
-        
+        void DelPlayers();
         void AddBait(string name, int price, int biteTime);
         Bait FindBait(string name);
         List<Bait> GetAllBait();

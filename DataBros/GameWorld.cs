@@ -34,8 +34,8 @@ namespace DataBros
         public static SpriteFont font;
         public static Texture2D player1Sprite;
         public static Texture2D player2Sprite;
-        public static Player player1;
-        public static Player player2;
+        public Player player1;
+        public Player player2;
         public static Bait currentBait;
         
         //states
@@ -73,6 +73,8 @@ namespace DataBros
             content = Content;
             IsMouseVisible = true;
 
+            //player1 = new Player();
+            //player2 = new Player();
 
             // Database
             var mapper = new Mapper();
@@ -151,6 +153,7 @@ namespace DataBros
 
         }
 
+
         public void AddUserLogin()
         {
             Window.TextInput += UserLogin.UsernameInput;
@@ -162,6 +165,19 @@ namespace DataBros
             Window.TextInput -= UserLogin.UsernameInput;
 
             Window.TextInput -= UserLogin.PasswordInput;
+        }
+
+        public void AddCreateUserLogin()
+        {
+            Window.TextInput += UserLogin.CreateUsernameInput;
+
+            Window.TextInput += UserLogin.CreatePasswordInput;
+        }
+        public void RemoveCreateUserLogin()
+        {
+            Window.TextInput -= UserLogin.CreateUsernameInput;
+
+            Window.TextInput -= UserLogin.CreatePasswordInput;
         }
 
         protected override void LoadContent()

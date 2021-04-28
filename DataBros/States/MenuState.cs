@@ -62,7 +62,15 @@ namespace DataBros.States
             };
 
             CreateUserButton.Click += CreateNewUserButton_Click;
+            
+            var DeleteUserButton = new Button(buttonTexture, buttonFont)
+            {
+                Position = new Vector2(700, 380),
+                Text = "Delete All users",
 
+            };
+
+            DeleteUserButton.Click += DeleteUserButton_Click;
 
             var UserLoginButton = new Button(buttonTexture, buttonFont)
             {
@@ -76,11 +84,20 @@ namespace DataBros.States
 
             components = new List<Component>()
             {
+                DeleteUserButton,
                 startGameButton,
                 quitGameButton,
                 CreateUserButton,
                 UserLoginButton,
             };
+        }
+
+        private void DeleteUserButton_Click(object sender, EventArgs e)
+        {
+            GameWorld.repo.Open();
+           GameWorld.repo.DelPlayers();
+            GameWorld.repo.Close();
+
         }
 
         #endregion
@@ -102,6 +119,14 @@ namespace DataBros.States
                 spriteBatch.DrawString(GameWorld.font, UserLogin.PasswordInputString, new Vector2((GameWorld._graphics.PreferredBackBufferWidth / 2) - 100, 850), Color.Black, 0.0f, Vector2.Zero, 2.0f, SpriteEffects.None, 0.0f);
             }
 
+            if (GameWorld.Instance.player1 != null)
+            {
+                spriteBatch.DrawString(GameWorld.font, $"Player 1: {GameWorld.Instance.player1.Name}", new Vector2((GameWorld._graphics.PreferredBackBufferWidth / 2) + 200, 900), Color.Black, 0.0f, Vector2.Zero, 2.0f, SpriteEffects.None, 0.0f);
+            }
+            if (GameWorld.Instance.player2 != null)
+            {
+                spriteBatch.DrawString(GameWorld.font, $"Player 2: {GameWorld.Instance.player2.Name}", new Vector2((GameWorld._graphics.PreferredBackBufferWidth / 2) - 400, 900), Color.Black, 0.0f, Vector2.Zero, 2.0f, SpriteEffects.None, 0.0f);
+            }
             spriteBatch.End();
         }
 
@@ -119,7 +144,7 @@ namespace DataBros.States
         private void CreateNewUserButton_Click(object sender, EventArgs e)
         {
 
-            GameWorld.Instance.AddUserLogin();
+            GameWorld.Instance.AddCreateUserLogin();
             if (isCreatingUser == false)
             {
                 isCreatingUser = true;
@@ -129,7 +154,11 @@ namespace DataBros.States
 
         private void UserLoginButton_Click(object sender, EventArgs e)
         {
-
+            GameWorld.Instance.AddUserLogin();
+            if (isCreatingUser == false)
+            {
+                isCreatingUser = true;
+            }
         }
 
         public override void PostUpdate(GameTime gameTime)

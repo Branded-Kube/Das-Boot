@@ -8,10 +8,14 @@ namespace DataBros
     {
         public int Id { get; set; }
 
-        public string Name { get; set; }
+        public string Name { get { return name; }   set { name = value; } }
+        private string name = "Username";
+
+        //public string Name { get; set; }
 
         public int Money { get; set; }
         public string Password { get; set; }
+
 
 
 

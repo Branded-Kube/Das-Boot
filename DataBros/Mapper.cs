@@ -72,9 +72,9 @@ namespace DataBros
             while (reader.Read())
             {
                 var id = reader.GetInt32(0);
-                var name = reader.GetString(3);
+                var name = reader.GetString(1);
                 var money = reader.GetInt32(2);
-                var password = reader.GetString(1);
+                var password = reader.GetString(3);
 
                 result1.Add(new Player() { Id = id, Name = name, Money = money, Password = password });
             }

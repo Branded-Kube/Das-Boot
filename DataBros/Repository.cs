@@ -83,7 +83,12 @@ namespace DataBros
 
         public void AddPlayer(string name, int money, string password)
         {
-            var cmd = new SQLiteCommand($"INSERT OR IGNORE INTO Player (Name, Money, Password ) VALUES ('{name}', {money}, '{password}')", (SQLiteConnection)connection);
+            var cmd = new SQLiteCommand($"INSERT OR IGNORE INTO Player (Name, Money, Password) VALUES ('{name}',{money},'{password}')", (SQLiteConnection)connection);
+            cmd.ExecuteNonQuery();
+        }
+        public void DelPlayers()
+        {
+            var cmd = new SQLiteCommand($"DELETE FROM Player", (SQLiteConnection)connection);
             cmd.ExecuteNonQuery();
         }
 
