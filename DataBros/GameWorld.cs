@@ -217,10 +217,10 @@ namespace DataBros
 
             currentState.PostUpdate(gameTime);
 
-            if (player1 != null)
-            {
-                player1.Update();
-            }
+           // if (player1 != null)
+           // {
+           //     player1.Update();
+           // }
 
             base.Update(gameTime);
         }

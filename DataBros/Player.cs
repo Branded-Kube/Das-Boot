@@ -1,8 +1,8 @@
-﻿using Microsoft.Xna.Framework.Graphics;
+﻿using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using System;
 using System.Collections.Generic;
-using System.Numerics;
 using System.Text;
 using System.Timers;
 
@@ -20,18 +20,6 @@ namespace DataBros
         public int Money { get; set; }
         public string Password { get; set; }
 
-        private Texture2D player1;
-        private Texture2D player2;
-        private Texture2D p1Aim;
-        private Texture2D p2Aim;
-        private Vector2 p1origin;
-        private Vector2 p2origin;
-        private Vector2 p1position = new Vector2(700, 900);
-        private Vector2 p2position = new Vector2(100, 900);
-        private Vector2 p1AimPosition = new Vector2(700, 500);
-        private Vector2 p2AimPosition = new Vector2(100, 500);
-
-        System.Timers.Timer aTimer;
 
         bool alreadyFishing = false;
 
@@ -40,8 +28,13 @@ namespace DataBros
 
         private int pullCount = 0;
 
+        public Vector2 p1position = GameWorld.Instance.player1.p1position;
+        public Vector2 p2position = GameWorld.Instance.player2.p2position;
+        public Vector2 p1AimPosition = GameWorld.Instance.player1.p1AimPosition;
+        public Vector2 p2AimPosition = GameWorld.Instance.player2.p2AimPosition;
 
-        
+
+
 
         public void Update()
         {
@@ -61,7 +54,7 @@ namespace DataBros
                     p1position.X -= 100;
                     p1AimPosition.X -= 100;
                 }
-
+       
                 if (Keyboard.GetState().IsKeyDown(Keys.Up) && oldState.IsKeyUp(Keys.Up) && p1AimPosition.Y >= 100)
                 {
                     p1AimPosition.Y -= 100;
@@ -75,7 +68,7 @@ namespace DataBros
                     GameWorld.gameState.FishingKey();
                 }
             }
-
+       
             if (alreadyFishing == false)
             {
                 //player 2 movement
@@ -89,7 +82,7 @@ namespace DataBros
                     p2position.X -= 100;
                     p2AimPosition.X -= 100;
                 }
-
+       
                 if (Keyboard.GetState().IsKeyDown(Keys.W) && oldState.IsKeyUp(Keys.W) && p2AimPosition.Y >= 100)
                 {
                     p2AimPosition.Y -= 100;
@@ -98,7 +91,7 @@ namespace DataBros
                 {
                     p2AimPosition.Y += 100;
                 }
-
+       
                 if (Keyboard.GetState().IsKeyDown(Keys.Space) && oldState.IsKeyUp(Keys.Space))
                 {
                     GameWorld.gameState.FishingKey();

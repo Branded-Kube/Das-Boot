@@ -33,12 +33,10 @@ namespace DataBros.States
         private Texture2D player2;
         private Texture2D p1Aim;
         private Texture2D p2Aim;
-        private Vector2 p1origin;
-        private Vector2 p2origin;
-        private Vector2 p1position = new Vector2(700, 900);
-        private Vector2 p2position = new Vector2(100, 900);
-        private Vector2 p1AimPosition = new Vector2(700, 500);
-        private Vector2 p2AimPosition = new Vector2(100, 500);
+        public Vector2 p1position = new Vector2(700, 900);
+        public Vector2 p2position = new Vector2(100, 900);
+        public Vector2 p1AimPosition = new Vector2(700, 500);
+        public Vector2 p2AimPosition = new Vector2(100, 500);
         private Rectangle upgRectangle;
         private Rectangle upg2Rectangle;
         Texture2D buttonTexture;
@@ -145,9 +143,7 @@ namespace DataBros.States
         public void LoadContent()
         {
             player1 = _content.Load<Texture2D>("pl1");
-            p1origin = new Vector2(500, 300);
             player2 = _content.Load<Texture2D>("pl2");
-            p2origin = new Vector2(300, 300);
 
             p1Aim = _content.Load<Texture2D>("p1aimsprite");
             p2Aim = _content.Load<Texture2D>("p2aimsprite");
@@ -165,9 +161,6 @@ namespace DataBros.States
             spriteBatch.Draw(backgroundTexture, backgroundRectangle, Color.White);
 
             GameWorld.visualManager.Draw(spriteBatch);
-
-            //spriteBatch.Draw(player1, new Vector2(200, 100), new Rectangle(100,100,100,100), Color.White, 0f, p1origin, 1, SpriteEffects.None, 0);
-            //spriteBatch.Draw(player2, new Vector2(500, 200), Rectangle.Empty, Color.White, 0f, p2origin, Vector2.Zero, SpriteEffects.None, 1);
 
             spriteBatch.Draw(player1, p1position, Color.White);
             spriteBatch.Draw(player2, p2position, Color.White);
