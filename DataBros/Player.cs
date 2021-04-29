@@ -29,7 +29,6 @@ namespace DataBros
         private Texture2D p1Aim;
         private Texture2D p2Aim;
         private Texture2D fishTexture;
-        private Texture2D bootTexture;
         private bool fishVisible;
         private Vector2 p1origin;
         private Vector2 p2origin;
@@ -60,7 +59,6 @@ namespace DataBros
                 player1Sprite = GameWorld.content.Load<Texture2D>("pl1");
                 p1origin = new Vector2(500, 300);
                 p1Aim = GameWorld.content.Load<Texture2D>("p1aimsprite");
-                bootTexture = GameWorld.content.Load<Texture2D>("fish");
 
             }
             else
@@ -68,7 +66,6 @@ namespace DataBros
                 player2Sprite = GameWorld.content.Load<Texture2D>("pl2");
                 p2origin = new Vector2(300, 300);
                 p2Aim = GameWorld.content.Load<Texture2D>("p2aimsprite");
-                bootTexture = GameWorld.content.Load<Texture2D>("fish");
 
             }
         }
@@ -280,7 +277,7 @@ namespace DataBros
                 }
                 else if (caught.Name == "The one ring to rule them all")
                 {
-                    fishTexture = GameWorld.content.Load<Texture2D>("pl1");
+                    fishTexture = GameWorld.content.Load<Texture2D>("Ring");
                 }
                 else
                 {
