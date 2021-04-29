@@ -7,6 +7,7 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using DataBros.Controls;
+using Microsoft.Xna.Framework.Audio;
 
 namespace DataBros.States
 {
@@ -17,6 +18,8 @@ namespace DataBros.States
         private bool isCreatingUser = false;
         public string menyMsg = "";
         public bool inMenu = false;
+
+        public SoundEffect effect;
 
         public bool IsCreatingUser {
             get
@@ -96,6 +99,9 @@ namespace DataBros.States
 
         private void DeleteUserButton_Click(object sender, EventArgs e)
         {
+            effect = GameWorld.content.Load<SoundEffect>("Sounds/delete");
+            effect.Play();
+
             GameWorld.repo.Open();
            GameWorld.repo.DelPlayers();
             GameWorld.repo.Close();
@@ -137,6 +143,9 @@ namespace DataBros.States
 
         private void NewGameButton_Click(object sender, EventArgs e)
         {
+            effect = GameWorld.content.Load<SoundEffect>("Sounds/btneffect");
+            effect.Play();
+
             if (GameWorld.Instance.player2.logedIn == true & GameWorld.Instance.player1.logedIn == true)
             {
                 GameWorld.gameState = new GameState(_game, _graphicsDevice, _content);
@@ -152,6 +161,9 @@ namespace DataBros.States
 
         private void CreateNewUserButton_Click(object sender, EventArgs e)
         {
+            effect = GameWorld.content.Load<SoundEffect>("Sounds/waterdrop");
+            effect.Play();
+
             menyMsg = "Write your name and Press enter to confirm";
 
             if ( inMenu == false)
@@ -168,6 +180,9 @@ namespace DataBros.States
 
         private void UserLoginButton_Click(object sender, EventArgs e)
         {
+            effect = GameWorld.content.Load<SoundEffect>("Sounds/waterblup");
+            effect.Play();
+
             menyMsg = "Write your username and press enter ";
             if (inMenu == false)
             {

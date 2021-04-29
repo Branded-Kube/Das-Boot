@@ -188,11 +188,83 @@
 /processorParam:TextureFormat=Color
 /build:Ring.png
 
-#begin seasidewaves.mp3
+#begin Sounds/btneffect.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Sounds/btneffect.wav
+
+#begin Sounds/Damnit.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Sounds/Damnit.wav
+
+#begin Sounds/dasboot.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Sounds/dasboot.wav
+
+#begin Sounds/delete.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Sounds/delete.wav
+
+#begin Sounds/fishingreel.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Sounds/fishingreel.wav
+
+#begin Sounds/fishy.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Sounds/fishy.wav
+
+#begin Sounds/MyPrecious.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Sounds/MyPrecious.wav
+
+#begin Sounds/notagain.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Sounds/notagain.wav
+
+#begin Sounds/seasidewaves.mp3
 /importer:Mp3Importer
 /processor:SongProcessor
 /processorParam:Quality=Best
-/build:seasidewaves.mp3
+/build:Sounds/seasidewaves.mp3
+
+#begin Sounds/Step1.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Sounds/Step1.wav
+
+#begin Sounds/Step2.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Sounds/Step2.wav
+
+#begin Sounds/waterblup.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Sounds/waterblup.wav
+
+#begin Sounds/waterdrop.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Sounds/waterdrop.wav
 
 #begin upgmenu.png
 /importer:TextureImporter

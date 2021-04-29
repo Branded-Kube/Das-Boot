@@ -149,7 +149,7 @@ namespace DataBros.States
             buttonFont = _content.Load<SpriteFont>("Fonts/font");
 
             // Background music
-            backgroundMusic = _content.Load<Song>("seasidewaves");
+            backgroundMusic = _content.Load<Song>("Sounds/seasidewaves");
             MediaPlayer.Play(backgroundMusic);
             MediaPlayer.IsRepeating = true;
         }

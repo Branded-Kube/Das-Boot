@@ -7,6 +7,7 @@ using System.Diagnostics;
 using DataBros.States;
 using Microsoft.Xna.Framework.Content;
 using System;
+using Microsoft.Xna.Framework.Audio;
 
 namespace DataBros
 {
@@ -45,6 +46,8 @@ namespace DataBros
 
 
         private static State nextState;
+
+        public SoundEffect effect;
 
         public void ChangeState(State state)
         {
