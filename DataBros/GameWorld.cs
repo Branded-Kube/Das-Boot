@@ -64,7 +64,6 @@ namespace DataBros
         //private int sizeY = 1100;
 
         public static Repository repo;
-        public static Repository repo2;
 
 
 
