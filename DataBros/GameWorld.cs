@@ -92,18 +92,19 @@ namespace DataBros
 
             repo.AddFish("Herring", 5, 1, 1, 1);
             repo.AddFish("Cod", 35, 20, 1, 4);
-            repo.AddFish("Boot", 50, 2, 1, 30);
-            repo.AddFish("Tuna", 140, 80, 3, 2);
+            repo.AddFish("Tuna", 140, 80, 1, 2);
             repo.AddFish("Catfish", 5, 1, 1, 1);
 
-            repo.AddFish("Flatfish", 50, 25, 2, 3);
-            repo.AddFish("Tigershark", 70, 50,2, 4);
-            repo.AddFish("Squid", 40, 20, 2, 4);
-            repo.AddFish("Boot", 50, 2, 2, 30);
+            repo.AddFish("Flatfish", 10, 25, 2, 3);
+            repo.AddFish("Tigershark", 50, 50,2, 12);
+            repo.AddFish("Squid", 40, 30, 2, 5);
+            repo.AddFish("Dolphin", 60, 40, 2, 10);
+            repo.AddFish("Whale", 100, 80, 2, 20);
 
-            repo.AddFish("Bass", 50, 1, 1, 1);
+            repo.AddFish("Bass", 50, 1, 3, 1);
             repo.AddFish("The one ring to rule them all", 1000, 500, 3, 35);
             repo.AddFish("Salmon", 60, 60, 3, 3);
+            repo.AddFish("Boot", 50, 2, 3, 30);
 
 
             repo.AddBait("Earthworm", 5, 3, true);
@@ -111,7 +112,7 @@ namespace DataBros
             repo.AddBait("Herring", 20, 2, false);
 
 
-            currentBait = repo.FindBait("Regnorm");
+            currentBait = repo.FindBait("Earthworm");
 
             repo.Close();
 
