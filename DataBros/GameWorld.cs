@@ -63,7 +63,7 @@ namespace DataBros
         //private int sizeX = 900;
         //private int sizeY = 1100;
 
-        public static Repository repo1;
+        public static Repository repo;
         public static Repository repo2;
 
 
@@ -83,27 +83,27 @@ namespace DataBros
             var mapper = new Mapper();
             var provider = new SQLiteDatabaseProvider("Data Source=adventurer.db;Version=3;new=true");
 
-            repo1 = new Repository(provider, mapper);
-            repo2 = new Repository(provider, mapper);
+            repo = new Repository(provider, mapper);
 
-            repo1.Open();
+            repo.Open();
 
-            repo1.AddWater("Lake", 20,true);
-            repo1.AddWater("Ocean", 100, false);
-            repo1.AddWater("Stream", 10, true);
+            repo.AddWater("Lake", 20,true);
+            repo.AddWater("Ocean", 100, false);
+            repo.AddWater("Stream", 10, true);
 
-            repo1.AddFish("Sild", 1, 1, 1, 1);
-            repo1.AddFish("Tun", 220,80, 3,2);
-            repo1.AddFish("FladFisk", 4,10, 2,3);
-            repo1.AddFish("Torsk", 40, 20,3,4);
-            repo1.AddBait("Regnorm", 5, 3, true);
-            repo1.AddBait("PowerBait", 10, 1, false);
-            repo1.AddBait("Sild", 20, 2, false);
+            repo.AddFish("Sild", 1, 1, 1, 1);
+            repo.AddFish("Sild", 1, 1, 2, 1);
+            repo.AddFish("Tun", 220,80, 3,2);
+            repo.AddFish("FladFisk", 4,10, 2,3);
+            repo.AddFish("Torsk", 40, 20,3,4);
+            repo.AddBait("Regnorm", 5, 3, true);
+            repo.AddBait("PowerBait", 10, 1, false);
+            repo.AddBait("Sild", 20, 2, false);
 
 
-            currentBait = repo1.FindBait("Regnorm");
+            currentBait = repo.FindBait("Regnorm");
 
-            repo1.Close();
+            repo.Close();
 
             //var mapper1 = new Mapper();
             //var provider1 = new SQLiteDatabaseProvider("Data Source=adventurer.db;Version=3;new=true");
@@ -152,6 +152,7 @@ namespace DataBros
             Window.TextInput -= UserLogin.UsernameInput;
 
             Window.TextInput -= UserLogin.PasswordInput;
+            menuState.inMenu = false;
         }
 
         public void AddCreateUserLogin()
@@ -165,6 +166,7 @@ namespace DataBros
             Window.TextInput -= UserLogin.CreateUsernameInput;
 
             Window.TextInput -= UserLogin.CreatePasswordInput;
+            menuState.inMenu = false;
             menuState.menyMsg = "Now press login";
         }
 

@@ -32,10 +32,10 @@ namespace DataBros
         private bool fishVisible;
         private Vector2 p1origin;
         private Vector2 p2origin;
-        private Vector2 p1position = new Vector2(700, 900);
-        private Vector2 p2position = new Vector2(100, 900);
-        private Vector2 p1AimPosition = new Vector2(700, 500);
-        private Vector2 p2AimPosition = new Vector2(100, 500);
+        private Vector2 p2position = new Vector2(700, 900);
+        private Vector2 p1position = new Vector2(100, 900);
+        private Vector2 p2AimPosition = new Vector2(700, 500);
+        private Vector2 p1AimPosition = new Vector2(100, 500);
         public bool isplayer1;
         public bool logedIn = false;
         int catchdifficulty;
@@ -259,9 +259,9 @@ namespace DataBros
                 Random rnd = new Random();
                 pullCount = rnd.Next(10, 20);
 
-                GameWorld.repo1.Open();
-                    var catchAble = GameWorld.repo1.FindAFish(GameWorld.gameState.currentWater.Id);
-                GameWorld.repo1.Close();
+                GameWorld.repo.Open();
+                    var catchAble = GameWorld.repo.FindAFish(GameWorld.gameState.currentWater.Id);
+                GameWorld.repo.Close();
 
                 int max = catchAble.Count;
                     Random Rnd = new Random();
@@ -293,12 +293,12 @@ namespace DataBros
 
             if (pullCount == 0)
             {
-                GameWorld.repo1.Open();
+                GameWorld.repo.Open();
 
-                MsgToPlayer = $"You have caught a {caught.Name} at weight {caught.Weight} going for {caught.Price}!!";
+                MsgToPlayer = $"You have caught a {caught.Name} at weight {caught.Weight}Kg going for {caught.Price}Monies !!";
                 Money += caught.Price;
-                GameWorld.repo1.UpdatePlayers(name, Money);
-                GameWorld.repo1.Close();
+                GameWorld.repo.UpdatePlayers(name, Money);
+                GameWorld.repo.Close();
             }
             else
             {
