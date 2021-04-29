@@ -276,15 +276,15 @@ namespace DataBros
 
                 if (caught.Name == "Boot")
                 {
-                    fishTexture = GameWorld.content.Load<Texture2D>("pl1");
+                    fishTexture = GameWorld.content.Load<Texture2D>("Boot");
                 }
                 else if (caught.Name == "The one ring to rule them all")
                 {
-                    fishTexture = GameWorld.content.Load<Texture2D>("Boot");
+                    fishTexture = GameWorld.content.Load<Texture2D>("pl1");
                 }
                 else
                 {
-                    fishTexture = GameWorld.content.Load<Texture2D>("Ring");
+                    fishTexture = GameWorld.content.Load<Texture2D>("Fish");
                 }
 
                 catchTimer = new System.Timers.Timer();
