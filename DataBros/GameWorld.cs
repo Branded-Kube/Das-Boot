@@ -92,6 +92,7 @@ namespace DataBros
             repo.AddWater("Stream", 10, true);
 
             repo.AddFish("Sild", 1, 1, 1, 1);
+            repo.AddFish("Sild", 1, 1, 2, 1);
             repo.AddFish("Tun", 220,80, 3,2);
             repo.AddFish("FladFisk", 4,10, 2,3);
             repo.AddFish("Torsk", 40, 20,3,4);
