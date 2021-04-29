@@ -281,7 +281,7 @@ namespace DataBros
             {
                 GameWorld.repo.Open();
 
-                MsgToPlayer = $"You have caught a {caught.Name} at weight {caught.Weight}Kg going for {caught.Price}!!";
+                MsgToPlayer = $"You have caught a {caught.Name} at weight {caught.Weight}Kg going for {caught.Price}Monies !!";
                 Money += caught.Price;
                 GameWorld.repo.UpdatePlayers(name, Money);
                 GameWorld.repo.Close();
