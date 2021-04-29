@@ -27,7 +27,7 @@ namespace DataBros
             cmd = new SQLiteCommand($"CREATE TABLE IF NOT EXISTS Player (PlayerID INTEGER PRIMARY KEY, Name VARCHAR(50), Money INTEGER, Password VARCHAR(50), UNIQUE(Name));", (SQLiteConnection)connection);
             cmd.ExecuteNonQuery();
             
-            cmd = new SQLiteCommand($"CREATE TABLE IF NOT EXISTS Fish (FishID INTEGER PRIMARY KEY, Name VARCHAR(50), Weight INTEGER, Price INTEGER, WaterFK INTEGER, Strenght INTEGER, FOREIGN KEY (WaterFK) REFERENCES Water(WaterID), UNIQUE(Name));", (SQLiteConnection)connection);
+            cmd = new SQLiteCommand($"CREATE TABLE IF NOT EXISTS Fish (FishID INTEGER PRIMARY KEY, Name VARCHAR(50), Weight INTEGER, Price INTEGER, WaterFK INTEGER, Strenght INTEGER, FOREIGN KEY (WaterFK) REFERENCES Water(WaterID), UNIQUE(FishID));", (SQLiteConnection)connection);
             cmd.ExecuteNonQuery();
 
             cmd = new SQLiteCommand($"CREATE TABLE IF NOT EXISTS Water (WaterID INTEGER PRIMARY KEY, Name VARCHAR(50), Size INTEGER, Type BOOLEAN, UNIQUE(Name));", (SQLiteConnection)connection);

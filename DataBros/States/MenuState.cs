@@ -16,7 +16,7 @@ namespace DataBros.States
         private List<Component> components;
         private bool isCreatingUser = false;
         public string menyMsg = "";
-
+        public bool inMenu = false;
 
         public bool IsCreatingUser {
             get
@@ -96,9 +96,9 @@ namespace DataBros.States
 
         private void DeleteUserButton_Click(object sender, EventArgs e)
         {
-            GameWorld.repo1.Open();
-           GameWorld.repo1.DelPlayers();
-            GameWorld.repo1.Close();
+            GameWorld.repo.Open();
+           GameWorld.repo.DelPlayers();
+            GameWorld.repo.Close();
 
         }
 
@@ -120,8 +120,8 @@ namespace DataBros.States
                 spriteBatch.DrawString(GameWorld.font, "Enter your password", new Vector2((GameWorld._graphics.PreferredBackBufferWidth / 2) - 100, 800), Color.Black, 0.0f, Vector2.Zero, 2.0f, SpriteEffects.None, 0.0f);
                 spriteBatch.DrawString(GameWorld.font, UserLogin.PasswordInputString, new Vector2((GameWorld._graphics.PreferredBackBufferWidth / 2) - 100, 850), Color.Green, 0.0f, Vector2.Zero, 2.0f, SpriteEffects.None, 0.0f);
             }
-                spriteBatch.DrawString(GameWorld.font, $"Player 1: {GameWorld.Instance.player2.Name}", new Vector2((GameWorld._graphics.PreferredBackBufferWidth / 2) + 150, 900), Color.Black, 0.0f, Vector2.Zero, 2.0f, SpriteEffects.None, 0.0f);
-                spriteBatch.DrawString(GameWorld.font, $"Player 2: {GameWorld.Instance.player1.Name}", new Vector2((GameWorld._graphics.PreferredBackBufferWidth / 2) - 400, 900), Color.Black, 0.0f, Vector2.Zero, 2.0f, SpriteEffects.None, 0.0f);
+                spriteBatch.DrawString(GameWorld.font, $"Player 2: {GameWorld.Instance.player2.Name}", new Vector2((GameWorld._graphics.PreferredBackBufferWidth / 2) + 150, 900), Color.Black, 0.0f, Vector2.Zero, 2.0f, SpriteEffects.None, 0.0f);
+                spriteBatch.DrawString(GameWorld.font, $"Player 1: {GameWorld.Instance.player1.Name}", new Vector2((GameWorld._graphics.PreferredBackBufferWidth / 2) - 400, 900), Color.Black, 0.0f, Vector2.Zero, 2.0f, SpriteEffects.None, 0.0f);
             spriteBatch.DrawString(GameWorld.font, $"{menyMsg}", new Vector2((GameWorld._graphics.PreferredBackBufferWidth / 2) -400, 200), Color.Black, 0.0f, Vector2.Zero, 2.0f, SpriteEffects.None, 0.0f);
 
 
@@ -154,7 +154,11 @@ namespace DataBros.States
         {
             menyMsg = "Write your name and Press enter to confirm";
 
-            GameWorld.Instance.AddCreateUserLogin();
+            if ( inMenu == false)
+            {
+                GameWorld.Instance.AddCreateUserLogin();
+                inMenu = true;
+            }
             if (isCreatingUser == false)
             {
                 isCreatingUser = true;
@@ -165,7 +169,11 @@ namespace DataBros.States
         private void UserLoginButton_Click(object sender, EventArgs e)
         {
             menyMsg = "Write your username and press enter ";
-            GameWorld.Instance.AddUserLogin();
+            if (inMenu == false)
+            {
+                GameWorld.Instance.AddUserLogin();
+                inMenu = true;
+            }
             if (isCreatingUser == false)
             {
                 isCreatingUser = true;
