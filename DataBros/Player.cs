@@ -246,9 +246,9 @@ namespace DataBros
                 Random rnd = new Random();
                 pullCount = rnd.Next(10, 20);
 
-                GameWorld.repo1.Open();
-                    var catchAble = GameWorld.repo1.FindAFish(GameWorld.gameState.currentWater.Id);
-                GameWorld.repo1.Close();
+                GameWorld.repo.Open();
+                    var catchAble = GameWorld.repo.FindAFish(GameWorld.gameState.currentWater.Id);
+                GameWorld.repo.Close();
 
                 int max = catchAble.Count;
                     Random Rnd = new Random();
@@ -279,12 +279,12 @@ namespace DataBros
         {
             if (pullCount == 0)
             {
-                GameWorld.repo1.Open();
+                GameWorld.repo.Open();
 
                 MsgToPlayer = $"You have caught a {caught.Name} at weight {caught.Weight} going for {caught.Price}!!";
                 Money += caught.Price;
-                GameWorld.repo1.UpdatePlayers(name, Money);
-                GameWorld.repo1.Close();
+                GameWorld.repo.UpdatePlayers(name, Money);
+                GameWorld.repo.Close();
             }
             else
             {
