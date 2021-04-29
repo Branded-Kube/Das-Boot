@@ -45,28 +45,15 @@ namespace DataBros
 
 
         private static State nextState;
-        //UserLogin userLogin;
-
-        
 
         public void ChangeState(State state)
         {
             nextState = state;
         }
 
-
-        // Custom classes/objects
-       // public static VisualManager visualManager;
         public static ContentManager content;
 
-        // Ints / points
-        //private int sizeX = 900;
-        //private int sizeY = 1100;
-
         public static Repository repo;
-
-
-
 
         public GameWorld()
         {
@@ -115,26 +102,6 @@ namespace DataBros
             currentBait = repo.FindBait("Earthworm");
 
             repo.Close();
-
-            //var mapper1 = new Mapper();
-            //var provider1 = new SQLiteDatabaseProvider("Data Source=adventurer.db;Version=3;new=true");
-
-            //List<Bait> result1;
-            //var repo1 = new Repository(provider1, mapper1);
-
-            //repo.Open();
-
-          
-            //result1 = repo.GetAllBait();
-            //foreach (var bait in result1)
-            //{
-            //    Debug.WriteLine($"Id {bait.Id} Name {bait.BaitName} Cost {bait.Price}");
-
-            //}
-            //var anotherBait = repo.FindBait("Regnorm");
-            //Debug.WriteLine($"Id {anotherBait.Id} Name {anotherBait.BaitName} Cost {anotherBait.Price}");
-
-            // repo.Close();
         }
 
         protected override void Initialize()
@@ -143,8 +110,6 @@ namespace DataBros
             // Sets window size
             _graphics.PreferredBackBufferWidth = 900;
             _graphics.PreferredBackBufferHeight = 1000;
-
-            //visualManager = new VisualManager(_spriteBatch, new Rectangle(-566, 0, sizeX, sizeY));
 
             _graphics.ApplyChanges();
             base.Initialize();

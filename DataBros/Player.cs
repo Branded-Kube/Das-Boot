@@ -30,8 +30,6 @@ namespace DataBros
         private Texture2D p2Aim;
         private Texture2D fishTexture;
         private bool fishVisible;
-        private Vector2 p1origin;
-        private Vector2 p2origin;
         private Vector2 p2position = new Vector2(100, 900);
         private Vector2 p1position = new Vector2(700, 900);
         private Vector2 p2AimPosition = new Vector2(100, 500);
