@@ -182,6 +182,7 @@ namespace DataBros
                     var character = e.Character;
                     PasswordInputString.Append(character);
                 }
+                
                 if (pressedKey.IsKeyDown(Keys.Enter) && releasedKey.IsKeyUp(Keys.Enter))
                 {
                     var passwordInputString = Convert.ToString(PasswordInputString);
