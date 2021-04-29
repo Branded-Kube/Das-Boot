@@ -59,14 +59,14 @@ namespace DataBros
                 player1Sprite = GameWorld.content.Load<Texture2D>("pl1");
                 p1origin = new Vector2(500, 300);
                 p1Aim = GameWorld.content.Load<Texture2D>("p1aimsprite");
-                fishTexture = GameWorld.content.Load<Texture2D>("fish");
+
             }
             else
             {
                 player2Sprite = GameWorld.content.Load<Texture2D>("pl2");
                 p2origin = new Vector2(300, 300);
                 p2Aim = GameWorld.content.Load<Texture2D>("p2aimsprite");
-                fishTexture = GameWorld.content.Load<Texture2D>("fish");
+
             }
         }
 
@@ -253,7 +253,7 @@ namespace DataBros
 
             if (chanceToCatch > 6)
             {
-                fishVisible = true;
+                
                 MsgToPlayer = $"A fish has taken the bait! time to wheel it in (Press enter / space)!!";
                 color = Color.Black;
                 Random rnd = new Random();
@@ -269,6 +269,20 @@ namespace DataBros
 
                     caught = catchAble[randomNumber];
                 pullCount += caught.Strenght;
+                fishVisible = true;
+
+                if (caught.Name == "Boot")
+                {
+                    fishTexture = GameWorld.content.Load<Texture2D>("Boot");
+                }
+                else if (caught.Name == "The one ring to rule them all")
+                {
+                    fishTexture = GameWorld.content.Load<Texture2D>("Ring");
+                }
+                else
+                {
+                    fishTexture = GameWorld.content.Load<Texture2D>("Fish");
+                }
 
                 catchTimer = new System.Timers.Timer();
                 catchTimer.Elapsed += new ElapsedEventHandler(OnTimedEventCatching);

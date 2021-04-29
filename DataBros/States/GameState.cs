@@ -1,8 +1,10 @@
 ﻿using DataBros.Controls;
 using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Audio;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
+using Microsoft.Xna.Framework.Media;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -15,6 +17,8 @@ namespace DataBros.States
         #region Fields
         private Texture2D backgroundTexture;
         private Rectangle backgroundRectangle;
+
+        public Song backgroundMusic;
 
         private List<Component> components;
         private List<Component> addComponents;
@@ -140,6 +144,10 @@ namespace DataBros.States
             buttonTexture = _content.Load<Texture2D>("button");
             buttonFont = _content.Load<SpriteFont>("Fonts/font");
 
+            // Background music
+            backgroundMusic = _content.Load<Song>("seasidewaves");
+            MediaPlayer.Play(backgroundMusic);
+            MediaPlayer.IsRepeating = true;
         }
 
         public override void Draw(GameTime gameTime, SpriteBatch spriteBatch)
