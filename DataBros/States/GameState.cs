@@ -44,6 +44,10 @@ namespace DataBros.States
         Button oceanButton;
         public Water stream;
         string msgToPlayers = "";
+        string roundOver = "";
+        private int timeRemaining = 180;
+        private float countDuration = 1f;
+        private float currentTime = 0f;
 
 
         public Water currentWater;
@@ -168,8 +172,10 @@ namespace DataBros.States
             spriteBatch.DrawString(buttonFont, $" When a fish has taken the bait, spam Enter/Space until pull counter is at 0", new Vector2(100, 50), Color.Green, 0f, Vector2.Zero, 1.5f, SpriteEffects.None, 0f);
             spriteBatch.DrawString(buttonFont, $" {msgToPlayers}", new Vector2(200, 100), Color.Green, 0f, Vector2.Zero, 2f, SpriteEffects.None, 0f);
             spriteBatch.DrawString(buttonFont, $"Available fish in theese waters", new Vector2(0, 200), Color.Green, 0f, Vector2.Zero, 2f, SpriteEffects.None, 0f);
+            spriteBatch.DrawString(buttonFont, $"Time remaining: {timeRemaining}", new Vector2(300, 10), Color.White, 0f, Vector2.Zero, 2f, SpriteEffects.None, 0f);
+            spriteBatch.DrawString(buttonFont, $" {roundOver}", new Vector2(200, 300), Color.Red, 0f, Vector2.Zero, 8f, SpriteEffects.None, 1f);
 
-           
+
             for (int i = 0; i < catchAble.Count; i++)
             {
 
@@ -355,6 +361,11 @@ namespace DataBros.States
             //paused = !paused;
         }
 
+        public void RoundOver()
+        {
+            roundOver = "Time's up!";
+        }
+
         public override void PostUpdate(GameTime gameTime)
         {
             //remove sprites if they are not needed
@@ -362,6 +373,21 @@ namespace DataBros.States
 
         public override void Update(GameTime gameTime)
         {
+
+            currentTime += (float)gameTime.ElapsedGameTime.TotalSeconds; 
+
+            if (currentTime >= countDuration)
+            {
+                if (timeRemaining > 0)
+                {
+                    timeRemaining--;
+                    currentTime -= countDuration;
+                }
+            }
+            if (timeRemaining == 0)
+            {
+                RoundOver();
+            }
 
             //foreach (Cell cell in GameWorld.visualManager.grid)
             //{
@@ -386,67 +412,7 @@ namespace DataBros.States
             foreach (var component in components)
             {
                 component.Update(gameTime);
-            }
-
-           // oldState = newState;
-           // newState = Keyboard.GetState();
-           // //player 1 movement
-           // if (alreadyFishing == false)
-           // {
-           //     if (newState.IsKeyDown(Keys.Right) && oldState.IsKeyUp(Keys.Right) && p1position.X <= 900)
-           //     {
-           //         p1position.X += 100;
-           //         p1AimPosition.X += 100;
-           //     }
-           //     if (Keyboard.GetState().IsKeyDown(Keys.Left) && oldState.IsKeyUp(Keys.Left) && p1position.X >= 100)
-           //     {
-           //         p1position.X -= 100;
-           //         p1AimPosition.X -= 100;
-           //     }
-           //
-           //     if (Keyboard.GetState().IsKeyDown(Keys.Up) && oldState.IsKeyUp(Keys.Up) && p1AimPosition.Y >= 100)
-           //     {
-           //         p1AimPosition.Y -= 100;
-           //     }
-           //     if (Keyboard.GetState().IsKeyDown(Keys.Down) && oldState.IsKeyUp(Keys.Down) && p1AimPosition.Y <= 600)
-           //     {
-           //         p1AimPosition.Y += 100;
-           //     }
-           //     if (Keyboard.GetState().IsKeyDown(Keys.Enter) && oldState.IsKeyUp(Keys.Enter))
-           //     {
-           //         FishingKey();
-           //     }
-           // }
-           //
-           // if (alreadyFishing == false)
-           // {
-           //     //player 2 movement
-           //     if (newState.IsKeyDown(Keys.D) && oldState.IsKeyUp(Keys.D) && p2position.X <= 900)
-           //     {
-           //         p2position.X += 100;
-           //         p2AimPosition.X += 100;
-           //     }
-           //     if (Keyboard.GetState().IsKeyDown(Keys.A) && oldState.IsKeyUp(Keys.A) && p2position.X >= 100)
-           //     {
-           //         p2position.X -= 100;
-           //         p2AimPosition.X -= 100;
-           //     }
-           //
-           //     if (Keyboard.GetState().IsKeyDown(Keys.W) && oldState.IsKeyUp(Keys.W) && p2AimPosition.Y >= 100)
-           //     {
-           //         p2AimPosition.Y -= 100;
-           //     }
-           //     if (Keyboard.GetState().IsKeyDown(Keys.S) && oldState.IsKeyUp(Keys.S) && p2AimPosition.Y <= 600)
-           //     {
-           //         p2AimPosition.Y += 100;
-           //     }
-           //
-           //     if (Keyboard.GetState().IsKeyDown(Keys.Space) && oldState.IsKeyUp(Keys.Space))
-           //     {
-           //         FishingKey();
-           //     }
-           // }
-            
+            }            
 
         }
 
