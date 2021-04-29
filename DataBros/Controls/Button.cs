@@ -70,8 +70,8 @@ namespace DataBros.Controls
             }
 
             spriteBatch.Draw(buttonTexture, Rectangle, color);
-
-            if (!string.IsNullOrEmpty(Text))
+            
+            if (!string.IsNullOrEmpty(Text)) //if there is text in a button, sizes the button to the legth of the text
             {
                 var x = (Rectangle.X + (Rectangle.Width / 2)) - (buttonFont.MeasureString(Text).X / 2);
                 var y = (Rectangle.Y + (Rectangle.Height / 2)) - (buttonFont.MeasureString(Text).Y / 2);
