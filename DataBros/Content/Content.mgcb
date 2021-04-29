@@ -188,6 +188,12 @@
 /processorParam:TextureFormat=Color
 /build:Ring.png
 
+#begin seasidewaves.mp3
+/importer:Mp3Importer
+/processor:SongProcessor
+/processorParam:Quality=Best
+/build:seasidewaves.mp3
+
 #begin upgmenu.png
 /importer:TextureImporter
 /processor:TextureProcessor
