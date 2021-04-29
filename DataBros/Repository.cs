@@ -24,46 +24,20 @@ namespace DataBros
             var cmd = new SQLiteCommand($"PRAGMA foreign_keys = ON;", (SQLiteConnection)connection);
             cmd.ExecuteNonQuery();
 
-            cmd = new SQLiteCommand($"CREATE TABLE IF NOT EXISTS characters (ID INTEGER PRIMARY KEY, Name VARCHAR(50), Experience INTEGER, UNIQUE(Name));", (SQLiteConnection)connection);
-            cmd.ExecuteNonQuery();
-
             cmd = new SQLiteCommand($"CREATE TABLE IF NOT EXISTS Player (PlayerID INTEGER PRIMARY KEY, Name VARCHAR(50), Money INTEGER, Password VARCHAR(50), UNIQUE(Name));", (SQLiteConnection)connection);
             cmd.ExecuteNonQuery();
             
-            cmd = new SQLiteCommand($"CREATE TABLE IF NOT EXISTS Fish (FishID INTEGER PRIMARY KEY, Name VARCHAR(50), BiteTime INTEGER, Strengt INTEGER, Weight INTEGER, Price INTEGER, WaterFK INTEGER, FOREIGN KEY (WaterFK) REFERENCES Water(WaterID), UNIQUE(Name));", (SQLiteConnection)connection);
+            cmd = new SQLiteCommand($"CREATE TABLE IF NOT EXISTS Fish (FishID INTEGER PRIMARY KEY, Name VARCHAR(50), Weight INTEGER, Price INTEGER, WaterFK INTEGER, Strenght INTEGER, FOREIGN KEY (WaterFK) REFERENCES Water(WaterID), UNIQUE(Name));", (SQLiteConnection)connection);
             cmd.ExecuteNonQuery();
 
             cmd = new SQLiteCommand($"CREATE TABLE IF NOT EXISTS Water (WaterID INTEGER PRIMARY KEY, Name VARCHAR(50), Size INTEGER, Type BOOLEAN, UNIQUE(Name));", (SQLiteConnection)connection);
             cmd.ExecuteNonQuery();
 
-            cmd = new SQLiteCommand($"CREATE TABLE IF NOT EXISTS Bait (BaitID INTEGER PRIMARY KEY, BiteTimeMultiplier INTEGER, Price INTEGER, Name VARCHAR(50), Type BOOLEAN, UNIQUE(Name));", (SQLiteConnection)connection);
+            cmd = new SQLiteCommand($"CREATE TABLE IF NOT EXISTS Bait (BaitID INTEGER PRIMARY KEY, BiteTimeMultiplier INTEGER, Price INTEGER, Name VARCHAR(50), Alive BOOLEAN, UNIQUE(Name));", (SQLiteConnection)connection);
             cmd.ExecuteNonQuery();
         }
 
-        public void AddCharacter(string name, int experience)
-        {
-            var cmd = new SQLiteCommand($"INSERT OR IGNORE INTO characters (Name, Experience) VALUES ('{name}', {experience})", (SQLiteConnection)connection);
-            cmd.ExecuteNonQuery();
-        }
-
-
-        public Character FindCharacter(string name)
-        {
-            var cmd = new SQLiteCommand($"SELECT * from characters WHERE name = '{name}'", (SQLiteConnection)connection);
-            var reader = cmd.ExecuteReader();
-
-            var result = mapper.MapCharactersFromReader(reader).First();
-            return result;
-        }
-
-        public List<Character> GetAllCharacters()
-        {
-            var cmd = new SQLiteCommand("SELECT * from characters", (SQLiteConnection)connection);
-            var reader = cmd.ExecuteReader();
-
-            var result = mapper.MapCharactersFromReader(reader);
-            return result;
-        }
+       
 
         public Water FindWater(string name)
         {
@@ -92,6 +66,12 @@ namespace DataBros
             cmd.ExecuteNonQuery();
         }
 
+        public void UpdatePlayers(string name, int money)
+        {
+            var cmd = new SQLiteCommand($"UPDATE Player SET Money = {money} WHERE Name = '{name}' ", (SQLiteConnection)connection);
+            cmd.ExecuteNonQuery();
+        }
+
         public Player FindPlayer(string name)
         {
 
@@ -104,16 +84,15 @@ namespace DataBros
 
         public List<Fish> FindAFish(int waterId)
         {
-            //var cmd = new SQLiteCommand($"SELECT * from Fish WHERE FishID = '{randomNumber}'", (SQLiteConnection)connection);
             var cmd = new SQLiteCommand($"SELECT * from Fish WHERE WaterFK = '{waterId}'", (SQLiteConnection)connection);
 
             var reader = cmd.ExecuteReader();
             var result = mapper.MapFishFromReader(reader);
             return result;
         }
-        public void AddBait(string name, int price, int biteTime)
+        public void AddBait(string name, int price, int biteTime, bool alive)
         {
-            var cmd = new SQLiteCommand($"INSERT OR IGNORE INTO Bait (Name, Price, BiteTimeMultiplier) VALUES ('{name}', {price}, {biteTime})", (SQLiteConnection)connection);
+            var cmd = new SQLiteCommand($"INSERT OR IGNORE INTO Bait (Name, Price, BiteTimeMultiplier, Alive) VALUES ('{name}', {price}, {biteTime}, {alive})", (SQLiteConnection)connection);
             cmd.ExecuteNonQuery();
         }
 
@@ -126,17 +105,17 @@ namespace DataBros
             return result1;
         }
 
-        public List<Bait> GetAllBait()
-        {
-            var cmd = new SQLiteCommand("SELECT * from bait", (SQLiteConnection)connection);
-            var reader = cmd.ExecuteReader();
+        //public List<Bait> GetAllBait()
+        //{
+        //    var cmd = new SQLiteCommand("SELECT * from bait", (SQLiteConnection)connection);
+        //    var reader = cmd.ExecuteReader();
 
-            var result1 = mapper.MapBaitFromReader(reader);
-            return result1;
-        }
-        public void AddFish(string name, int price, int FKID)
+        //    var result1 = mapper.MapBaitFromReader(reader);
+        //    return result1;
+        //}
+        public void AddFish(string name, int weight, int price, int FKID, int strenght)
         {
-            var cmd = new SQLiteCommand($"INSERT OR IGNORE INTO Fish (Name, Price, WaterFK) VALUES ('{name}', {price}, {FKID})", (SQLiteConnection)connection);
+            var cmd = new SQLiteCommand($"INSERT OR IGNORE INTO Fish (Name,Weight,Price,WaterFK,Strenght) VALUES ('{name}',{weight},{price},{FKID},{strenght})", (SQLiteConnection)connection);
             cmd.ExecuteNonQuery();
         }
 

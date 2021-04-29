@@ -8,27 +8,7 @@ namespace DataBros
 {
     public class Mapper : IMapper
     {
-        public List<Character> MapCharactersFromReader(IDataReader reader)
-        {
-            var result = new List<Character>();
-            while (reader.Read())
-            {
-                var name = reader.GetString(1);
-                var xp = reader.GetInt32(2);
-                var id = reader.GetInt32(0);
-
-                // var id = reader.GetInt32(0);
-                // var BaitName = reader.GetString(1);
-                // var Cost = reader.GetInt32(2);
-
-                result.Add(new Character() { Id = id, Name = name, Experience = xp });
-
-                // result.Add(new Character() { Id = id, Name = BaitName, Experience = Cost });
-
-            }
-
-            return result;
-        }
+        
         public List<Water> MapWaterFromReader(IDataReader reader)
         {
             var result = new List<Water>();
@@ -38,15 +18,7 @@ namespace DataBros
                 var size = reader.GetInt32(2);
                 var id = reader.GetInt32(0);
                 var type = reader.GetBoolean(3);
-
-
-                // var id = reader.GetInt32(0);
-                // var BaitName = reader.GetString(1);
-                // var Cost = reader.GetInt32(2);
-
                 result.Add(new Water() { Id = id, Name = name, Size = size , Type = type});
-
-                // result.Add(new Character() { Id = id, Name = BaitName, Experience = Cost });
 
             }
 
@@ -58,11 +30,13 @@ namespace DataBros
             while (reader.Read())
             {
                 var id = reader.GetInt32(0);
-                var name = reader.GetString(3);
-                var price = reader.GetInt32(2);
                 var biteTime = reader.GetInt32(1);
+                var price = reader.GetInt32(2);
+                var name = reader.GetString(3);
+                var alive = reader.GetBoolean(4);
 
-                result1.Add(new Bait() { Id = id, BaitName = name, Price = price, BiteTime = biteTime});
+
+                result1.Add(new Bait() { Id = id, BaitName = name, Price = price, BiteTime = biteTime, Alive = alive});
             }
             return result1;
         }
@@ -86,11 +60,17 @@ namespace DataBros
             var result = new List<Fish>();
             while (reader.Read())
             {
-                var name = reader.GetString(1);
-                var price = reader.GetInt32(5);
                 var id = reader.GetInt32(0);
+                var name = reader.GetString(1);
+                var weight = reader.GetInt32(2);
+                var price = reader.GetInt32(3);
+                var WaterFk = reader.GetInt32(4);
+                var strenght = reader.GetInt32(5);
 
-                result.Add(new Fish() { Id = id, Name = name, Price = price});
+
+
+
+                result.Add(new Fish() { Id = id, Name = name, Weight = weight, Price = price, WaterFK = WaterFk, Strenght= strenght });
             }
 
             return result;

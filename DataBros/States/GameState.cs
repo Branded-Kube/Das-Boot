@@ -29,16 +29,7 @@ namespace DataBros.States
 
         private Texture2D upgrade1;
         private Texture2D upgrade2;
-        private Texture2D player1;
-        private Texture2D player2;
-        private Texture2D p1Aim;
-        private Texture2D p2Aim;
-        private Vector2 p1origin;
-        private Vector2 p2origin;
-        private Vector2 p1position = new Vector2(700, 900);
-        private Vector2 p2position = new Vector2(100, 900);
-        private Vector2 p1AimPosition = new Vector2(700, 500);
-        private Vector2 p2AimPosition = new Vector2(100, 500);
+   
         private Rectangle upgRectangle;
         private Rectangle upg2Rectangle;
         Texture2D buttonTexture;
@@ -49,15 +40,15 @@ namespace DataBros.States
         Button oceanButton;
         Button FishButton;
         public Water stream;
+        string msgToPlayers = "";
 
-        private int pullCount = 0;
 
         public Water currentWater;
-        System.Timers.Timer aTimer;
-        bool alreadyFishing = false;
+        //System.Timers.Timer aTimer;
 
-        private KeyboardState oldState;
-        private KeyboardState newState;
+        //private KeyboardState oldState;
+        //private KeyboardState newState;
+        List<Fish> catchAble;
 
         #endregion
 
@@ -66,13 +57,18 @@ namespace DataBros.States
         #region Constructor
         public GameState(GameWorld game, GraphicsDevice graphicsDevice, ContentManager content) : base(game, graphicsDevice, content)
         {
-
-            GameWorld.repo.Open();
-            stream = GameWorld.repo.FindWater("Stream");
+            msgToPlayers = "Press enter or space to start fishing!";
+            GameWorld.repo1.Open();
+            stream = GameWorld.repo1.FindWater("Stream");
             currentWater = stream;
-            GameWorld.repo.Close();
-            GameWorld.visualManager.cellCount = currentWater.Size;
-            GameWorld.visualManager.CreateGrid();
+            catchAble = GameWorld.repo1.FindAFish(currentWater.Id);
+
+            GameWorld.repo1.Close();
+
+          
+
+            //GameWorld.visualManager.cellCount = currentWater.Size;
+            //GameWorld.visualManager.CreateGrid();
 
             LoadContent();
             //Button
@@ -112,12 +108,6 @@ namespace DataBros.States
                 Position = new Vector2(300, 300),
                 Text = "Stream",
             };
-            FishButton = new Button(buttonTexture, buttonFont)
-            {
-                Position = new Vector2(300, 400),
-                Text = "Fish",
-            };
-            
 
             components = new List<Component>()
             {
@@ -151,8 +141,9 @@ namespace DataBros.States
 
             //p1Aim = _content.Load<Texture2D>("p1aimsprite");
             //p2Aim = _content.Load<Texture2D>("p2aimsprite");
-            GameWorld.Instance.player1.Loadcontent();
-            GameWorld.Instance.player2.Loadcontent();
+
+            //GameWorld.Instance.player1.Loadcontent();
+            //GameWorld.Instance.player2.Loadcontent();
 
 
             buttonTexture = _content.Load<Texture2D>("button");
@@ -166,7 +157,7 @@ namespace DataBros.States
 
             spriteBatch.Draw(backgroundTexture, backgroundRectangle, Color.White);
 
-            GameWorld.visualManager.Draw(spriteBatch);
+            //GameWorld.visualManager.Draw(spriteBatch);
 
             //spriteBatch.Draw(player1, new Vector2(200, 100), new Rectangle(100,100,100,100), Color.White, 0f, p1origin, 1, SpriteEffects.None, 0);
             //spriteBatch.Draw(player2, new Vector2(500, 200), Rectangle.Empty, Color.White, 0f, p2origin, Vector2.Zero, SpriteEffects.None, 1);
@@ -175,8 +166,17 @@ namespace DataBros.States
             //spriteBatch.Draw(player2, p2position, Color.White);
             //spriteBatch.Draw(p1Aim, p1AimPosition, Color.White);
             //spriteBatch.Draw(p2Aim, p2AimPosition, Color.White);
-            //spriteBatch.DrawString(buttonFont, $"ammount of pulls left: {pullCount}", new Vector2(10, 300), Color.Green);
+            spriteBatch.DrawString(buttonFont, $" When a fish has taken the bait, spam Enter/Space until pull counter is at 0", new Vector2(100, 50), Color.Green, 0f, Vector2.Zero, 1.5f, SpriteEffects.None, 0f);
+            spriteBatch.DrawString(buttonFont, $" {msgToPlayers}", new Vector2(200, 100), Color.Green, 0f, Vector2.Zero, 2f, SpriteEffects.None, 0f);
+            spriteBatch.DrawString(buttonFont, $"Available fish in theese waters", new Vector2(0, 200), Color.Green, 0f, Vector2.Zero, 2f, SpriteEffects.None, 0f);
 
+           
+            for (int i = 0; i < catchAble.Count; i++)
+            {
+
+                spriteBatch.DrawString(buttonFont, $" {catchAble[i].Name}", new Vector2(0, 250 + (i*50)), Color.Green, 0f, Vector2.Zero, 2f, SpriteEffects.None, 0f);
+
+            }
             GameWorld.Instance.player1.Draw(spriteBatch);
             GameWorld.Instance.player2.Draw(spriteBatch);
 
@@ -209,11 +209,9 @@ namespace DataBros.States
                 lakeButton.Click += LakeButton_Click;
                 oceanButton.Click += OceanButton_Click;
                 streamButton.Click += StreamButton_Click;
-                FishButton.Click += FishButton_Click;
 
                 addComponents = new List<Component>()
             {
-                    FishButton,
                 streamButton,
                 lakeButton,
                 oceanButton,
@@ -223,65 +221,64 @@ namespace DataBros.States
 
         }
 
-        private void FishButton_Click(object sender, EventArgs e)
-        {
-            if (alreadyFishing == false)
-            {
+        //private void FishButton_Click(object sender, EventArgs e)
+        //{
+        //    if (alreadyFishing == false)
+        //    {
 
-                aTimer = new System.Timers.Timer();
-                aTimer.Elapsed += new ElapsedEventHandler(OnTimedEvent);
-                //aTimer.Interval = 5000 ;
-                aTimer.Interval = 3000 * GameWorld.currentBait.BiteTime;
-                 aTimer.Enabled = true;
-                alreadyFishing = true;
-            }
-        }
+        //        aTimer = new System.Timers.Timer();
+        //        aTimer.Elapsed += new ElapsedEventHandler(OnTimedEvent);
+        //        //aTimer.Interval = 5000 ;
+        //        aTimer.Interval = 3000 * GameWorld.currentBait.BiteTime;
+        //         aTimer.Enabled = true;
+        //        alreadyFishing = true;
+        //    }
+        //}
 
-        public void FishingKey()
-        {
-            if (alreadyFishing == false)
-            {
-                Random rnd = new Random();
-                pullCount = rnd.Next(10, 20);
+        //public void FishingKey(Player player)
+        //{
+        //    if (alreadyFishing == false)
+        //    {
+        //        Random rnd = new Random();
+        //        player.pullCount = rnd.Next(10, 20);
 
-                aTimer = new System.Timers.Timer();
-                aTimer.Elapsed += new ElapsedEventHandler(OnTimedEvent);
-                //aTimer.Interval = 5000 ;
-                aTimer.Interval = 3000 * GameWorld.currentBait.BiteTime;
-                aTimer.Enabled = true;
-                alreadyFishing = true;
-            }
-        }
+        //        aTimer = new System.Timers.Timer();
+        //        aTimer.Elapsed += new ElapsedEventHandler(OnTimedEvent);
+        //        //aTimer.Interval = 5000 ;
+        //        aTimer.Interval = 3000 * GameWorld.currentBait.BiteTime;
+        //        aTimer.Enabled = true;
+        //        alreadyFishing = true;
+        //    }
+        //}
 
-        private void OnTimedEvent(object sender, ElapsedEventArgs e)
-        {
-            Debug.WriteLine("You have Caught a fish!");
+        //private void OnTimedEvent(object sender, ElapsedEventArgs e)
+        //{
+        //    Debug.WriteLine("You have Caught a fish!");
 
-            GameWorld.repo.Open();
-            var catchAble = GameWorld.repo.FindAFish(currentWater.Id);
-            int max = catchAble.Count;
-            Random Rnd = new Random();
-            int randomNumber = Rnd.Next(0, max);
+        //    GameWorld.repo.Open();
+        //    var catchAble = GameWorld.repo.FindAFish(currentWater.Id);
+        //    int max = catchAble.Count;
+        //    Random Rnd = new Random();
+        //    int randomNumber = Rnd.Next(0, max);
 
-            var caught = catchAble[randomNumber];
+        //    var caught = catchAble[randomNumber];
 
-            Debug.WriteLine($"Id {caught.Id} Name {caught.Name} Price {caught.Price} ");
-            Debug.WriteLine($"Time spent {aTimer.Interval} ");
+        //    Debug.WriteLine($"Id {caught.Id} Name {caught.Name} Price {caught.Price} ");
+        //    Debug.WriteLine($"Time spent {aTimer.Interval} ");
 
 
-            GameWorld.repo.Close();
-            //ResetWaterButtons();
-            aTimer.Elapsed -= new ElapsedEventHandler(OnTimedEvent);
-            aTimer.Enabled = false;
-            alreadyFishing = false;
+        //    GameWorld.repo.Close();
+        //    //ResetWaterButtons();
+        //    aTimer.Elapsed -= new ElapsedEventHandler(OnTimedEvent);
+        //    aTimer.Enabled = false;
+        //    alreadyFishing = false;
 
-        }
+        //}
 
         public void ResetWaterButtons()
         {
             delComponents = new List<Component>()
             {
-                FishButton,
                 streamButton,
                 lakeButton,
                   oceanButton,
@@ -289,13 +286,12 @@ namespace DataBros.States
             lakeButton.Click -= LakeButton_Click;
             oceanButton.Click -= OceanButton_Click;
             streamButton.Click -= StreamButton_Click;
-            FishButton.Click -= FishButton_Click;
 
 
             pickWater = true;
 
-            GameWorld.visualManager.cellCount = currentWater.Size;
-            GameWorld.visualManager.CreateGrid();
+            //GameWorld.visualManager.cellCount = currentWater.Size;
+            //GameWorld.visualManager.CreateGrid();
 
         }
         private void StreamButton_Click(object sender, EventArgs e)
@@ -303,11 +299,13 @@ namespace DataBros.States
             
             if (currentWater.Name != "Stream")
             {
-                GameWorld.repo.Open();
-                stream = GameWorld.repo.FindWater("Stream");
+                GameWorld.repo1.Open();
+                stream = GameWorld.repo1.FindWater("Stream");
                 currentWater = stream;
-                Debug.WriteLine($"Id {stream.Id} Name {stream.Name} Size {stream.Size} Type {stream.Type} ");
-                GameWorld.repo.Close();
+                msgToPlayers= $"Name {stream.Name} ";
+            catchAble = GameWorld.repo1.FindAFish(currentWater.Id);
+
+                GameWorld.repo1.Close();
                 ResetWaterButtons();
 
             }
@@ -319,11 +317,13 @@ namespace DataBros.States
         {
             if (currentWater.Name != "Ocean")
             {
-                GameWorld.repo.Open();
-                Water ocean = GameWorld.repo.FindWater("Ocean");
+                GameWorld.repo1.Open();
+                Water ocean = GameWorld.repo1.FindWater("Ocean");
                 currentWater = ocean;
-                Debug.WriteLine($"Id {ocean.Id} Name {ocean.Name} Size {ocean.Size} Type {ocean.Type} ");
-                GameWorld.repo.Close();
+                msgToPlayers = $"Name {ocean.Name} ";
+                catchAble = GameWorld.repo1.FindAFish(currentWater.Id);
+
+                GameWorld.repo1.Close();
                 ResetWaterButtons();
             }
 
@@ -333,26 +333,26 @@ namespace DataBros.States
         {
             if (currentWater.Name != "Lake")
             {
-                GameWorld.repo.Open();
-                Water lake = GameWorld.repo.FindWater("Lake");
+                GameWorld.repo1.Open();
+                Water lake = GameWorld.repo1.FindWater("Lake");
                 currentWater = lake;
-                Debug.WriteLine($"Id {lake.Id} Name {lake.Name} Size {lake.Size} Type {lake.Type} ");
-                //// test
-                //Fish torsk = GameWorld.repo.FindFish("Torsk");
-                //Debug.WriteLine($"Id {torsk.Id} Name {torsk.Name} Price {torsk.Price}");
-                ////
-                GameWorld.repo.Close();
+                msgToPlayers = $"Name {lake.Name}";
+                catchAble = GameWorld.repo1.FindAFish(currentWater.Id);
+
+                GameWorld.repo1.Close();
                 ResetWaterButtons();
             }
         }
 
         private void BaitButton_Click(object sender, EventArgs e)
         {
-            GameWorld.repo.Open();
-            Bait nextBait = GameWorld.repo.FindBait("PowerBait");
-            GameWorld.repo.Close();
+            GameWorld.repo1.Open();
+            Bait nextBait = GameWorld.repo1.FindBait("PowerBait");
+            GameWorld.repo1.Close();
 
             GameWorld.currentBait = nextBait;
+
+            msgToPlayers = $"Players are now using {nextBait.BaitName}";
             //paused = !paused;
         }
 
@@ -364,10 +364,10 @@ namespace DataBros.States
         public override void Update(GameTime gameTime)
         {
 
-            foreach (Cell cell in GameWorld.visualManager.grid)
-            {
-                cell.MyColor = Color.Yellow;
-            }
+            //foreach (Cell cell in GameWorld.visualManager.grid)
+            //{
+            //    cell.MyColor = Color.Yellow;
+            //}
 
             if (addComponents != null)
             {

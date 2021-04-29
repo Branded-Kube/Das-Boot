@@ -8,8 +8,6 @@ namespace DataBros
 {
     public interface IMapper
     {
-        //List<Character> MapCharactersFromReader(SQLiteDataReader reader);
-        List<Character> MapCharactersFromReader(IDataReader reader);
         List<Water> MapWaterFromReader(IDataReader reader);
 
 

@@ -23,7 +23,6 @@ namespace DataBros.States
 
         #region Methods
 
-        //public abstract void Load(ContentManager content);
 
         public abstract void Draw(GameTime gameTime, SpriteBatch spriteBatch);
 

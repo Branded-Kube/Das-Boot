@@ -15,19 +15,16 @@ namespace DataBros
         public static bool user = true;
         static KeyboardState releasedKey;
         static KeyboardState pressedKey;
-
+        static Player tmpPlayer;
 
          public static void CreateUsernameInput(object sender, TextInputEventArgs e)
         {
             pressedKey = Keyboard.GetState();
 
-
-            //pressedKey = e.Key;
             int length = PlayerNameInput.Length;
             if (user == true)
             {
                 
-                //if (pressedKey == Keys.Back)
                 if (pressedKey.IsKeyDown(Keys.Back) && releasedKey.IsKeyUp(Keys.Back))
                 {
                     if (length > 0)
@@ -56,8 +53,10 @@ namespace DataBros
 
         public static void CreatePasswordInput(object sender, TextInputEventArgs e)
         {
+
             if (pass == true)
             {
+                GameWorld.menuState.menyMsg = "Write your password and Press enter to confirm";
                 int length = PasswordInputString.Length;
                 if (pressedKey.IsKeyDown(Keys.Back) && releasedKey.IsKeyUp(Keys.Back))
                 {
@@ -77,17 +76,17 @@ namespace DataBros
                     var passwordInputString = Convert.ToString(PasswordInputString);
                     Debug.WriteLine($"{passwordInputString}");
 
-                    GameWorld.repo.Open();
+                    GameWorld.repo1.Open();
                     bool success = false;
                     try
                     {
-                        GameWorld.repo.FindPlayer($"{playerNameInput}");
+                        GameWorld.repo1.FindPlayer($"{playerNameInput}");
                         success = true;
                     }
                     catch (Exception)
                     {
                         Debug.WriteLine($"No player found with that name! , Adding player to table");
-                        GameWorld.repo.AddPlayer(playerNameInput,0,$"{PasswordInputString}");
+                        GameWorld.repo1.AddPlayer(playerNameInput,0,$"{PasswordInputString}");
 
                     }
                     finally
@@ -98,19 +97,8 @@ namespace DataBros
                         }
                     }
                    
-                    //tmpPlayer = GameWorld.repo.FindPlayer($"{playerNameInput}");
-                    GameWorld.repo.Close();
+                    GameWorld.repo1.Close();
 
-                    // set player
-                    //if (GameWorld.player1 == null)
-                    //{
-                    //    GameWorld.player1 = tmpPlayer;
-
-                    //}
-                    //else
-                    //{
-                    //    GameWorld.player2 = tmpPlayer;
-                    //}
                     // Reset login
                     GameWorld.menuState.IsCreatingUser = false;
                     pass = false;
@@ -147,9 +135,27 @@ namespace DataBros
 
                 if (pressedKey.IsKeyDown(Keys.Enter) && releasedKey.IsKeyUp(Keys.Enter))
                 {
-                    user = false;
-                    pass = true;
-                    Debug.WriteLine($"{PlayerNameInput}");
+                    tmpPlayer = new Player();
+                    var playerNameInput = Convert.ToString(PlayerNameInput);
+
+                    GameWorld.repo1.Open();
+
+                    try
+                    {
+                        tmpPlayer = GameWorld.repo1.FindPlayer($"{playerNameInput}");
+                        Debug.WriteLine($"Player Found! {tmpPlayer.Name}");
+                        user = false;
+                        pass = true;
+                    }
+                    catch (Exception)
+                    {
+                        GameWorld.menuState.menyMsg = "No player found with that name!";
+                        GameWorld.menuState.IsCreatingUser = false;
+                        GameWorld.Instance.RemoveUserLogin();
+
+                    }
+                    GameWorld.repo1.Close();
+                    
                 }
                 pressedKey = releasedKey;
             }
@@ -161,6 +167,7 @@ namespace DataBros
         {
             if (pass == true)
             {
+                GameWorld.menuState.menyMsg = "Write your password and Press enter to login";
                 int length = PasswordInputString.Length;
                 if (pressedKey.IsKeyDown(Keys.Back) && releasedKey.IsKeyUp(Keys.Back))
                 {
@@ -177,59 +184,54 @@ namespace DataBros
                 }
                 if (pressedKey.IsKeyDown(Keys.Enter) && releasedKey.IsKeyUp(Keys.Enter))
                 {
-                    var playerNameInput = Convert.ToString(PlayerNameInput);
                     var passwordInputString = Convert.ToString(PasswordInputString);
                     Debug.WriteLine($"{passwordInputString}");
 
-                    Player tmpPlayer = new Player();
-
-                    GameWorld.repo.Open();
-
-                    try
-                    {
-                        tmpPlayer = GameWorld.repo.FindPlayer($"{playerNameInput}");
-                       Debug.WriteLine($"Player Found! {tmpPlayer.Name}");
-
-                    }
-                    catch (Exception)
-                    {
-                        Debug.WriteLine($"No player found with that name!");
-                    }
-                    GameWorld.repo.Close();
+                   
 
                     if (tmpPlayer.Password == passwordInputString)
                     {
                         Debug.WriteLine($"Password found! {tmpPlayer.Password}");
 
                         // set players
-                        if (GameWorld.Instance.player1 == null)
+                        if (GameWorld.Instance.player1.logedIn == false)
                         {
                             GameWorld.Instance.player1 = tmpPlayer;
+                            GameWorld.Instance.player1.logedIn = true;
                             Debug.WriteLine($"Setting Player1 to {GameWorld.Instance.player1.Name}");
+                            GameWorld.Instance.player1.isplayer1 = true;
+                            GameWorld.Instance.player1.Loadcontent();
+                            GameWorld.menuState.menyMsg = "Now login with player 2";
+
                         }
-                        else if (GameWorld.Instance.player2 == null)
+                        else if (GameWorld.Instance.player2.logedIn == false)
                         {
                             if (GameWorld.Instance.player1.Name != tmpPlayer.Name)
                             {
                                 GameWorld.Instance.player2 = tmpPlayer;
+                                GameWorld.Instance.player2.logedIn = true;
                                 Debug.WriteLine($"Setting Player2 to {GameWorld.Instance.player2.Name}");
+                                GameWorld.Instance.player2.isplayer1 = false;
+                                GameWorld.Instance.player2.Loadcontent();
+                                GameWorld.menuState.menyMsg = "Now press start to start fishing";
+
                             }
                             else
                             {
-                                Debug.WriteLine($"Same user as player 1 and 2 ! try with another user ?");
+                                GameWorld.menuState.menyMsg = "User already logged in!! try with another user ?";
                             }
 
                         }
-                        else if (GameWorld.Instance.player2 != null & GameWorld.Instance.player1 != null)
+                        else if (GameWorld.Instance.player2.logedIn == true & GameWorld.Instance.player1.logedIn == true)
                         {
-                            Debug.WriteLine($" Only 2 players are allowed");
+                            GameWorld.menuState.menyMsg = "Only 2 players are allowed, press start to start fishing";
                         }
 
 
                     }
                     else
                     {
-                        Debug.WriteLine($"Wrong Password");
+                        GameWorld.menuState.menyMsg = "Wrong Password";
                     }
 
                     // Reset login

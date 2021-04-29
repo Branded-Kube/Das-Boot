@@ -4,6 +4,7 @@ using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Text;
 using System.Timers;
 
@@ -15,6 +16,8 @@ namespace DataBros
 
         public string Name { get { return name; }   set { name = value; } }
         private string name = "Username";
+        private string MsgToPlayer;
+
 
         //public string Name { get; set; }
 
@@ -31,28 +34,21 @@ namespace DataBros
         private Vector2 p2position = new Vector2(100, 900);
         private Vector2 p1AimPosition = new Vector2(700, 500);
         private Vector2 p2AimPosition = new Vector2(100, 500);
-        private bool isplayer1;
+        public bool isplayer1;
+        public bool logedIn = false;
+        int catchdifficulty;
+        Fish caught;
+        Color color = Color.White;
+        System.Timers.Timer fishTimer;
+        System.Timers.Timer catchTimer;
 
-        System.Timers.Timer aTimer;
 
-        bool alreadyFishing = false;
+        public bool alreadyFishing = false;
 
         private KeyboardState oldState;
         private KeyboardState newState;
 
-        private int pullCount = 0;
-
-
-        public Player(bool isplayer1)
-        {
-            this.isplayer1 = isplayer1;
-        }
-
-        public Player()
-        {
-
-
-        }
+        public int pullCount = 0;
 
         public void Loadcontent()
         {
@@ -75,15 +71,37 @@ namespace DataBros
             if (isplayer1)
             {
                 spriteBatch.Draw(player1Sprite, p1position, Color.White);
-                spriteBatch.Draw(p1Aim, p1AimPosition, Color.White);
+                spriteBatch.Draw(p1Aim, p1AimPosition, color);
+                spriteBatch.DrawString(GameWorld.font, $" pulls left: {pullCount}", new Vector2(p1position.X + 90, p1position.Y + 50), Color.Green);
 
+                spriteBatch.DrawString(GameWorld.font, $"   {Name}", new Vector2(p1position.X, p1position.Y - 25), Color.Black);
+                spriteBatch.DrawString(GameWorld.font, $"Money: {Money}", new Vector2(p1position.X - 90, p1position.Y +25), Color.Black);
+                if (alreadyFishing)
+                {
+                    spriteBatch.DrawString(GameWorld.font, $"Cant Move, busy fishing!", new Vector2(p1position.X -25, p1position.Y + 75), Color.Black);
+                }
+                if (MsgToPlayer != null)
+                {
+                    spriteBatch.DrawString(GameWorld.font, $"  {MsgToPlayer}", new Vector2(p1position.X, p1position.Y - 50), Color.Black);
+                }
             }
             else
             {
                 spriteBatch.Draw(player2Sprite, p2position, Color.White);
-                spriteBatch.Draw(p2Aim, p2AimPosition, Color.White);
+                spriteBatch.Draw(p2Aim, p2AimPosition, color);
+                spriteBatch.DrawString(GameWorld.font, $"   pulls left: {pullCount}", new Vector2(p2position.X + 90, p2position.Y + 50), Color.Green);
+                spriteBatch.DrawString(GameWorld.font, $"   {Name}", new Vector2(p2position.X, p2position.Y - 25), Color.Black);
+                spriteBatch.DrawString(GameWorld.font, $"Money: {Money}", new Vector2(p2position.X - 90, p2position.Y + 25), Color.Black);
+                if (alreadyFishing)
+                {
+                    spriteBatch.DrawString(GameWorld.font, $"Cant Move, busy fishing!", new Vector2(p2position.X - 25, p2position.Y + 75), Color.Black);
+                }
+                if (MsgToPlayer != null)
+                {
+                    spriteBatch.DrawString(GameWorld.font, $"  {MsgToPlayer}", new Vector2(p2position.X, p2position.Y - 50), Color.Black);
+                }
             }
-            spriteBatch.DrawString(GameWorld.font, $"ammount of pulls left: {pullCount}", new Vector2(10, 300), Color.Green);
+           
         }
 
         public void Update()
@@ -91,63 +109,192 @@ namespace DataBros
             oldState = newState;
             newState = Keyboard.GetState();
             //player 1 movement
-            if (alreadyFishing == false)
+            if (isplayer1)
             {
-                if (newState.IsKeyDown(Keys.Right) && oldState.IsKeyUp(Keys.Right) && p1position.X <= 900)
+                if (alreadyFishing == false)
                 {
-                    p1position.X += 100;
-                    p1AimPosition.X += 100;
-                }
-                if (Keyboard.GetState().IsKeyDown(Keys.Left) && oldState.IsKeyUp(Keys.Left) && p1position.X >= 100)
-                {
-                    p1position.X -= 100;
-                    p1AimPosition.X -= 100;
-                }
+                    if (newState.IsKeyDown(Keys.Right) && oldState.IsKeyUp(Keys.Right) && p1position.X <= 900)
+                    {
+                        p1position.X += 100;
+                        p1AimPosition.X += 100;
+                    }
+                    if (Keyboard.GetState().IsKeyDown(Keys.Left) && oldState.IsKeyUp(Keys.Left) && p1position.X >= 100)
+                    {
+                        p1position.X -= 100;
+                        p1AimPosition.X -= 100;
+                    }
 
-                if (Keyboard.GetState().IsKeyDown(Keys.Up) && oldState.IsKeyUp(Keys.Up) && p1AimPosition.Y >= 100)
-                {
-                    p1AimPosition.Y -= 100;
+                    if (Keyboard.GetState().IsKeyDown(Keys.Up) && oldState.IsKeyUp(Keys.Up) && p1AimPosition.Y >= 100)
+                    {
+                        p1AimPosition.Y -= 100;
+                    }
+                    if (Keyboard.GetState().IsKeyDown(Keys.Down) && oldState.IsKeyUp(Keys.Down) && p1AimPosition.Y <= 600)
+                    {
+                        p1AimPosition.Y += 100;
+                    }
+                    if (Keyboard.GetState().IsKeyDown(Keys.Enter) && oldState.IsKeyUp(Keys.Enter))
+                    {
+                        FishingKey();
+                    }
                 }
-                if (Keyboard.GetState().IsKeyDown(Keys.Down) && oldState.IsKeyUp(Keys.Down) && p1AimPosition.Y <= 600)
+                else
                 {
-                    p1AimPosition.Y += 100;
+                    if (Keyboard.GetState().IsKeyDown(Keys.Enter) && oldState.IsKeyUp(Keys.Enter))
+                    {
+                        if (pullCount > 0)
+                        {
+                            pullCount -= 1;
+                        }
+                    }
                 }
-                if (Keyboard.GetState().IsKeyDown(Keys.Enter) && oldState.IsKeyUp(Keys.RightShift))
+            }
+            else
+            {
+                if (alreadyFishing == false)
                 {
-                    GameWorld.gameState.FishingKey();
+                    //player 2 movement
+                    if (newState.IsKeyDown(Keys.D) && oldState.IsKeyUp(Keys.D) && p2position.X <= 900)
+                    {
+                        p2position.X += 100;
+                        p2AimPosition.X += 100;
+                    }
+                    if (Keyboard.GetState().IsKeyDown(Keys.A) && oldState.IsKeyUp(Keys.A) && p2position.X >= 100)
+                    {
+                        p2position.X -= 100;
+                        p2AimPosition.X -= 100;
+                    }
+
+                    if (Keyboard.GetState().IsKeyDown(Keys.W) && oldState.IsKeyUp(Keys.W) && p2AimPosition.Y >= 100)
+                    {
+                        p2AimPosition.Y -= 100;
+                    }
+                    if (Keyboard.GetState().IsKeyDown(Keys.S) && oldState.IsKeyUp(Keys.S) && p2AimPosition.Y <= 600)
+                    {
+                        p2AimPosition.Y += 100;
+                    }
+
+                    if (Keyboard.GetState().IsKeyDown(Keys.Space) && oldState.IsKeyUp(Keys.Space))
+                    {
+                     
+                        FishingKey();
+
+                        
+                    }
+                }
+                else
+                {
+                    if (Keyboard.GetState().IsKeyDown(Keys.Space) && oldState.IsKeyUp(Keys.Space))
+                    {
+                        if (pullCount > 0)
+                        {
+                            pullCount -= 1;
+                        }
+                    }
                 }
             }
 
-            if (alreadyFishing == false)
+            if (p1AimPosition.Y > 600)
             {
-                //player 2 movement
-                if (newState.IsKeyDown(Keys.D) && oldState.IsKeyUp(Keys.D) && p2position.X <= 900)
-                {
-                    p2position.X += 100;
-                    p2AimPosition.X += 100;
-                }
-                if (Keyboard.GetState().IsKeyDown(Keys.A) && oldState.IsKeyUp(Keys.A) && p2position.X >= 100)
-                {
-                    p2position.X -= 100;
-                    p2AimPosition.X -= 100;
-                }
+                catchdifficulty = 3;
+            }
+            else if (p1AimPosition.Y <= 600 & p1AimPosition.Y > 300)
+            {
+                catchdifficulty = 2;
 
-                if (Keyboard.GetState().IsKeyDown(Keys.W) && oldState.IsKeyUp(Keys.W) && p2AimPosition.Y >= 100)
-                {
-                    p2AimPosition.Y -= 100;
-                }
-                if (Keyboard.GetState().IsKeyDown(Keys.S) && oldState.IsKeyUp(Keys.S) && p2AimPosition.Y <= 600)
-                {
-                    p2AimPosition.Y += 100;
-                }
+            }
+            else
+            {
+                catchdifficulty = 1;
 
-                if (Keyboard.GetState().IsKeyDown(Keys.Space) && oldState.IsKeyUp(Keys.Space))
-                {
-                    GameWorld.gameState.FishingKey();
-                }
             }
         }
 
+        public void FishingKey()
+        {
 
+            pullCount = 0;
+            fishTimer = new System.Timers.Timer();
+                fishTimer.Elapsed += new ElapsedEventHandler(OnTimedEventFishing);
+                if (GameWorld.currentBait.Alive)
+                {
+                    fishTimer.Interval = 3000 * GameWorld.currentBait.BiteTime *0.5f;
+                }
+                else
+                {
+                    fishTimer.Interval = 3000 * GameWorld.currentBait.BiteTime;
+                }
+                fishTimer.Enabled = true;
+                alreadyFishing = true;
+                MsgToPlayer = "";
+            
+        }
+
+        private void OnTimedEventFishing(object sender, ElapsedEventArgs e)
+        {
+            // catchdifficulty
+            Random Rndchance = new Random();
+            int chanceToCatch = Rndchance.Next( 1, 10);
+            chanceToCatch += catchdifficulty;
+            Debug.WriteLine($"{chanceToCatch}");
+            Debug.WriteLine($"difficulty{catchdifficulty} position{p1AimPosition.Y}");
+
+
+            if (chanceToCatch > 6)
+            {
+                MsgToPlayer = $"A fish has taken the bait! time to wheel it in (Press enter / space)!!";
+                color = Color.Black;
+                Random rnd = new Random();
+                pullCount = rnd.Next(10, 20);
+
+                GameWorld.repo1.Open();
+                    var catchAble = GameWorld.repo1.FindAFish(GameWorld.gameState.currentWater.Id);
+                GameWorld.repo1.Close();
+
+                int max = catchAble.Count;
+                    Random Rnd = new Random();
+                    int randomNumber = Rnd.Next(0, max);
+
+                    caught = catchAble[randomNumber];
+                pullCount += caught.Strenght;
+
+                catchTimer = new System.Timers.Timer();
+                catchTimer.Elapsed += new ElapsedEventHandler(OnTimedEventCatching);
+                catchTimer.Interval = 5000;
+                catchTimer.Enabled = true;
+
+
+            }
+            else
+            {
+                MsgToPlayer = "You didnt catch a thing!!";
+                alreadyFishing = false;
+            }
+
+            fishTimer.Elapsed -= new ElapsedEventHandler(OnTimedEventFishing);
+            fishTimer.Enabled = false;
+
+        }
+
+        private void OnTimedEventCatching(object sender, ElapsedEventArgs e)
+        {
+            if (pullCount == 0)
+            {
+                GameWorld.repo1.Open();
+
+                MsgToPlayer = $"You have caught a {caught.Name} at weight {caught.Weight} going for {caught.Price}!!";
+                Money += caught.Price;
+                GameWorld.repo1.UpdatePlayers(name, Money);
+                GameWorld.repo1.Close();
+            }
+            else
+            {
+                MsgToPlayer= $"Fish slipped away ";
+            }
+            color = Color.White;
+            catchTimer.Elapsed -= new ElapsedEventHandler(OnTimedEventCatching);
+            catchTimer.Enabled = false;
+            alreadyFishing = false;
+
+        }
     }
 }

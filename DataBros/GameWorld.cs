@@ -56,14 +56,16 @@ namespace DataBros
 
 
         // Custom classes/objects
-        public static VisualManager visualManager;
+       // public static VisualManager visualManager;
         public static ContentManager content;
 
         // Ints / points
-        private int sizeX = 900;
-        private int sizeY = 1100;
+        //private int sizeX = 900;
+        //private int sizeY = 1100;
 
-        public static Repository repo;
+        public static Repository repo1;
+        public static Repository repo2;
+
 
 
 
@@ -74,70 +76,54 @@ namespace DataBros
             content = Content;
             IsMouseVisible = true;
 
-            player1 = new Player(true);
-            player2 = new Player(false);
+            player1 = new Player();
+            player2 = new Player();
 
             // Database
             var mapper = new Mapper();
             var provider = new SQLiteDatabaseProvider("Data Source=adventurer.db;Version=3;new=true");
 
-            List<Character> result;
-            repo = new Repository(provider, mapper);
-            repo.Open();
+            repo1 = new Repository(provider, mapper);
+            repo2 = new Repository(provider, mapper);
 
-            //repo.AddPlayer("Player1", 100, "Pass1");
-            //repo.AddPlayer("Player2", 10, "Pass2");
+            repo1.Open();
 
-            repo.AddCharacter("Jon Snow", 2983);
-            repo.AddCharacter("Kurt", 2344);
-            repo.AddCharacter("Hans", 12);
+            repo1.AddWater("Lake", 20,true);
+            repo1.AddWater("Ocean", 100, false);
+            repo1.AddWater("Stream", 10, true);
 
-            repo.AddWater("Lake", 20, true);
-            repo.AddWater("Ocean", 100, false);
-            repo.AddWater("Stream", 10, true);
+            repo1.AddFish("Sild", 1, 1, 1, 1);
+            repo1.AddFish("Tun", 220,80, 3,2);
+            repo1.AddFish("FladFisk", 4,10, 2,3);
+            repo1.AddFish("Torsk", 40, 20,3,4);
+            repo1.AddBait("Regnorm", 5, 3, true);
+            repo1.AddBait("PowerBait", 10, 1, false);
+            repo1.AddBait("Sild", 20, 2, false);
 
-            repo.AddFish("Sild", 1, 1);
-            repo.AddFish("Tun", 80, 3);
-            repo.AddFish("FladFisk", 10, 2);
-            repo.AddFish("Torsk", 20, 3);
 
-            result = repo.GetAllCharacters();
-            foreach (var character in result)
-            {
-               Debug.WriteLine($"Id {character.Id} Name {character.Name} XP {character.Experience}");
-                
-            }
+            currentBait = repo1.FindBait("Regnorm");
 
-            
+            repo1.Close();
 
-            var anotherCharacter = repo.FindCharacter("Jon Snow");
-            //Debug.WriteLine($"Id {anotherCharacter.Id} Name {anotherCharacter.Name} XP {anotherCharacter.Experience}");
+            //var mapper1 = new Mapper();
+            //var provider1 = new SQLiteDatabaseProvider("Data Source=adventurer.db;Version=3;new=true");
 
-            repo.Close();
-            //
+            //List<Bait> result1;
+            //var repo1 = new Repository(provider1, mapper1);
 
-            var mapper1 = new Mapper();
-            var provider1 = new SQLiteDatabaseProvider("Data Source=adventurer.db;Version=3;new=true");
+            //repo.Open();
 
-            List<Bait> result1;
-            var repo1 = new Repository(provider1, mapper1);
-            repo.Open();
-            
-            repo.AddBait("Regnorm", 5, 3);
-            repo.AddBait("PowerBait", 10, 1);
-            repo.AddBait("Sild", 20, 2);
+          
+            //result1 = repo.GetAllBait();
+            //foreach (var bait in result1)
+            //{
+            //    Debug.WriteLine($"Id {bait.Id} Name {bait.BaitName} Cost {bait.Price}");
 
-            result1 = repo.GetAllBait();
-            foreach (var bait in result1)
-            {
-                Debug.WriteLine($"Id {bait.Id} Name {bait.BaitName} Cost {bait.Price}");
+            //}
+            //var anotherBait = repo.FindBait("Regnorm");
+            //Debug.WriteLine($"Id {anotherBait.Id} Name {anotherBait.BaitName} Cost {anotherBait.Price}");
 
-            }
-            currentBait = repo.FindBait("Regnorm");
-            var anotherBait = repo.FindBait("Regnorm");
-            Debug.WriteLine($"Id {anotherBait.Id} Name {anotherBait.BaitName} Cost {anotherBait.Price}");
-
-            repo.Close();
+            // repo.Close();
         }
 
         protected override void Initialize()
@@ -147,7 +133,7 @@ namespace DataBros
             _graphics.PreferredBackBufferWidth = 900;
             _graphics.PreferredBackBufferHeight = 1000;
 
-            visualManager = new VisualManager(_spriteBatch, new Rectangle(-566, 0, sizeX, sizeY));
+            //visualManager = new VisualManager(_spriteBatch, new Rectangle(-566, 0, sizeX, sizeY));
 
             _graphics.ApplyChanges();
             base.Initialize();
@@ -179,6 +165,7 @@ namespace DataBros
             Window.TextInput -= UserLogin.CreateUsernameInput;
 
             Window.TextInput -= UserLogin.CreatePasswordInput;
+            menuState.menyMsg = "Now press login";
         }
 
         protected override void LoadContent()
@@ -189,9 +176,13 @@ namespace DataBros
 
             //Game
             font = Content.Load<SpriteFont>("Fonts/font");
-            visualManager.LoadContent(Content);
+            //visualManager.LoadContent(Content);
             gameState = new GameState(this, _graphics.GraphicsDevice, Content);
+
             
+
+
+
             //Main Menu
             menuState = new MenuState(this, _graphics.GraphicsDevice, Content);
             currentState = menuState;
@@ -217,12 +208,13 @@ namespace DataBros
 
             currentState.PostUpdate(gameTime);
 
+            if (currentState == gameState)
+            {
+                player1.Update();
+                player2.Update();
+
+            }
            
-            player1.Update();
-            
-            player2.Update();
-
-
             base.Update(gameTime);
         }
 
@@ -234,7 +226,13 @@ namespace DataBros
             _spriteBatch.Begin();
 
 
+            if (currentState == gameState)
+            {
+                player1.Draw(_spriteBatch);
+                player2.Draw(_spriteBatch);
 
+            }
+          
 
             _spriteBatch.End();
 
