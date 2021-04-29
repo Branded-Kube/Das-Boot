@@ -29,6 +29,7 @@ namespace DataBros
         private Texture2D p1Aim;
         private Texture2D p2Aim;
         private Texture2D fishTexture;
+        private Texture2D bootTexture;
         private bool fishVisible;
         private Vector2 p1origin;
         private Vector2 p2origin;
@@ -59,14 +60,16 @@ namespace DataBros
                 player1Sprite = GameWorld.content.Load<Texture2D>("pl1");
                 p1origin = new Vector2(500, 300);
                 p1Aim = GameWorld.content.Load<Texture2D>("p1aimsprite");
-                fishTexture = GameWorld.content.Load<Texture2D>("fish");
+                bootTexture = GameWorld.content.Load<Texture2D>("fish");
+
             }
             else
             {
                 player2Sprite = GameWorld.content.Load<Texture2D>("pl2");
                 p2origin = new Vector2(300, 300);
                 p2Aim = GameWorld.content.Load<Texture2D>("p2aimsprite");
-                fishTexture = GameWorld.content.Load<Texture2D>("fish");
+                bootTexture = GameWorld.content.Load<Texture2D>("fish");
+
             }
         }
 
@@ -253,7 +256,16 @@ namespace DataBros
 
             if (chanceToCatch > 6)
             {
-                fishVisible = true;
+                if (caught.Name == "boots")
+                {
+                    fishTexture = bootTexture;
+                }
+                else
+                {
+                    fishTexture = GameWorld.content.Load<Texture2D>("fish");
+                    fishVisible = true;
+
+                }
                 MsgToPlayer = $"A fish has taken the bait! time to wheel it in (Press enter / space)!!";
                 color = Color.Black;
                 Random rnd = new Random();
