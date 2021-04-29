@@ -64,7 +64,6 @@ namespace DataBros
         //private int sizeY = 1100;
 
         public static Repository repo;
-        public static Repository repo2;
 
 
 
@@ -91,25 +90,25 @@ namespace DataBros
             repo.AddWater("Ocean", 100, false);
             repo.AddWater("Stream", 10, true);
 
-            repo1.AddFish("Herring", 5, 1, 1, 1);
-            repo1.AddFish("Cod", 35, 20, 1, 4);
-            repo1.AddFish("Boot", 50, 2, 1, 30);
-            repo1.AddFish("Tuna", 140, 80, 3, 2);
-            repo1.AddFish("Catfish", 5, 1, 1, 1);
+            repo.AddFish("Herring", 5, 1, 1, 1);
+            repo.AddFish("Cod", 35, 20, 1, 4);
+            repo.AddFish("Boot", 50, 2, 1, 30);
+            repo.AddFish("Tuna", 140, 80, 3, 2);
+            repo.AddFish("Catfish", 5, 1, 1, 1);
 
-            repo1.AddFish("Flatfish", 50, 25, 2, 3);
-            repo1.AddFish("Tigershark", 70, 50,2, 4);
-            repo1.AddFish("Squid", 40, 20, 2, 4);
-            repo1.AddFish("Boot", 50, 2, 2, 30);
+            repo.AddFish("Flatfish", 50, 25, 2, 3);
+            repo.AddFish("Tigershark", 70, 50,2, 4);
+            repo.AddFish("Squid", 40, 20, 2, 4);
+            repo.AddFish("Boot", 50, 2, 2, 30);
 
-            repo1.AddFish("Bass", 50, 1, 1, 1);
-            repo1.AddFish("The one ring to rule them all", 1000, 500, 3, 35);
-            repo1.AddFish("Salmon", 60, 60, 3, 3);
+            repo.AddFish("Bass", 50, 1, 1, 1);
+            repo.AddFish("The one ring to rule them all", 1000, 500, 3, 35);
+            repo.AddFish("Salmon", 60, 60, 3, 3);
 
 
-            repo1.AddBait("Earthworm", 5, 3, true);
-            repo1.AddBait("PowerBait", 10, 1, false);
-            repo1.AddBait("Herring", 20, 2, false);
+            repo.AddBait("Earthworm", 5, 3, true);
+            repo.AddBait("PowerBait", 10, 1, false);
+            repo.AddBait("Herring", 20, 2, false);
 
 
             currentBait = repo.FindBait("Regnorm");
