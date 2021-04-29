@@ -92,13 +92,22 @@ namespace DataBros
             repo1.AddWater("Ocean", 100, false);
             repo1.AddWater("Stream", 10, true);
 
-            repo1.AddFish("Sild", 1, 1, 1, 1);
-            repo1.AddFish("Tun", 220,80, 3,2);
-            repo1.AddFish("FladFisk", 4,10, 2,3);
-            repo1.AddFish("Torsk", 40, 20,3,4);
-            repo1.AddBait("Regnorm", 5, 3, true);
+            repo1.AddFish("Herring", 1, 1, 1, 1);
+            repo1.AddFish("Cod", 40, 20, 1, 4);
+            repo1.AddFish("Boot", 200, 2, 1, 30);
+
+            repo1.AddFish("Flatfish", 4, 10, 2, 3);
+            repo1.AddFish("Tigershark", 40, 20,3, 4);
+            repo1.AddFish("Squid", 40, 20, 3, 4);
+
+            repo1.AddFish("Tuna", 140, 80, 3,2);
+            repo1.AddFish("Cod", 40, 20, 3, 4);
+            repo1.AddFish("Salmon", 60, 60, 3, 3);
+
+
+            repo1.AddBait("Earthworm", 5, 3, true);
             repo1.AddBait("PowerBait", 10, 1, false);
-            repo1.AddBait("Sild", 20, 2, false);
+            repo1.AddBait("Herring", 20, 2, false);
 
 
             currentBait = repo1.FindBait("Regnorm");
