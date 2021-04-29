@@ -38,16 +38,11 @@ namespace DataBros.States
         Button streamButton;
         Button lakeButton;
         Button oceanButton;
-        Button FishButton;
         public Water stream;
         string msgToPlayers = "";
 
 
         public Water currentWater;
-        //System.Timers.Timer aTimer;
-
-        //private KeyboardState oldState;
-        //private KeyboardState newState;
         List<Fish> catchAble;
 
         #endregion
@@ -65,10 +60,6 @@ namespace DataBros.States
 
             GameWorld.repo.Close();
 
-          
-
-            //GameWorld.visualManager.cellCount = currentWater.Size;
-            //GameWorld.visualManager.CreateGrid();
 
             LoadContent();
             //Button
