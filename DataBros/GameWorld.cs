@@ -92,16 +92,19 @@ namespace DataBros
             repo1.AddWater("Ocean", 100, false);
             repo1.AddWater("Stream", 10, true);
 
-            repo1.AddFish("Herring", 1, 1, 1, 1);
-            repo1.AddFish("Cod", 40, 20, 1, 4);
-            repo1.AddFish("Boot", 200, 2, 1, 30);
+            repo1.AddFish("Herring", 5, 1, 1, 1);
+            repo1.AddFish("Cod", 35, 20, 1, 4);
+            repo1.AddFish("Boot", 50, 2, 1, 30);
+            repo1.AddFish("Tuna", 140, 80, 3, 2);
+            repo1.AddFish("Catfish", 5, 1, 1, 1);
 
-            repo1.AddFish("Flatfish", 4, 10, 2, 3);
-            repo1.AddFish("Tigershark", 40, 20,3, 4);
-            repo1.AddFish("Squid", 40, 20, 3, 4);
+            repo1.AddFish("Flatfish", 50, 25, 2, 3);
+            repo1.AddFish("Tigershark", 70, 50,2, 4);
+            repo1.AddFish("Squid", 40, 20, 2, 4);
+            repo1.AddFish("Boot", 50, 2, 2, 30);
 
-            repo1.AddFish("Tuna", 140, 80, 3,2);
-            repo1.AddFish("Cod", 40, 20, 3, 4);
+            repo1.AddFish("Bass", 50, 1, 1, 1);
+            repo1.AddFish("The one ring to rule them all", 1000, 500, 3, 35);
             repo1.AddFish("Salmon", 60, 60, 3, 3);
 
 
