@@ -28,6 +28,8 @@ namespace DataBros
         private Texture2D player2Sprite;
         private Texture2D p1Aim;
         private Texture2D p2Aim;
+        private Texture2D fishTexture;
+        private bool fishVisible;
         private Vector2 p1origin;
         private Vector2 p2origin;
         private Vector2 p1position = new Vector2(700, 900);
@@ -57,12 +59,14 @@ namespace DataBros
                 player1Sprite = GameWorld.content.Load<Texture2D>("pl1");
                 p1origin = new Vector2(500, 300);
                 p1Aim = GameWorld.content.Load<Texture2D>("p1aimsprite");
+                fishTexture = GameWorld.content.Load<Texture2D>("fish");
             }
             else
             {
                 player2Sprite = GameWorld.content.Load<Texture2D>("pl2");
                 p2origin = new Vector2(300, 300);
                 p2Aim = GameWorld.content.Load<Texture2D>("p2aimsprite");
+                fishTexture = GameWorld.content.Load<Texture2D>("fish");
             }
         }
 
@@ -72,6 +76,10 @@ namespace DataBros
             {
                 spriteBatch.Draw(player1Sprite, p1position, Color.White);
                 spriteBatch.Draw(p1Aim, p1AimPosition, color);
+                if (fishVisible)
+                {
+                    spriteBatch.Draw(fishTexture, new Rectangle((int)p1AimPosition.X, (int)p1AimPosition.Y, p1Aim.Width, p1Aim.Height), Color.White);
+                }
                 spriteBatch.DrawString(GameWorld.font, $" pulls left: {pullCount}", new Vector2(p1position.X + 90, p1position.Y + 50), Color.Green);
 
                 spriteBatch.DrawString(GameWorld.font, $"   {Name}", new Vector2(p1position.X, p1position.Y - 25), Color.Black);
@@ -89,6 +97,10 @@ namespace DataBros
             {
                 spriteBatch.Draw(player2Sprite, p2position, Color.White);
                 spriteBatch.Draw(p2Aim, p2AimPosition, color);
+                if (fishVisible)
+                {
+                    spriteBatch.Draw(fishTexture, new Rectangle((int)p2AimPosition.X, (int)p2AimPosition.Y, p2Aim.Width, p2Aim.Height), Color.White);
+                }
                 spriteBatch.DrawString(GameWorld.font, $"   pulls left: {pullCount}", new Vector2(p2position.X + 90, p2position.Y + 50), Color.Green);
                 spriteBatch.DrawString(GameWorld.font, $"   {Name}", new Vector2(p2position.X, p2position.Y - 25), Color.Black);
                 spriteBatch.DrawString(GameWorld.font, $"Money: {Money}", new Vector2(p2position.X - 90, p2position.Y + 25), Color.Black);
@@ -241,6 +253,7 @@ namespace DataBros
 
             if (chanceToCatch > 6)
             {
+                fishVisible = true;
                 MsgToPlayer = $"A fish has taken the bait! time to wheel it in (Press enter / space)!!";
                 color = Color.Black;
                 Random rnd = new Random();
@@ -262,7 +275,6 @@ namespace DataBros
                 catchTimer.Interval = 5000;
                 catchTimer.Enabled = true;
 
-
             }
             else
             {
@@ -277,6 +289,8 @@ namespace DataBros
 
         private void OnTimedEventCatching(object sender, ElapsedEventArgs e)
         {
+            fishVisible = false;
+
             if (pullCount == 0)
             {
                 GameWorld.repo1.Open();
