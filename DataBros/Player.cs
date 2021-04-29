@@ -32,10 +32,10 @@ namespace DataBros
         private bool fishVisible;
         private Vector2 p1origin;
         private Vector2 p2origin;
-        private Vector2 p2position = new Vector2(700, 900);
-        private Vector2 p1position = new Vector2(100, 900);
-        private Vector2 p2AimPosition = new Vector2(700, 500);
-        private Vector2 p1AimPosition = new Vector2(100, 500);
+        private Vector2 p2position = new Vector2(100, 900);
+        private Vector2 p1position = new Vector2(700, 900);
+        private Vector2 p2AimPosition = new Vector2(100, 500);
+        private Vector2 p1AimPosition = new Vector2(700, 500);
         public bool isplayer1;
         public bool logedIn = false;
         int catchdifficulty;
@@ -57,14 +57,12 @@ namespace DataBros
             if (isplayer1)
             {
                 player1Sprite = GameWorld.content.Load<Texture2D>("pl1");
-                p1origin = new Vector2(500, 300);
                 p1Aim = GameWorld.content.Load<Texture2D>("p1aimsprite");
 
             }
             else
             {
                 player2Sprite = GameWorld.content.Load<Texture2D>("pl2");
-                p2origin = new Vector2(300, 300);
                 p2Aim = GameWorld.content.Load<Texture2D>("p2aimsprite");
 
             }
