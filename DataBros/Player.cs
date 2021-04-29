@@ -30,10 +30,10 @@ namespace DataBros
         private Texture2D p2Aim;
         private Vector2 p1origin;
         private Vector2 p2origin;
-        private Vector2 p1position = new Vector2(700, 900);
-        private Vector2 p2position = new Vector2(100, 900);
-        private Vector2 p1AimPosition = new Vector2(700, 500);
-        private Vector2 p2AimPosition = new Vector2(100, 500);
+        private Vector2 p2position = new Vector2(700, 900);
+        private Vector2 p1position = new Vector2(100, 900);
+        private Vector2 p2AimPosition = new Vector2(700, 500);
+        private Vector2 p1AimPosition = new Vector2(100, 500);
         public bool isplayer1;
         public bool logedIn = false;
         int catchdifficulty;
@@ -281,7 +281,7 @@ namespace DataBros
             {
                 GameWorld.repo.Open();
 
-                MsgToPlayer = $"You have caught a {caught.Name} at weight {caught.Weight} going for {caught.Price}!!";
+                MsgToPlayer = $"You have caught a {caught.Name} at weight {caught.Weight}Kg going for {caught.Price}!!";
                 Money += caught.Price;
                 GameWorld.repo.UpdatePlayers(name, Money);
                 GameWorld.repo.Close();
