@@ -28,11 +28,6 @@ namespace DataBros.States
         private Texture2D upgradeMenuTexture;
         private Rectangle upgradeMenuRectangle;
 
-        private Texture2D upgrade1;
-        private Texture2D upgrade2;
-   
-        private Rectangle upgRectangle;
-        private Rectangle upg2Rectangle;
         Texture2D buttonTexture;
         SpriteFont buttonFont;
         Button pickWaterButton;
@@ -116,14 +111,8 @@ namespace DataBros.States
             backgroundRectangle = new Rectangle(0, 0, backgroundTexture.Width, backgroundTexture.Height);
 
             //Upgrade menu
-            upgradeMenuTexture = _content.Load<Texture2D>("upgmenu");
+            upgradeMenuTexture = _content.Load<Texture2D>("upgrademenu");
             upgradeMenuRectangle = new Rectangle(430, 90, upgradeMenuTexture.Width, upgradeMenuTexture.Height);
-
-            upgrade1 = _content.Load<Texture2D>("upgrade1");
-            upgrade2 = _content.Load<Texture2D>("upgrade2");
-            upgRectangle = new Rectangle(495, 140, upgrade1.Width, upgrade1.Height);
-            upg2Rectangle = new Rectangle(495, 195, upgrade2.Width, upgrade2.Height);
-
         }
 
 
@@ -169,8 +158,6 @@ namespace DataBros.States
             if (playGame)
             {
                 spriteBatch.Draw(upgradeMenuTexture, upgradeMenuRectangle, Color.White);
-                spriteBatch.Draw(upgrade1, upgRectangle, Color.White);
-                spriteBatch.Draw(upgrade2, upg2Rectangle, Color.White);
             }
 
             spriteBatch.End();
