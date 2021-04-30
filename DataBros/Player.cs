@@ -277,20 +277,26 @@ namespace DataBros
             }
         }
 
+        /// <summary>
+        /// Starts a timer with a base 3sec and blocks playermovemnt. 
+        /// Adds bait modifiers to timer, if bait is alive * 0.5
+        /// </summary>
         public void FishingKey()
         {
 
             pullCount = 0;
             fishTimer = new System.Timers.Timer();
                 fishTimer.Elapsed += new ElapsedEventHandler(OnTimedEventFishing);
+
+            // adds bait modifier
                 if (GameWorld.currentBait.Alive)
                 {
-                    fishTimer.Interval = 3000 * GameWorld.currentBait.BiteTime *0.5f;
+                fishTimer.Interval = 3000 * GameWorld.currentBait.BiteTime;
                 }
                 else
                 {
-                    fishTimer.Interval = 3000 * GameWorld.currentBait.BiteTime;
-                }
+                    fishTimer.Interval = 3000 * GameWorld.currentBait.BiteTime *0.5f;
+            }
                 fishTimer.Enabled = true;
                 alreadyFishing = true;
                 MsgToPlayer = "";
@@ -298,29 +304,33 @@ namespace DataBros
         }
 
         /// <summary>
-        ///  Time it takes to catch a random fish from its water (foreign key relation) id, or nothing. 
-        ///  
+        ///  Time it takes to a catch random fish from its water (foreign key relation) id, or nothing. 
+        ///  If it catches 
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
         private void OnTimedEventFishing(object sender, ElapsedEventArgs e)
         {
-            
+
             Random Rndchance = new Random();
             int chanceToCatch = Rndchance.Next( 1, 10);
+            //sets a random chance 
+            // adds a catching difficulty modifier(1 - 3) 
+            // deping on players y possition from coastline in sections 1 to 3
             chanceToCatch += catchdifficulty;
-            //
-
+         
             // For testing
             Debug.WriteLine($"{chanceToCatch}");
             Debug.WriteLine($"difficulty{catchdifficulty} position{p2AimPosition.Y}");
 
+            
             if (chanceToCatch > 6)
             {
                 MsgToPlayer = $"A fish has taken the bait! time to wheel it in (Press enter / space)!!";
                 color = Color.Black;
-                Random rnd = new Random();
-                pullCount = rnd.Next(10, 20);
+
+
+                // Gets list of available fish in current water
                 List<Fish> catchAble;
                 if (isplayer1)
                 {
@@ -335,15 +345,24 @@ namespace DataBros
                     GameWorld.repo2.Close();
                 }
               
-
+                // picks a random fish from the list
                 int max = catchAble.Count;
                     Random Rnd = new Random();
                     int randomNumber = Rnd.Next(0, max);
 
                     caught = catchAble[randomNumber];
-                pullCount += caught.Strenght;
-                CalcPullPerClick();
 
+
+                // sets a random pullcounter
+                Random rnd = new Random();
+                pullCount = rnd.Next(10, 20);
+
+                // adds chosen fishs strenght to a pullcounter
+                pullCount += caught.Strenght;
+
+                // cals how many clicks it takes for fish positon to reach player position
+                CalcPullPerClick();
+                // Sets caughts texture and sound effect acording to name 
                 Debug.WriteLine(pullPerClick);
                 if (caught.Name == "Boot")
                 {
@@ -362,10 +381,12 @@ namespace DataBros
                 }
                 fishVisible = true;
 
+                // starts the timer to reel in the fish
                 catchTimer = new System.Timers.Timer();
                 catchTimer.Elapsed += new ElapsedEventHandler(OnTimedEventCatching);
                 catchTimer.Interval = 5000;
                 catchTimer.Enabled = true;
+                // enables players pull option (enter)
                 enablePull = true;
             }
             else
@@ -375,12 +396,18 @@ namespace DataBros
                 dammitEffect.Play();
             }
 
+            // turns of the event
             fishTimer.Elapsed -= new ElapsedEventHandler(OnTimedEventFishing);
             fishTimer.Enabled = false;
         }
 
 
 
+        /// <summary>
+        /// Time to reel in a fish, gives fish price to player money if player have pulled x amount of times. 
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void OnTimedEventCatching(object sender, ElapsedEventArgs e)
         {
             fishVisible = false;
