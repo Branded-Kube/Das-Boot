@@ -163,7 +163,11 @@ namespace DataBros.States
             spriteBatch.End();
         }
 
-
+        /// <summary>
+        /// enables the buttons to pick different waters to fish on
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void PickWaterButton_Click(object sender, EventArgs e)
         {
             if (pickWater == true)
@@ -249,6 +253,11 @@ namespace DataBros.States
             }
         }
 
+        /// <summary>
+        /// gives the players a new kind of bait to make fishing faster
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void BaitButton_Click(object sender, EventArgs e)
         {
             GameWorld.repo1.Open();
