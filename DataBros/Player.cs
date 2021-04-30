@@ -277,7 +277,7 @@ namespace DataBros
                 }
                 else
                 {
-                    fishTexture = GameWorld.content.Load<Texture2D>("Fish");
+                    fishTexture = GameWorld.content.Load<Texture2D>("fish");
                 }
 
                 catchTimer = new System.Timers.Timer();
