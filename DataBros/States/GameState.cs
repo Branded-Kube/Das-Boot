@@ -364,11 +364,6 @@ namespace DataBros.States
             GameWorld.currentState = GameWorld.menuState;
         }
 
-        public override void PostUpdate(GameTime gameTime)
-        {
-            //remove sprites if they are not needed
-        }
-
         public override void Update(GameTime gameTime)
         {
 

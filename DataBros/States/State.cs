@@ -21,8 +21,6 @@ namespace DataBros.States
 
         public abstract void Draw(GameTime gameTime, SpriteBatch spriteBatch);
 
-        public abstract void PostUpdate(GameTime gameTime);
-
         #region Constructor
         public State(GameWorld game, GraphicsDevice graphicsDevice, ContentManager content)
         {

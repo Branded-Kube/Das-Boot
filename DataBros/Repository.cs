@@ -102,15 +102,6 @@ namespace DataBros
             var result1 = mapper.MapBaitFromReader(reader).First();
             return result1;
         }
-
-        //public List<Bait> GetAllBait()
-        //{
-        //    var cmd = new SQLiteCommand("SELECT * from bait", (SQLiteConnection)connection);
-        //    var reader = cmd.ExecuteReader();
-
-        //    var result1 = mapper.MapBaitFromReader(reader);
-        //    return result1;
-        //}
         public void AddFish(string name, int weight, int price, int FKID, int strenght)
         {
             var cmd = new SQLiteCommand($"INSERT OR IGNORE INTO Fish (Name,Weight,Price,WaterFK,Strenght) VALUES ('{name}',{weight},{price},{FKID},{strenght})", (SQLiteConnection)connection);

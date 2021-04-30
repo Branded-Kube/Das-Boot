@@ -16,7 +16,10 @@ namespace DataBros.States
         public string menyMsg = "";
         public bool inMenu = false;
 
-        public SoundEffect effect;
+        public SoundEffect delEffect;
+        public SoundEffect buttonEffect;
+        public SoundEffect newUserEffect;
+        public SoundEffect userLogineffect;
 
         public bool IsCreatingUser {
             get
@@ -92,12 +95,12 @@ namespace DataBros.States
                 CreateUserButton,
                 UserLoginButton,
             };
+            LoadContent();
         }
 
         private void DeleteUserButton_Click(object sender, EventArgs e)
         {
-            effect = GameWorld.content.Load<SoundEffect>("Sounds/delete");
-            effect.Play();
+            delEffect.Play();
 
             GameWorld.repo1.Open();
            GameWorld.repo1.DelPlayers();
@@ -107,6 +110,13 @@ namespace DataBros.States
 
         #endregion
 
+        public void LoadContent()
+        {
+            delEffect = GameWorld.content.Load<SoundEffect>("Sounds/delete");
+            buttonEffect = GameWorld.content.Load<SoundEffect>("Sounds/btneffect");
+            newUserEffect = GameWorld.content.Load<SoundEffect>("Sounds/waterdrop");
+            userLogineffect = GameWorld.content.Load<SoundEffect>("Sounds/waterblup");
+        }
         public override void Draw(GameTime gameTime, SpriteBatch spriteBatch)
         {
             spriteBatch.Begin();
@@ -140,8 +150,7 @@ namespace DataBros.States
 
         private void NewGameButton_Click(object sender, EventArgs e)
         {
-            effect = GameWorld.content.Load<SoundEffect>("Sounds/btneffect");
-            effect.Play();
+            buttonEffect.Play();
 
             if (GameWorld.Instance.player2.logedIn == true & GameWorld.Instance.player1.logedIn == true)
             {
@@ -158,8 +167,7 @@ namespace DataBros.States
 
         private void CreateNewUserButton_Click(object sender, EventArgs e)
         {
-            effect = GameWorld.content.Load<SoundEffect>("Sounds/waterdrop");
-            effect.Play();
+            newUserEffect.Play();
 
             menyMsg = "Write your name and Press enter to confirm";
 
@@ -177,8 +185,7 @@ namespace DataBros.States
 
         private void UserLoginButton_Click(object sender, EventArgs e)
         {
-            effect = GameWorld.content.Load<SoundEffect>("Sounds/waterblup");
-            effect.Play();
+            userLogineffect.Play();
 
             menyMsg = "Write your username and press enter ";
             if (inMenu == false)
@@ -191,12 +198,7 @@ namespace DataBros.States
                 isCreatingUser = true;
             }
         }
-
-        public override void PostUpdate(GameTime gameTime)
-        {
-            //remove sprites if they are not needed
-        }
-
+       
         public override void Update(GameTime gameTime)
         {
             //Button
@@ -206,11 +208,7 @@ namespace DataBros.States
             }
         }
 
-        //public override void Load(ContentManager content)
-        //{
-        //    throw new NotImplementedException();
-        //}
-
+     
         #endregion
     }
 }

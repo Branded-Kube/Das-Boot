@@ -170,13 +170,10 @@ namespace DataBros
             currentState = menuState;
             
         }
-        protected override void UnloadContent()
-        {
-            base.UnloadContent();
-        }
+     
         protected override void Update(GameTime gameTime)
         {
-            if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
+            if (Keyboard.GetState().IsKeyDown(Keys.Escape))
                 Exit();
          
             if (nextState != null)
@@ -187,8 +184,6 @@ namespace DataBros
             }
 
             currentState.Update(gameTime);
-
-            currentState.PostUpdate(gameTime);
 
             if (currentState == gameState)
             {
