@@ -1,4 +1,5 @@
 ﻿using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Audio;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
@@ -49,6 +50,8 @@ namespace DataBros
         private KeyboardState newState;
 
         public int pullCount = 0;
+
+        public SoundEffect effect;
 
         public void Loadcontent()
         {
@@ -125,11 +128,15 @@ namespace DataBros
                     {
                         p1position.X += 100;
                         p1AimPosition.X += 100;
+                        effect = GameWorld.content.Load<SoundEffect>("Sounds/Step1");
+                        effect.Play();
                     }
                     if (Keyboard.GetState().IsKeyDown(Keys.Left) && oldState.IsKeyUp(Keys.Left) && p1position.X >= 100)
                     {
                         p1position.X -= 100;
                         p1AimPosition.X -= 100;
+                        effect = GameWorld.content.Load<SoundEffect>("Sounds/Step1");
+                        effect.Play();
                     }
 
                     if (Keyboard.GetState().IsKeyDown(Keys.Up) && oldState.IsKeyUp(Keys.Up) && p1AimPosition.Y >= 100)
@@ -143,6 +150,8 @@ namespace DataBros
                     if (Keyboard.GetState().IsKeyDown(Keys.Enter) && oldState.IsKeyUp(Keys.Enter))
                     {
                         FishingKey();
+                        effect = GameWorld.content.Load<SoundEffect>("Sounds/fishingreel");
+                        effect.Play();
                     }
                 }
                 else
@@ -165,11 +174,15 @@ namespace DataBros
                     {
                         p2position.X += 100;
                         p2AimPosition.X += 100;
+                        effect = GameWorld.content.Load<SoundEffect>("Sounds/Step2");
+                        effect.Play();
                     }
                     if (Keyboard.GetState().IsKeyDown(Keys.A) && oldState.IsKeyUp(Keys.A) && p2position.X >= 100)
                     {
                         p2position.X -= 100;
                         p2AimPosition.X -= 100;
+                        effect = GameWorld.content.Load<SoundEffect>("Sounds/Step2");
+                        effect.Play();
                     }
 
                     if (Keyboard.GetState().IsKeyDown(Keys.W) && oldState.IsKeyUp(Keys.W) && p2AimPosition.Y >= 100)
@@ -185,8 +198,9 @@ namespace DataBros
                     {
                      
                         FishingKey();
+                        effect = GameWorld.content.Load<SoundEffect>("Sounds/fishingreel");
+                        effect.Play();
 
-                        
                     }
                 }
                 else
@@ -270,14 +284,20 @@ namespace DataBros
                 if (caught.Name == "Boot")
                 {
                     fishTexture = GameWorld.content.Load<Texture2D>("Boot");
+                    effect = GameWorld.content.Load<SoundEffect>("Sounds/dasboot");
+                    effect.Play();
                 }
                 else if (caught.Name == "The one ring to rule them all")
                 {
                     fishTexture = GameWorld.content.Load<Texture2D>("Ring");
+                    effect = GameWorld.content.Load<SoundEffect>("Sounds/MyPrecious");
+                    effect.Play();
                 }
                 else
                 {
-                    fishTexture = GameWorld.content.Load<Texture2D>("fish");
+                    fishTexture = GameWorld.content.Load<Texture2D>("Fish");
+                    effect = GameWorld.content.Load<SoundEffect>("Sounds/fishy");
+                    effect.Play();
                 }
 
                 catchTimer = new System.Timers.Timer();
@@ -290,6 +310,8 @@ namespace DataBros
             {
                 MsgToPlayer = "You didnt catch a thing!!";
                 alreadyFishing = false;
+                effect = GameWorld.content.Load<SoundEffect>("Sounds/Damnit");
+                effect.Play();
             }
 
             fishTimer.Elapsed -= new ElapsedEventHandler(OnTimedEventFishing);
@@ -313,6 +335,8 @@ namespace DataBros
             else
             {
                 MsgToPlayer= $"Fish slipped away ";
+                effect = GameWorld.content.Load<SoundEffect>("Sounds/notagain");
+                effect.Play();
             }
             color = Color.White;
             catchTimer.Elapsed -= new ElapsedEventHandler(OnTimedEventCatching);
