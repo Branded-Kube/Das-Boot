@@ -76,17 +76,17 @@ namespace DataBros
                     var passwordInputString = Convert.ToString(PasswordInputString);
                     Debug.WriteLine($"{passwordInputString}");
 
-                    GameWorld.repo.Open();
+                    GameWorld.repo1.Open();
                     bool success = false;
                     try
                     {
-                        GameWorld.repo.FindPlayer($"{playerNameInput}");
+                        GameWorld.repo1.FindPlayer($"{playerNameInput}");
                         success = true;
                     }
                     catch (Exception)
                     {
                         Debug.WriteLine($"No player found with that name! , Adding player to table");
-                        GameWorld.repo.AddPlayer(playerNameInput,0,$"{PasswordInputString}");
+                        GameWorld.repo1.AddPlayer(playerNameInput,0,$"{PasswordInputString}");
 
                     }
                     finally
@@ -97,7 +97,7 @@ namespace DataBros
                         }
                     }
                    
-                    GameWorld.repo.Close();
+                    GameWorld.repo1.Close();
 
                     // Reset login
                     GameWorld.menuState.IsCreatingUser = false;
@@ -138,11 +138,11 @@ namespace DataBros
                     tmpPlayer = new Player();
                     var playerNameInput = Convert.ToString(PlayerNameInput);
 
-                    GameWorld.repo.Open();
+                    GameWorld.repo1.Open();
 
                     try
                     {
-                        tmpPlayer = GameWorld.repo.FindPlayer($"{playerNameInput}");
+                        tmpPlayer = GameWorld.repo1.FindPlayer($"{playerNameInput}");
                         Debug.WriteLine($"Player Found! {tmpPlayer.Name}");
                         user = false;
                         pass = true;
@@ -154,7 +154,7 @@ namespace DataBros
                         GameWorld.Instance.RemoveUserLogin();
 
                     }
-                    GameWorld.repo.Close();
+                    GameWorld.repo1.Close();
                     
                 }
                 pressedKey = releasedKey;

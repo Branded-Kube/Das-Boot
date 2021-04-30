@@ -56,7 +56,9 @@ namespace DataBros
 
         public static ContentManager content;
 
-        public static Repository repo;
+        public static Repository repo1;
+        public static Repository repo2;
+
 
         public GameWorld()
         {
@@ -70,41 +72,43 @@ namespace DataBros
 
             // Database
             var mapper = new Mapper();
-            var provider = new SQLiteDatabaseProvider("Data Source=adventurer.db;Version=3;new=true");
+            var provider = new SQLiteDatabaseProvider("Data Source=DasBoot.db;Version=3;new=true");
 
-            repo = new Repository(provider, mapper);
-
-            repo.Open();
-
-            repo.AddWater("Lake", 20,true);
-            repo.AddWater("Ocean", 100, false);
-            repo.AddWater("Stream", 10, true);
-
-            repo.AddFish("Herring", 5, 1, 1, 1);
-            repo.AddFish("Cod", 35, 20, 1, 4);
-            repo.AddFish("Tuna", 140, 80, 1, 2);
-            repo.AddFish("Catfish", 5, 1, 1, 1);
-
-            repo.AddFish("Flatfish", 10, 25, 2, 3);
-            repo.AddFish("Tigershark", 50, 50,2, 12);
-            repo.AddFish("Squid", 40, 30, 2, 5);
-            repo.AddFish("Dolphin", 60, 40, 2, 10);
-            repo.AddFish("Whale", 100, 80, 2, 20);
-
-            repo.AddFish("Bass", 50, 1, 3, 1);
-            repo.AddFish("The one ring to rule them all", 1000, 500, 3, 35);
-            repo.AddFish("Salmon", 60, 60, 3, 3);
-            repo.AddFish("Boot", 50, 2, 3, 30);
+            repo1 = new Repository(provider, mapper);
+            repo2 = new Repository(provider, mapper);
 
 
-            repo.AddBait("Earthworm", 5, 3, true);
-            repo.AddBait("PowerBait", 10, 1, false);
-            repo.AddBait("Herring", 20, 2, false);
+            repo1.Open();
+
+            repo1.AddWater("Lake", 20,true);
+            repo1.AddWater("Ocean", 100, false);
+            repo1.AddWater("Stream", 10, true);
+
+            repo1.AddFish("Herring", 5, 1, 1, 1);
+            repo1.AddFish("Cod", 35, 20, 1, 4);
+            repo1.AddFish("Tuna", 140, 80, 1, 2);
+            repo1.AddFish("Catfish", 5, 1, 1, 1);
+
+            repo1.AddFish("Flatfish", 10, 25, 2, 3);
+            repo1.AddFish("Tigershark", 50, 50,2, 12);
+            repo1.AddFish("Squid", 40, 30, 2, 5);
+            repo1.AddFish("Dolphin", 60, 40, 2, 10);
+            repo1.AddFish("Whale", 100, 80, 2, 20);
+
+            repo1.AddFish("Bass", 50, 1, 3, 1);
+            repo1.AddFish("The one ring to rule them all", 1000, 500, 3, 35);
+            repo1.AddFish("Salmon", 60, 60, 3, 3);
+            repo1.AddFish("Boot", 50, 2, 3, 30);
 
 
-            currentBait = repo.FindBait("Earthworm");
+            repo1.AddBait("Earthworm", 5, 3, true);
+            repo1.AddBait("PowerBait", 10, 1, false);
+            repo1.AddBait("Herring", 20, 2, false);
 
-            repo.Close();
+
+            currentBait = repo1.FindBait("Earthworm");
+
+            repo1.Close();
         }
 
         protected override void Initialize()

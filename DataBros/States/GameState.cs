@@ -61,12 +61,12 @@ namespace DataBros.States
         public GameState(GameWorld game, GraphicsDevice graphicsDevice, ContentManager content) : base(game, graphicsDevice, content)
         {
             msgToPlayers = "Press enter or space to start fishing!";
-            GameWorld.repo.Open();
-            stream = GameWorld.repo.FindWater("Stream");
+            GameWorld.repo1.Open();
+            stream = GameWorld.repo1.FindWater("Stream");
             currentWater = stream;
-            catchAble = GameWorld.repo.FindAFish(currentWater.Id);
+            catchAble = GameWorld.repo1.FindAFish(currentWater.Id);
 
-            GameWorld.repo.Close();
+            GameWorld.repo1.Close();
 
 
             LoadContent();
@@ -304,13 +304,13 @@ namespace DataBros.States
             
             if (currentWater.Name != "Stream")
             {
-                GameWorld.repo.Open();
-                stream = GameWorld.repo.FindWater("Stream");
+                GameWorld.repo1.Open();
+                stream = GameWorld.repo1.FindWater("Stream");
                 currentWater = stream;
                 msgToPlayers= $"Name {stream.Name} ";
-            catchAble = GameWorld.repo.FindAFish(currentWater.Id);
+            catchAble = GameWorld.repo1.FindAFish(currentWater.Id);
 
-                GameWorld.repo.Close();
+                GameWorld.repo1.Close();
                 ResetWaterButtons();
 
             }
@@ -322,13 +322,13 @@ namespace DataBros.States
         {
             if (currentWater.Name != "Ocean")
             {
-                GameWorld.repo.Open();
-                Water ocean = GameWorld.repo.FindWater("Ocean");
+                GameWorld.repo1.Open();
+                Water ocean = GameWorld.repo1.FindWater("Ocean");
                 currentWater = ocean;
                 msgToPlayers = $"Name {ocean.Name} ";
-                catchAble = GameWorld.repo.FindAFish(currentWater.Id);
+                catchAble = GameWorld.repo1.FindAFish(currentWater.Id);
 
-                GameWorld.repo.Close();
+                GameWorld.repo1.Close();
                 ResetWaterButtons();
             }
 
@@ -338,22 +338,22 @@ namespace DataBros.States
         {
             if (currentWater.Name != "Lake")
             {
-                GameWorld.repo.Open();
-                Water lake = GameWorld.repo.FindWater("Lake");
+                GameWorld.repo1.Open();
+                Water lake = GameWorld.repo1.FindWater("Lake");
                 currentWater = lake;
                 msgToPlayers = $"Name {lake.Name}";
-                catchAble = GameWorld.repo.FindAFish(currentWater.Id);
+                catchAble = GameWorld.repo1.FindAFish(currentWater.Id);
 
-                GameWorld.repo.Close();
+                GameWorld.repo1.Close();
                 ResetWaterButtons();
             }
         }
 
         private void BaitButton_Click(object sender, EventArgs e)
         {
-            GameWorld.repo.Open();
-            Bait nextBait = GameWorld.repo.FindBait("PowerBait");
-            GameWorld.repo.Close();
+            GameWorld.repo1.Open();
+            Bait nextBait = GameWorld.repo1.FindBait("PowerBait");
+            GameWorld.repo1.Close();
 
             GameWorld.currentBait = nextBait;
 
@@ -364,6 +364,7 @@ namespace DataBros.States
         public void RoundOver()
         {
             roundOver = "Time's up!";
+            GameWorld.currentState = GameWorld.menuState;
         }
 
         public override void PostUpdate(GameTime gameTime)
