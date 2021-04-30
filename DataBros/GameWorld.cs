@@ -1,9 +1,6 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
-using System.Collections.Generic;
-using System.Data.SQLite;
-using System.Diagnostics;
 using DataBros.States;
 using Microsoft.Xna.Framework.Content;
 using System;
