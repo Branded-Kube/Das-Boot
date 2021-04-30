@@ -297,12 +297,21 @@ namespace DataBros
             
         }
 
+        /// <summary>
+        ///  Time it takes to catch a random fish from its water (foreign key relation) id, or nothing. 
+        ///  
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void OnTimedEventFishing(object sender, ElapsedEventArgs e)
         {
+            
             Random Rndchance = new Random();
             int chanceToCatch = Rndchance.Next( 1, 10);
             chanceToCatch += catchdifficulty;
+            //
 
+            // For testing
             Debug.WriteLine($"{chanceToCatch}");
             Debug.WriteLine($"difficulty{catchdifficulty} position{p2AimPosition.Y}");
 
@@ -369,6 +378,8 @@ namespace DataBros
             fishTimer.Elapsed -= new ElapsedEventHandler(OnTimedEventFishing);
             fishTimer.Enabled = false;
         }
+
+
 
         private void OnTimedEventCatching(object sender, ElapsedEventArgs e)
         {

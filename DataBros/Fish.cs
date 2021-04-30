@@ -7,10 +7,7 @@ namespace DataBros
         public int Price { get; set; }
         public int Weight { get; set; }
         public int Strenght { get; set; }
-
-
         public int WaterFK { get; set; }
-
         public string Name { get; set; }
     }
 }

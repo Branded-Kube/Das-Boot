@@ -3,7 +3,6 @@ namespace DataBros
 {
     public interface IRepository
     {
-
         Water FindWater(string name);
         void AddWater(string name, int size, bool type);
 
