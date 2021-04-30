@@ -30,20 +30,28 @@ namespace DataBros
         private Texture2D p1Aim;
         private Texture2D p2Aim;
         private Texture2D fishTexture;
+        private Texture2D ringTexture;
+        private Texture2D bootTexture;
+        private Texture2D currentTexture;
+
+
         private bool fishVisible;
         private Vector2 p2position = new Vector2(100, 900);
         private Vector2 p1position = new Vector2(700, 900);
         private Vector2 p2AimPosition = new Vector2(100, 500);
         private Vector2 p1AimPosition = new Vector2(700, 500);
+
         public bool isplayer1;
         public bool logedIn = false;
+        public bool enablePull = false;
+
         int catchdifficulty;
         Fish caught;
         Color color = Color.White;
         System.Timers.Timer fishTimer;
         System.Timers.Timer catchTimer;
 
-
+        private int pullPerClick;
         public bool alreadyFishing = false;
 
         private KeyboardState oldState;
@@ -51,10 +59,34 @@ namespace DataBros
 
         public int pullCount = 0;
 
-        public SoundEffect effect;
+        public SoundEffect fishEffect;
+        public SoundEffect ringEffect;
+        public SoundEffect bootEffect;
+        public SoundEffect stepEffect;
+        public SoundEffect reelEffect;
+        public SoundEffect dammitEffect;
+        public SoundEffect notAgainEffect;
+
+        
+
+
+
+
 
         public void Loadcontent()
         {
+            bootTexture = GameWorld.content.Load<Texture2D>("Boot");
+            bootEffect = GameWorld.content.Load<SoundEffect>("Sounds/dasboot");
+            ringTexture = GameWorld.content.Load<Texture2D>("Ring");
+            ringEffect = GameWorld.content.Load<SoundEffect>("Sounds/MyPrecious");
+            fishTexture = GameWorld.content.Load<Texture2D>("fish");
+            fishEffect = GameWorld.content.Load<SoundEffect>("Sounds/fishy");
+
+            stepEffect = GameWorld.content.Load<SoundEffect>("Sounds/Step1");
+            reelEffect = GameWorld.content.Load<SoundEffect>("Sounds/fishingreel");
+            dammitEffect = GameWorld.content.Load<SoundEffect>("Sounds/Damnit");
+            notAgainEffect = GameWorld.content.Load<SoundEffect>("Sounds/notagain");
+
             if (isplayer1)
             {
                 player1Sprite = GameWorld.content.Load<Texture2D>("pl1");
@@ -77,7 +109,7 @@ namespace DataBros
                 spriteBatch.Draw(p1Aim, p1AimPosition, color);
                 if (fishVisible)
                 {
-                    spriteBatch.Draw(fishTexture, new Rectangle((int)p1AimPosition.X, (int)p1AimPosition.Y, p1Aim.Width, p1Aim.Height), Color.White);
+                    spriteBatch.Draw(currentTexture, new Rectangle((int)p1AimPosition.X, (int)p1AimPosition.Y, p1Aim.Width, p1Aim.Height), Color.White);
                 }
                 spriteBatch.DrawString(GameWorld.font, $" pulls left: {pullCount}", new Vector2(p1position.X + 90, p1position.Y + 50), Color.Green);
 
@@ -98,7 +130,7 @@ namespace DataBros
                 spriteBatch.Draw(p2Aim, p2AimPosition, color);
                 if (fishVisible)
                 {
-                    spriteBatch.Draw(fishTexture, new Rectangle((int)p2AimPosition.X, (int)p2AimPosition.Y, p2Aim.Width, p2Aim.Height), Color.White);
+                    spriteBatch.Draw(currentTexture, new Rectangle((int)p2AimPosition.X, (int)p2AimPosition.Y, p2Aim.Width, p2Aim.Height), Color.White);
                 }
                 spriteBatch.DrawString(GameWorld.font, $"   pulls left: {pullCount}", new Vector2(p2position.X + 90, p2position.Y + 50), Color.Green);
                 spriteBatch.DrawString(GameWorld.font, $"   {Name}", new Vector2(p2position.X, p2position.Y - 25), Color.Black);
@@ -124,19 +156,17 @@ namespace DataBros
             {
                 if (alreadyFishing == false)
                 {
-                    if (newState.IsKeyDown(Keys.Right) && oldState.IsKeyUp(Keys.Right) && p1position.X <= 900)
+                    if (newState.IsKeyDown(Keys.Right) && oldState.IsKeyUp(Keys.Right) && p1position.X <= 700)
                     {
                         p1position.X += 100;
                         p1AimPosition.X += 100;
-                        effect = GameWorld.content.Load<SoundEffect>("Sounds/Step1");
-                        effect.Play();
+                        stepEffect.Play();
                     }
                     if (Keyboard.GetState().IsKeyDown(Keys.Left) && oldState.IsKeyUp(Keys.Left) && p1position.X >= 100)
                     {
                         p1position.X -= 100;
                         p1AimPosition.X -= 100;
-                        effect = GameWorld.content.Load<SoundEffect>("Sounds/Step1");
-                        effect.Play();
+                        stepEffect.Play();
                     }
 
                     if (Keyboard.GetState().IsKeyDown(Keys.Up) && oldState.IsKeyUp(Keys.Up) && p1AimPosition.Y >= 100)
@@ -150,8 +180,7 @@ namespace DataBros
                     if (Keyboard.GetState().IsKeyDown(Keys.Enter) && oldState.IsKeyUp(Keys.Enter))
                     {
                         FishingKey();
-                        effect = GameWorld.content.Load<SoundEffect>("Sounds/fishingreel");
-                        effect.Play();
+                        reelEffect.Play();
                     }
                 }
                 else
@@ -162,7 +191,30 @@ namespace DataBros
                         {
                             pullCount -= 1;
                         }
+                        if (enablePull)
+                        {
+                            if (p1AimPosition.Y < 800)
+                            {
+                                p1AimPosition.Y += pullPerClick;
+                            }
+                        }
                     }
+                }
+                // shallow, middle and deep water difficulty modifiers, changes acording to where player is chosing to fish.
+                // Is added to chance to catch a fish. easiest to catch a fish in shallow water and hardest in deep water
+                if (p1AimPosition.Y > 600)
+                {
+                    catchdifficulty = 1;
+                }
+                else if (p1AimPosition.Y <= 600 & p1AimPosition.Y > 300)
+                {
+                    catchdifficulty = 2;
+
+                }
+                else
+                {
+                    catchdifficulty = 3;
+
                 }
             }
             else
@@ -170,19 +222,17 @@ namespace DataBros
                 if (alreadyFishing == false)
                 {
                     //player 2 movement
-                    if (newState.IsKeyDown(Keys.D) && oldState.IsKeyUp(Keys.D) && p2position.X <= 900)
+                    if (newState.IsKeyDown(Keys.D) && oldState.IsKeyUp(Keys.D) && p2position.X <= 700)
                     {
                         p2position.X += 100;
                         p2AimPosition.X += 100;
-                        effect = GameWorld.content.Load<SoundEffect>("Sounds/Step2");
-                        effect.Play();
+                        stepEffect.Play();
                     }
                     if (Keyboard.GetState().IsKeyDown(Keys.A) && oldState.IsKeyUp(Keys.A) && p2position.X >= 100)
                     {
                         p2position.X -= 100;
                         p2AimPosition.X -= 100;
-                        effect = GameWorld.content.Load<SoundEffect>("Sounds/Step2");
-                        effect.Play();
+                        stepEffect.Play();
                     }
 
                     if (Keyboard.GetState().IsKeyDown(Keys.W) && oldState.IsKeyUp(Keys.W) && p2AimPosition.Y >= 100)
@@ -198,8 +248,7 @@ namespace DataBros
                     {
                      
                         FishingKey();
-                        effect = GameWorld.content.Load<SoundEffect>("Sounds/fishingreel");
-                        effect.Play();
+                        reelEffect.Play();
 
                     }
                 }
@@ -211,22 +260,30 @@ namespace DataBros
                         {
                             pullCount -= 1;
                         }
+                        if (enablePull)
+                        {
+                            if (p2AimPosition.Y < 800)
+                            {
+                                p2AimPosition.Y += pullPerClick;
+                            }
+                        }
                     }
                 }
             }
-
-            if (p1AimPosition.Y > 600)
+            // shallow, middle and deep water difficulty modifiers, changes acording to where player is chosing to fish.
+            // Is added to chance to catch a fish. easiest to catch a fish in shallow water and hardest in deep water
+            if (p2AimPosition.Y > 600)
             {
-                catchdifficulty = 3;
+                catchdifficulty = 1;
             }
-            else if (p1AimPosition.Y <= 600 & p1AimPosition.Y > 300)
+            else if (p2AimPosition.Y <= 600 & p2AimPosition.Y > 300)
             {
                 catchdifficulty = 2;
 
             }
             else
             {
-                catchdifficulty = 1;
+                catchdifficulty = 3;
 
             }
         }
@@ -253,17 +310,15 @@ namespace DataBros
 
         private void OnTimedEventFishing(object sender, ElapsedEventArgs e)
         {
-            // catchdifficulty
             Random Rndchance = new Random();
             int chanceToCatch = Rndchance.Next( 1, 10);
             chanceToCatch += catchdifficulty;
-            Debug.WriteLine($"{chanceToCatch}");
-            Debug.WriteLine($"difficulty{catchdifficulty} position{p1AimPosition.Y}");
 
+            Debug.WriteLine($"{chanceToCatch}");
+            Debug.WriteLine($"difficulty{catchdifficulty} position{p2AimPosition.Y}");
 
             if (chanceToCatch > 6)
             {
-                
                 MsgToPlayer = $"A fish has taken the bait! time to wheel it in (Press enter / space)!!";
                 color = Color.Black;
                 Random rnd = new Random();
@@ -279,50 +334,52 @@ namespace DataBros
 
                     caught = catchAble[randomNumber];
                 pullCount += caught.Strenght;
-                fishVisible = true;
 
+                pullPerClick = 25;
+
+                Debug.WriteLine(pullPerClick);
                 if (caught.Name == "Boot")
                 {
-                    fishTexture = GameWorld.content.Load<Texture2D>("Boot");
-                    effect = GameWorld.content.Load<SoundEffect>("Sounds/dasboot");
-                    effect.Play();
+                    currentTexture = bootTexture;
+                    bootEffect.Play();
                 }
                 else if (caught.Name == "The one ring to rule them all")
                 {
-                    fishTexture = GameWorld.content.Load<Texture2D>("Ring");
-                    effect = GameWorld.content.Load<SoundEffect>("Sounds/MyPrecious");
-                    effect.Play();
+                    currentTexture = ringTexture;
+                    ringEffect.Play();
                 }
                 else
                 {
-                    fishTexture = GameWorld.content.Load<Texture2D>("Fish");
-                    effect = GameWorld.content.Load<SoundEffect>("Sounds/fishy");
-                    effect.Play();
+                    currentTexture = fishTexture;
+                    fishEffect.Play();
                 }
+                fishVisible = true;
 
                 catchTimer = new System.Timers.Timer();
                 catchTimer.Elapsed += new ElapsedEventHandler(OnTimedEventCatching);
                 catchTimer.Interval = 5000;
                 catchTimer.Enabled = true;
+                enablePull = true;
+
 
             }
             else
             {
                 MsgToPlayer = "You didnt catch a thing!!";
                 alreadyFishing = false;
-                effect = GameWorld.content.Load<SoundEffect>("Sounds/Damnit");
-                effect.Play();
+                dammitEffect.Play();
             }
 
             fishTimer.Elapsed -= new ElapsedEventHandler(OnTimedEventFishing);
             fishTimer.Enabled = false;
+
 
         }
 
         private void OnTimedEventCatching(object sender, ElapsedEventArgs e)
         {
             fishVisible = false;
-
+            enablePull = false;
             if (pullCount == 0)
             {
                 GameWorld.repo.Open();
@@ -335,13 +392,18 @@ namespace DataBros
             else
             {
                 MsgToPlayer= $"Fish slipped away ";
-                effect = GameWorld.content.Load<SoundEffect>("Sounds/notagain");
-                effect.Play();
+                notAgainEffect.Play();
             }
             color = Color.White;
             catchTimer.Elapsed -= new ElapsedEventHandler(OnTimedEventCatching);
             catchTimer.Enabled = false;
             alreadyFishing = false;
+
+            if (p2AimPosition.Y > 700 | p1AimPosition.Y > 700)
+            {
+                p2AimPosition.Y = 700;
+                p1AimPosition.Y = 700;
+            }
 
         }
     }
