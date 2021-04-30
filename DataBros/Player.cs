@@ -149,6 +149,8 @@ namespace DataBros
         {
             oldState = newState;
             newState = Keyboard.GetState();
+
+
             //player 1 movement
             if (isplayer1)
             {
@@ -342,8 +344,8 @@ namespace DataBros
 
                     caught = catchAble[randomNumber];
                 pullCount += caught.Strenght;
-
-                pullPerClick = 25;
+                Debug.WriteLine("pullCount" + pullCount);
+                CalcPullPerClick();
 
                 Debug.WriteLine(pullPerClick);
                 if (caught.Name == "Boot")
@@ -425,5 +427,41 @@ namespace DataBros
             }
 
         }
+
+        private void CalcPullPerClick()
+        {
+
+            if (isplayer1)
+            {
+                float startPos = p1AimPosition.Y;
+
+                float endPos = p1position.Y - 100;
+
+
+                pullPerClick = (int)(((endPos - startPos)) / pullCount);
+
+                Debug.WriteLine("EndPos is " + endPos);
+
+                Debug.WriteLine("pullPerClick is " + pullPerClick);
+            }
+
+            else
+            {
+                float startPos = p2AimPosition.Y;
+
+                float endPos = p2position.Y - 100;
+
+                pullPerClick = (int)(((endPos - startPos)) / pullCount);
+
+                Debug.WriteLine("EndPos is " + endPos);
+
+                Debug.WriteLine("pullPerClick is " + pullPerClick);
+
+            }
+
+
+
+        }
+
     }
 }
