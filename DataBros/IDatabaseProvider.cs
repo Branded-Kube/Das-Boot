@@ -5,6 +5,5 @@ namespace DataBros
     public interface IDatabaseProvider
     {
         IDbConnection CreateConnection();
-
     }
 }

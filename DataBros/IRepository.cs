@@ -18,7 +18,6 @@ namespace DataBros
 
         void AddBait(string name, int price, int biteTime, bool alive);
         Bait FindBait(string name);
-        //List<Bait> GetAllBait();
         void Open();
 
         void Close();

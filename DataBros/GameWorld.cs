@@ -74,7 +74,6 @@ namespace DataBros
             repo1 = new Repository(provider, mapper);
             repo2 = new Repository(provider, mapper);
 
-
             repo1.Open();
 
             repo1.AddWater("Lake", 20,true);
@@ -154,16 +153,9 @@ namespace DataBros
         {
             _spriteBatch = new SpriteBatch(GraphicsDevice);
 
-            // TODO: use this.Content to load your game content here
-
             //Game
             font = Content.Load<SpriteFont>("Fonts/font");
-            //visualManager.LoadContent(Content);
             gameState = new GameState(this, _graphics.GraphicsDevice, Content);
-
-            
-
-
 
             //Main Menu
             menuState = new MenuState(this, _graphics.GraphicsDevice, Content);
@@ -175,23 +167,17 @@ namespace DataBros
         {
             if (Keyboard.GetState().IsKeyDown(Keys.Escape))
                 Exit();
-         
             if (nextState != null)
             {
                 currentState = nextState;
-
                 nextState = null;
             }
-
             currentState.Update(gameTime);
-
             if (currentState == gameState)
             {
                 player1.Update();
                 player2.Update();
-
             }
-           
             base.Update(gameTime);
         }
 
@@ -199,27 +185,15 @@ namespace DataBros
         protected override void Draw(GameTime gameTime)
         {
             GraphicsDevice.Clear(Color.CornflowerBlue);
-
             _spriteBatch.Begin();
-
-
             if (currentState == gameState)
             {
                 player1.Draw(_spriteBatch);
                 player2.Draw(_spriteBatch);
 
             }
-          
-
             _spriteBatch.End();
-
             currentState.Draw(gameTime, _spriteBatch);
-
-
-
-            
-
-
             base.Draw(gameTime);
         }
     }

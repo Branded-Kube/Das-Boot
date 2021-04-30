@@ -25,8 +25,6 @@ namespace DataBros.Controls
 
         public event EventHandler Click;
 
-        //public bool IsClicked { get; private set; }
-
         public Color PenColor { get; set; }
 
         public Vector2 Position { get; set; }

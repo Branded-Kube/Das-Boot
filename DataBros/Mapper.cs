@@ -16,9 +16,7 @@ namespace DataBros
                 var id = reader.GetInt32(0);
                 var type = reader.GetBoolean(3);
                 result.Add(new Water() { Id = id, Name = name, Size = size , Type = type});
-
             }
-
             return result;
         }
         public List<Bait> MapBaitFromReader(IDataReader reader)
@@ -31,7 +29,6 @@ namespace DataBros
                 var price = reader.GetInt32(2);
                 var name = reader.GetString(3);
                 var alive = reader.GetBoolean(4);
-
 
                 result1.Add(new Bait() { Id = id, BaitName = name, Price = price, BiteTime = biteTime, Alive = alive});
             }
@@ -63,9 +60,6 @@ namespace DataBros
                 var price = reader.GetInt32(3);
                 var WaterFk = reader.GetInt32(4);
                 var strenght = reader.GetInt32(5);
-
-
-
 
                 result.Add(new Fish() { Id = id, Name = name, Weight = weight, Price = price, WaterFK = WaterFk, Strenght= strenght });
             }

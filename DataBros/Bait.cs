@@ -7,7 +7,6 @@ namespace DataBros
         public int Price { get; set; }
         public bool Alive { get; set; }
 
-
         public string BaitName { get; set; }
         public float BiteTime { get; set; }
 

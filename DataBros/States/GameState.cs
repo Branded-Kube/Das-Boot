@@ -130,18 +130,6 @@ namespace DataBros.States
         #endregion
         public void LoadContent()
         {
-            //player1 = _content.Load<Texture2D>("pl1");
-            //p1origin = new Vector2(500, 300);
-            //player2 = _content.Load<Texture2D>("pl2");
-            //p2origin = new Vector2(300, 300);
-
-            //p1Aim = _content.Load<Texture2D>("p1aimsprite");
-            //p2Aim = _content.Load<Texture2D>("p2aimsprite");
-
-            //GameWorld.Instance.player1.Loadcontent();
-            //GameWorld.Instance.player2.Loadcontent();
-
-
             buttonTexture = _content.Load<Texture2D>("button");
             buttonFont = _content.Load<SpriteFont>("Fonts/font");
 
@@ -157,15 +145,6 @@ namespace DataBros.States
 
             spriteBatch.Draw(backgroundTexture, backgroundRectangle, Color.White);
 
-            //GameWorld.visualManager.Draw(spriteBatch);
-
-            //spriteBatch.Draw(player1, new Vector2(200, 100), new Rectangle(100,100,100,100), Color.White, 0f, p1origin, 1, SpriteEffects.None, 0);
-            //spriteBatch.Draw(player2, new Vector2(500, 200), Rectangle.Empty, Color.White, 0f, p2origin, Vector2.Zero, SpriteEffects.None, 1);
-
-            //spriteBatch.Draw(player1, p1position, Color.White);
-            //spriteBatch.Draw(player2, p2position, Color.White);
-            //spriteBatch.Draw(p1Aim, p1AimPosition, Color.White);
-            //spriteBatch.Draw(p2Aim, p2AimPosition, Color.White);
             spriteBatch.DrawString(buttonFont, $" When a fish has taken the bait, spam Enter/Space until pull counter is at 0", new Vector2(100, 50), Color.Green, 0f, Vector2.Zero, 1.5f, SpriteEffects.None, 0f);
             spriteBatch.DrawString(buttonFont, $" {msgToPlayers}", new Vector2(200, 100), Color.Green, 0f, Vector2.Zero, 2f, SpriteEffects.None, 0f);
             spriteBatch.DrawString(buttonFont, $"Available fish in theese waters", new Vector2(0, 200), Color.Green, 0f, Vector2.Zero, 2f, SpriteEffects.None, 0f);
@@ -192,12 +171,6 @@ namespace DataBros.States
                 spriteBatch.Draw(upgradeMenuTexture, upgradeMenuRectangle, Color.White);
                 spriteBatch.Draw(upgrade1, upgRectangle, Color.White);
                 spriteBatch.Draw(upgrade2, upg2Rectangle, Color.White);
-                
-
-                if (Keyboard.GetState().IsKeyDown(Keys.U))
-                {
-                    //Upgrade fishing pole or bait
-                }
             }
 
             spriteBatch.End();
@@ -223,59 +196,7 @@ namespace DataBros.States
 
         }
 
-        //private void FishButton_Click(object sender, EventArgs e)
-        //{
-        //    if (alreadyFishing == false)
-        //    {
-
-        //        aTimer = new System.Timers.Timer();
-        //        aTimer.Elapsed += new ElapsedEventHandler(OnTimedEvent);
-        //        //aTimer.Interval = 5000 ;
-        //        aTimer.Interval = 3000 * GameWorld.currentBait.BiteTime;
-        //         aTimer.Enabled = true;
-        //        alreadyFishing = true;
-        //    }
-        //}
-
-        //public void FishingKey(Player player)
-        //{
-        //    if (alreadyFishing == false)
-        //    {
-        //        Random rnd = new Random();
-        //        player.pullCount = rnd.Next(10, 20);
-
-        //        aTimer = new System.Timers.Timer();
-        //        aTimer.Elapsed += new ElapsedEventHandler(OnTimedEvent);
-        //        //aTimer.Interval = 5000 ;
-        //        aTimer.Interval = 3000 * GameWorld.currentBait.BiteTime;
-        //        aTimer.Enabled = true;
-        //        alreadyFishing = true;
-        //    }
-        //}
-
-        //private void OnTimedEvent(object sender, ElapsedEventArgs e)
-        //{
-        //    Debug.WriteLine("You have Caught a fish!");
-
-        //    GameWorld.repo.Open();
-        //    var catchAble = GameWorld.repo.FindAFish(currentWater.Id);
-        //    int max = catchAble.Count;
-        //    Random Rnd = new Random();
-        //    int randomNumber = Rnd.Next(0, max);
-
-        //    var caught = catchAble[randomNumber];
-
-        //    Debug.WriteLine($"Id {caught.Id} Name {caught.Name} Price {caught.Price} ");
-        //    Debug.WriteLine($"Time spent {aTimer.Interval} ");
-
-
-        //    GameWorld.repo.Close();
-        //    //ResetWaterButtons();
-        //    aTimer.Elapsed -= new ElapsedEventHandler(OnTimedEvent);
-        //    aTimer.Enabled = false;
-        //    alreadyFishing = false;
-
-        //}
+        
 
         public void ResetWaterButtons()
         {
@@ -289,12 +210,7 @@ namespace DataBros.States
             oceanButton.Click -= OceanButton_Click;
             streamButton.Click -= StreamButton_Click;
 
-
             pickWater = true;
-
-            //GameWorld.visualManager.cellCount = currentWater.Size;
-            //GameWorld.visualManager.CreateGrid();
-
         }
         private void StreamButton_Click(object sender, EventArgs e)
         {
@@ -355,7 +271,6 @@ namespace DataBros.States
             GameWorld.currentBait = nextBait;
 
             msgToPlayers = $"Players are now using {nextBait.BaitName}";
-            //paused = !paused;
         }
 
         public void RoundOver()
@@ -381,11 +296,6 @@ namespace DataBros.States
             {
                 RoundOver();
             }
-
-            //foreach (Cell cell in GameWorld.visualManager.grid)
-            //{
-            //    cell.MyColor = Color.Yellow;
-            //}
 
             if (addComponents != null)
             {

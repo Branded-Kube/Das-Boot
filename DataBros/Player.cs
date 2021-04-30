@@ -17,9 +17,6 @@ namespace DataBros
         private string name = "Username";
         private string MsgToPlayer;
 
-
-        //public string Name { get; set; }
-
         public int Money { get; set; }
         public string Password { get; set; }
 
@@ -64,12 +61,6 @@ namespace DataBros
         public SoundEffect reelEffect;
         public SoundEffect dammitEffect;
         public SoundEffect notAgainEffect;
-
-        
-
-
-
-
 
         public void Loadcontent()
         {
@@ -149,8 +140,6 @@ namespace DataBros
         {
             oldState = newState;
             newState = Keyboard.GetState();
-
-
             //player 1 movement
             if (isplayer1)
             {
@@ -370,8 +359,6 @@ namespace DataBros
                 catchTimer.Interval = 5000;
                 catchTimer.Enabled = true;
                 enablePull = true;
-
-
             }
             else
             {
@@ -382,8 +369,6 @@ namespace DataBros
 
             fishTimer.Elapsed -= new ElapsedEventHandler(OnTimedEventFishing);
             fishTimer.Enabled = false;
-
-
         }
 
         private void OnTimedEventCatching(object sender, ElapsedEventArgs e)
@@ -425,12 +410,10 @@ namespace DataBros
                 p2AimPosition.Y = 700;
                 p1AimPosition.Y = 700;
             }
-
         }
 
         private void CalcPullPerClick()
         {
-
             if (isplayer1)
             {
                 float startPos = p1AimPosition.Y;
@@ -456,11 +439,7 @@ namespace DataBros
                 Debug.WriteLine("EndPos is " + endPos);
 
                 Debug.WriteLine("pullPerClick is " + pullPerClick);
-
             }
-
-
-
         }
 
     }
