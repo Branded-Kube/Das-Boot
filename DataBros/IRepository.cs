@@ -1,4 +1,6 @@
 ﻿
+using System.Collections.Generic;
+
 namespace DataBros
 {
     public interface IRepository
@@ -6,7 +8,7 @@ namespace DataBros
         Water FindWater(string name);
         void AddWater(string name, int size, bool type);
 
-        Fish FindFish(string name);
+        List<Fish> FindAFish(int waterId);
         void AddFish(string name,int weight, int price, int FKID, int strenght);
         Player FindPlayer(string name);
 
