@@ -108,15 +108,6 @@ namespace DataBros
             cmd.ExecuteNonQuery();
         }
 
-
-        public Fish FindFish(string name)
-        {
-            var cmd = new SQLiteCommand($"SELECT * from Fish WHERE name = '{name}'", (SQLiteConnection)connection);
-            var reader = cmd.ExecuteReader();
-            var result = mapper.MapFishFromReader(reader).First();
-            return result;
-        }
-
         public void Open()
         {
             if (connection == null)
