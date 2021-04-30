@@ -16,6 +16,8 @@ namespace DataBros.States
         public string menyMsg = "";
         public bool inMenu = false;
 
+        private Texture2D backgroundTexture;
+
         public SoundEffect delEffect;
         public SoundEffect buttonEffect;
         public SoundEffect newUserEffect;
@@ -39,6 +41,8 @@ namespace DataBros.States
         #region Constructor
         public MenuState(GameWorld game, GraphicsDevice graphicsDevice, ContentManager content) : base(game, graphicsDevice, content)
         {
+            // Background
+            backgroundTexture = _content.Load<Texture2D>("menubackground");
             //Button
             var buttonTexture = _content.Load<Texture2D>("button");
             var buttonFont = _content.Load<SpriteFont>("Fonts/font");
@@ -121,6 +125,10 @@ namespace DataBros.States
         {
             spriteBatch.Begin();
 
+            //Background
+            spriteBatch.Draw(backgroundTexture, new Vector2(0, 0), Color.White);
+
+            // Buttons
             foreach (var component in components)
             {
                 component.Draw(gameTime, spriteBatch);
@@ -133,9 +141,9 @@ namespace DataBros.States
                 spriteBatch.DrawString(GameWorld.font, "Enter your password", new Vector2((GameWorld._graphics.PreferredBackBufferWidth / 2) - 100, 800), Color.Black, 0.0f, Vector2.Zero, 2.0f, SpriteEffects.None, 0.0f);
                 spriteBatch.DrawString(GameWorld.font, UserLogin.PasswordInputString, new Vector2((GameWorld._graphics.PreferredBackBufferWidth / 2) - 100, 850), Color.Green, 0.0f, Vector2.Zero, 2.0f, SpriteEffects.None, 0.0f);
             }
-                spriteBatch.DrawString(GameWorld.font, $"Player 2: {GameWorld.Instance.player2.Name}", new Vector2((GameWorld._graphics.PreferredBackBufferWidth / 2) + 150, 900), Color.Black, 0.0f, Vector2.Zero, 2.0f, SpriteEffects.None, 0.0f);
-                spriteBatch.DrawString(GameWorld.font, $"Player 1: {GameWorld.Instance.player1.Name}", new Vector2((GameWorld._graphics.PreferredBackBufferWidth / 2) - 400, 900), Color.Black, 0.0f, Vector2.Zero, 2.0f, SpriteEffects.None, 0.0f);
-            spriteBatch.DrawString(GameWorld.font, $"{menyMsg}", new Vector2((GameWorld._graphics.PreferredBackBufferWidth / 2) -400, 200), Color.Black, 0.0f, Vector2.Zero, 2.0f, SpriteEffects.None, 0.0f);
+                spriteBatch.DrawString(GameWorld.font, $"Player 2: {GameWorld.Instance.player2.Name}", new Vector2((GameWorld._graphics.PreferredBackBufferWidth / 2) + 100, 900), Color.Black, 0.0f, Vector2.Zero, 2.0f, SpriteEffects.None, 0.0f);
+                spriteBatch.DrawString(GameWorld.font, $"Player 1: {GameWorld.Instance.player1.Name}", new Vector2((GameWorld._graphics.PreferredBackBufferWidth / 2) - 375, 900), Color.Black, 0.0f, Vector2.Zero, 2.0f, SpriteEffects.None, 0.0f);
+            spriteBatch.DrawString(GameWorld.font, $"{menyMsg}", new Vector2((GameWorld._graphics.PreferredBackBufferWidth / 2) -240, 200), Color.Black, 0.0f, Vector2.Zero, 2.0f, SpriteEffects.None, 0.0f);
 
 
             
