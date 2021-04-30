@@ -45,7 +45,7 @@ namespace DataBros.States
         public Water stream;
         string msgToPlayers = "";
         string roundOver = "";
-        private int timeRemaining = 180;
+        private int timeRemaining = 20;
         private float countDuration = 1f;
         private float currentTime = 0f;
 
@@ -364,6 +364,7 @@ namespace DataBros.States
         public void RoundOver()
         {
             roundOver = "Time's up!";
+            GameWorld.currentState = GameWorld.menuState;
         }
 
         public override void PostUpdate(GameTime gameTime)
