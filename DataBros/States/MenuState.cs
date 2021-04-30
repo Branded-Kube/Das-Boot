@@ -45,7 +45,7 @@ namespace DataBros.States
             menyMsg = "Create 2 users, and login with both.";
             var startGameButton = new Button(buttonTexture, buttonFont)
             {
-                Position = new Vector2(495, 250),
+                Position = new Vector2(390, 410),
                 Text = "Start Game",
             };
 
@@ -53,7 +53,7 @@ namespace DataBros.States
 
             var quitGameButton = new Button(buttonTexture, buttonFont)
             {
-                Position = new Vector2(495, 305),
+                Position = new Vector2(390, 465),
                 Text = "Quit Game",
             };
 
@@ -61,7 +61,7 @@ namespace DataBros.States
 
             var CreateUserButton = new Button(buttonTexture, buttonFont)
             {
-                Position = new Vector2(495,380),
+                Position = new Vector2(390,250),
                 Text = "Create new user",
 
             };
@@ -70,7 +70,7 @@ namespace DataBros.States
             
             var DeleteUserButton = new Button(buttonTexture, buttonFont)
             {
-                Position = new Vector2(700, 380),
+                Position = new Vector2(390, 580),
                 Text = "Delete All users",
 
             };
@@ -79,7 +79,7 @@ namespace DataBros.States
 
             var UserLoginButton = new Button(buttonTexture, buttonFont)
             {
-                Position = new Vector2(495, 430),
+                Position = new Vector2(390, 305),
                 Text = "Login",
 
             };
