@@ -333,7 +333,6 @@ namespace DataBros
 
                     caught = catchAble[randomNumber];
                 pullCount += caught.Strenght;
-                Debug.WriteLine("pullCount" + pullCount);
                 CalcPullPerClick();
 
                 Debug.WriteLine(pullPerClick);
@@ -405,40 +404,42 @@ namespace DataBros
             catchTimer.Enabled = false;
             alreadyFishing = false;
 
-            if (p2AimPosition.Y > 700 | p1AimPosition.Y > 700)
-            {
-                p2AimPosition.Y = 700;
-                p1AimPosition.Y = 700;
-            }
-        }
+            ResetAim();
 
+        }
+        /// <summary>
+        /// Calculates how much the fish shall be pulled each time the player pulls
+        /// </summary>
         private void CalcPullPerClick()
         {
             if (isplayer1)
             {
                 float startPos = p1AimPosition.Y;
-
                 float endPos = p1position.Y - 100;
-
-
                 pullPerClick = (int)(((endPos - startPos)) / pullCount);
 
-                Debug.WriteLine("EndPos is " + endPos);
-
-                Debug.WriteLine("pullPerClick is " + pullPerClick);
             }
 
             else
             {
                 float startPos = p2AimPosition.Y;
-
                 float endPos = p2position.Y - 100;
-
                 pullPerClick = (int)(((endPos - startPos)) / pullCount);
 
-                Debug.WriteLine("EndPos is " + endPos);
-
-                Debug.WriteLine("pullPerClick is " + pullPerClick);
+            }
+        }
+        /// <summary>
+        /// //  Resets the aim after a player tried to fish
+        /// </summary>
+        private void ResetAim()
+        {
+            if (isplayer1)
+            {
+                p1AimPosition.Y = 700;
+            }
+            else
+            {
+                p2AimPosition.Y = 700;
             }
         }
 
