@@ -323,10 +323,20 @@ namespace DataBros
                 color = Color.Black;
                 Random rnd = new Random();
                 pullCount = rnd.Next(10, 20);
-
-                GameWorld.repo.Open();
-                    var catchAble = GameWorld.repo.FindAFish(GameWorld.gameState.currentWater.Id);
-                GameWorld.repo.Close();
+                List<Fish> catchAble;
+                if (isplayer1)
+                {
+                    GameWorld.repo1.Open();
+                    catchAble = GameWorld.repo1.FindAFish(GameWorld.gameState.currentWater.Id);
+                    GameWorld.repo1.Close();
+                }
+                else
+                {
+                    GameWorld.repo2.Open();
+                    catchAble = GameWorld.repo2.FindAFish(GameWorld.gameState.currentWater.Id);
+                    GameWorld.repo2.Close();
+                }
+              
 
                 int max = catchAble.Count;
                     Random Rnd = new Random();
@@ -382,12 +392,23 @@ namespace DataBros
             enablePull = false;
             if (pullCount == 0)
             {
-                GameWorld.repo.Open();
-
-                MsgToPlayer = $"You have caught a {caught.Name} at weight {caught.Weight}Kg going for {caught.Price}Monies !!";
-                Money += caught.Price;
-                GameWorld.repo.UpdatePlayers(name, Money);
-                GameWorld.repo.Close();
+                if (isplayer1)
+                {
+                    GameWorld.repo1.Open();
+                    MsgToPlayer = $"You have caught a {caught.Name} at weight {caught.Weight}Kg going for {caught.Price}Monies !!";
+                    Money += caught.Price;
+                    GameWorld.repo1.UpdatePlayers(name, Money);
+                    GameWorld.repo1.Close();
+                }
+                else
+                {
+                    GameWorld.repo2.Open();
+                    MsgToPlayer = $"You have caught a {caught.Name} at weight {caught.Weight}Kg going for {caught.Price}Monies !!";
+                    Money += caught.Price;
+                    GameWorld.repo2.UpdatePlayers(name, Money);
+                    GameWorld.repo2.Close();
+                }
+            
             }
             else
             {

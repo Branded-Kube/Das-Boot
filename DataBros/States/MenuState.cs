@@ -102,9 +102,9 @@ namespace DataBros.States
             effect = GameWorld.content.Load<SoundEffect>("Sounds/delete");
             effect.Play();
 
-            GameWorld.repo.Open();
-           GameWorld.repo.DelPlayers();
-            GameWorld.repo.Close();
+            GameWorld.repo1.Open();
+           GameWorld.repo1.DelPlayers();
+            GameWorld.repo1.Close();
 
         }
 
